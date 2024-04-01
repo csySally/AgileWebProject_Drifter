@@ -1,4 +1,42 @@
-# CITS5505_AgileWebProject2
+# REACT / DRIFTER （TBC）
+
+## About the Application
+
+In this fast-paced world, everyone's heart harbours unspoken mysteries and late-night musings. Do those unspoken secrets in casual conversations or written silently on the pages of your diary sometimes make you feel lonely and helpless? Have you ever wanted to find an outlet for those questions?
+
+Welcome to "React/Drifter" - a unique platform for your questions to fly freely in an anonymous world. Here, everyone can be a listener and a sharer. Whether it's late-night blues, dawn doubts, or those flashes of inspiration and things you haven't told others, they can all find their home here.
+
+"React/Drifter" makes the power of anonymity gentle and powerful. There are no preconceived prejudices, only stories waiting to be discovered and mysteries to be solved. Send a secret note and it will randomly fly to a corner of the world; reply to a stranger's query and your words may become a beacon for them. In the process, different people will gather around a secret or question, sharing their perspectives so that everyone's experience is resonated and understood.
+
+Please speak up at React/Drifter!
+
+### MVP
+
+1. User registration and login
+
+Allow users to create accounts and log in to secure user information.
+
+2. Send a text note
+
+Users can send notes anonymously, the content can be anything.
+
+3. Receive Notes
+
+Users randomly receive secret notes from anonymous users. Plus Users can also search for notes containing specific keywords, such as "love".
+
+4. Anonymous Reply
+
+Users can reply anonymously to the received note. If the user can't answer or doesn't want to answer the current note, he/she can choose to read the next one.
+
+5. View Reply
+
+Users can view the replies received to the notes they send.
+
+### Future Improvements
+
+1. Users can insert pictures in the note.
+2. Allow users to like or dislike the replies they receive.
+3. Users can save their favourite replies to a "favourites" list for later viewing.
 
 ## Agile Marking:
 
@@ -37,6 +75,23 @@ An issue can be closed when it is resolved or a requirement is met by providing 
 
 Use a naming convention that includes the issue number and a short description, such as <b>issue-123-add-login-function</b>, so that we can learn directly from the branch name which issue it was created to resolve.
 
+#### How to Create A New Branch from Main?
+
+1. Switch to the main branch and pull the latest changes from the remote repository.
+
+```
+git checkout main
+git pull origin main
+
+```
+
+2. Create a new branch from main to develop your new feature.
+
+```
+git checkout -b issue-123-add-login-function
+
+```
+
 ### Pull Request (PR) Guidelines
 
 #### Creating a Pull Request
@@ -55,3 +110,10 @@ Use a naming convention that includes the issue number and a short description, 
 
 1. Close Linked Issues: If the PR description or commits didn’t automatically close the related issues, manually close them by mentioning the PR number (e.g., Closes #123 due to PR #456).
 2. Post-Merge Cleanup: Delete the feature branch if it's no longer needed, to keep the repository tidy.
+
+```
+git checkout main
+git merge issue-123-add-login-function
+git push origin main
+
+```
