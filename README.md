@@ -38,6 +38,15 @@ Users can view the replies received to the notes they send.
 2. Allow users to like or dislike the replies they receive.
 3. Users can save their favourite replies to a "favourites" list for later viewing.
 
+## Group Members
+
+| UWA ID   | Name        | Github Username |
+| -------- | ----------- | --------------- |
+| 23687599 | Sally Chen  | csySally        |
+| 23212326 | Lili Liu    | LiliLiu09       |
+| 24117922 | Zhengxu Jin | joshjin11       |
+| 23495103 | David Pan   | xxxxx           |
+
 ## Agile Marking:
 
 Marks will be given for evidence of Agile development practices, i.e.
