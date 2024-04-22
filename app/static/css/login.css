@@ -6,10 +6,14 @@ body{
     font-family: 'BankScript';
     src: url(../fonts/BanksScript.otf);
 }
+@font-face {
+    font-family: 'AppleChancery';
+    src: url(../fonts/Apple\ Chancery.ttf);
+}
 
 .left-panel {
     float: left;
-    padding: 3.5%;
+    padding: 3%;
     background-color: #D0DFE6; 
     width: 50%;
     height: 100vh;
@@ -22,7 +26,7 @@ body{
     background-image: url('../images/login-logo.png');
     background-size:contain;
     background-repeat: no-repeat;
-    margin-bottom: 2%;
+    margin-bottom: 1.5%;
     font-family: 'BankScript';
     font-size: 40px;
     box-sizing: border-box;
@@ -38,7 +42,7 @@ hr {
 }
 
 .description {
-
+    margin-top: 2%;
 }
 .des-top{
     display: flex;
@@ -47,12 +51,18 @@ hr {
 .des-top>ul{
     width: 100%;
     padding-top: 1%;
+    box-sizing: border-box;
 }
 
 .des-top>ul>li{
     width: 100%;
+    height: 18.5%;
     border-bottom: 2px #ffffff solid;
-    padding-top: 17.5%;
+    font-family: 'AppleChancery';
+    font-size: 26px;
+    padding-top: 10%;
+    padding-left: 8%;
+    box-sizing: border-box;
 }
 
 .des-right>img{
@@ -61,16 +71,23 @@ hr {
 
 .des-bottom>ul{
     width: 100%;
+    box-sizing: border-box;
+    padding-top: 1%;
 }
 
 .des-bottom>ul>li{
     width: 100%;
     border-bottom: 2px #ffffff solid;
-    padding-bottom: 8.5%;
+    height: 18.5%;
+    font-family: 'AppleChancery';
+    font-size: 26px;
+    padding-left: 4%;
+    box-sizing: border-box;
+    margin-bottom: 5%;
 }
 
 .footer-icon {
-    /* Add styles for your footer icon */
+    margin-top: 5%;
 }
 
 .right-panel {
