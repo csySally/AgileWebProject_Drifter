@@ -1,0 +1,38 @@
+html,body,p,h1,h2,h3,h4,h5,h6,input,
+form,table{
+    padding: 0;
+    margin: 0;
+}
+
+input,textarea,select{
+    border: 1px solid #666;
+    outline:none;
+}
+ul,ol{
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+img{
+ vertical-align: top;
+}
+b,strong,h1,h2,h3,h4,h5,h6{
+    font-weight: normal;
+}
+em,i{
+    font-style: normal;
+}
+a,u,s,del{
+    text-decoration: none;
+}
+body{
+    line-height: 1;
+    min-width: 768px;
+}
+
+.clearfix::after{
+    content: "";
+    display: block;
+    clear: both;
+}
