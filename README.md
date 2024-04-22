@@ -1,14 +1,14 @@
-# REACT / DRIFTER （TBC）
+# DRIFTER
 
 ## About the Application
 
 In this fast-paced world, everyone's heart harbours unspoken mysteries and late-night musings. Do those unspoken secrets in casual conversations or written silently on the pages of your diary sometimes make you feel lonely and helpless? Have you ever wanted to find an outlet for those questions?
 
-Welcome to "React/Drifter" - a unique platform for your questions to fly freely in an anonymous world. Here, everyone can be a listener and a sharer. Whether it's late-night blues, dawn doubts, or those flashes of inspiration and things you haven't told others, they can all find their home here.
+Welcome to "Drifter" - a unique platform for your questions to fly freely in an anonymous world. Here, everyone can be a listener and a sharer. Whether it's late-night blues, dawn doubts, or those flashes of inspiration and things you haven't told others, they can all find their home here.
 
-"React/Drifter" makes the power of anonymity gentle and powerful. There are no preconceived prejudices, only stories waiting to be discovered and mysteries to be solved. Send a secret note and it will randomly fly to a corner of the world; reply to a stranger's query and your words may become a beacon for them. In the process, different people will gather around a secret or question, sharing their perspectives so that everyone's experience is resonated and understood.
+"Drifter" makes the power of anonymity gentle and powerful. There are no preconceived prejudices, only stories waiting to be discovered and mysteries to be solved. Send a secret note and it will randomly fly to a corner of the world; reply to a stranger's query and your words may become a beacon for them. In the process, different people will gather around a secret or question, sharing their perspectives so that everyone's experience is resonated and understood.
 
-Please speak up at React/Drifter!
+Please speak up at Drifter!
 
 ### MVP
 
