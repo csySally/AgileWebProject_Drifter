@@ -90,6 +90,10 @@ hr {
     margin-top: 5%;
 }
 
+.footer-icon img{
+    width: 4%;
+}
+
 .right-panel {
     float: right;
     padding: 20px;
