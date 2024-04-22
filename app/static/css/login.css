@@ -1,0 +1,83 @@
+body{
+    width: 100%;
+    
+}
+@font-face {
+    font-family: 'BankScript';
+    src: url(../fonts/BanksScript.otf);
+}
+
+.left-panel {
+    float: left;
+    padding: 3.5%;
+    background-color: #D0DFE6; 
+    width: 50%;
+    height: 100vh;
+    box-sizing: border-box;
+}
+
+.logo {
+    width: 30%;
+    height: 15%;
+    background-image: url('../images/login-logo.png');
+    background-size:contain;
+    background-repeat: no-repeat;
+    margin-bottom: 2%;
+    font-family: 'BankScript';
+    font-size: 40px;
+    box-sizing: border-box;
+    padding-left: 11%;
+    padding-top: 3%;
+}
+
+hr {
+    border: 0;
+    height: 5px;
+    background: #ffffff;
+    margin: 1% 0;
+}
+
+.description {
+
+}
+.des-top{
+    display: flex;
+}
+
+.des-top>ul{
+    width: 100%;
+    padding-top: 1%;
+}
+
+.des-top>ul>li{
+    width: 100%;
+    border-bottom: 2px #ffffff solid;
+    padding-top: 17.5%;
+}
+
+.des-right>img{
+    width: 22vw;
+}
+
+.des-bottom>ul{
+    width: 100%;
+}
+
+.des-bottom>ul>li{
+    width: 100%;
+    border-bottom: 2px #ffffff solid;
+    padding-bottom: 8.5%;
+}
+
+.footer-icon {
+    /* Add styles for your footer icon */
+}
+
+.right-panel {
+    float: right;
+    padding: 20px;
+    background-color: #ffffff;
+    width: 50%;
+    height: 100vh;
+    box-sizing: border-box;
+}
