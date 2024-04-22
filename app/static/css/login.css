@@ -1,7 +1,7 @@
 body{
     width: 100%;
-    
 }
+/* font */
 @font-face {
     font-family: 'BankScript';
     src: url(../fonts/BanksScript.otf);
@@ -11,6 +11,7 @@ body{
     src: url(../fonts/Apple\ Chancery.ttf);
 }
 
+/* left-panel */
 .left-panel {
     float: left;
     padding: 3%;
@@ -30,8 +31,8 @@ body{
     font-family: 'BankScript';
     font-size: 40px;
     box-sizing: border-box;
-    padding-left: 11%;
-    padding-top: 3%;
+    padding-left: 9%;
+    padding-top: 2.8%;
 }
 
 hr {
@@ -86,6 +87,7 @@ hr {
     margin-bottom: 5%;
 }
 
+/* github icon */
 .footer-icon {
     margin-top: 5%;
 }
@@ -94,6 +96,7 @@ hr {
     width: 4%;
 }
 
+/* right-panel */
 .right-panel {
     float: right;
     padding: 40px;
