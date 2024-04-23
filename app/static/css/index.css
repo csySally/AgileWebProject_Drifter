@@ -36,7 +36,7 @@ header{
 }
 
 header>img{
-    width: 8.8%;
+    width: 7%;
     position: absolute;
     right: 10%;
     top: 0.5%;
@@ -48,7 +48,7 @@ header>img{
     height: 12vh;
 }
 
-.user>img{
+.user img{
     width: 6vw;
     height: 6vw;
     display: block;
@@ -86,14 +86,14 @@ header>img{
     right: 0;
     top: 0;
     bottom: 0;
-    padding-top: 3%;
+    padding-top: 1%;
 }
 
 .index-main>img:nth-of-type(2){
     width: 14vw;
     position: absolute;
     left: 28%;
-    top: 4%;
+    top: 0.8%;
 }
 
 .index-main>img:nth-of-type(3){
@@ -114,6 +114,42 @@ header>img{
 .card{
     width: 25%;
     height: 35vh;
-    background-color: black;
+    background-color: #ffffff;
     border-radius: 5%;
+    padding: 2.5%;
+    box-sizing: border-box;
+}
+
+.card>img{
+    width: 14%;
+}
+
+.card-title{
+    font-size: 1.6em;
+    font-family: 'Arial';
+    color: #000;
+    margin-top: 8%;
+}
+
+.card-explain{
+    height: 10vh;
+    font-size: 1.1em;
+    font-family: 'Arial';
+    color: #bbbbbb;
+    margin-top:5%;
+    line-height: 1.4em;
+}
+
+.card>a{
+    width: 50%;
+    background-color: #fff;
+    padding: 0;
+    border: 0;
+    border-radius: 5%;
+    font-size: 1.2em;
+    font-family: 'Arial';
+    color: #000;
+    cursor: pointer;
+    display: flex;
+    
 }
