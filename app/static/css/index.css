@@ -120,7 +120,8 @@ header>img{
     width: 14vw;
     position: absolute;
     left: 28%;
-    top: 0.8%;
+    top: -2%;
+
 }
 
 .index-main>img:nth-of-type(3){
@@ -147,8 +148,12 @@ header>img{
     padding: 2.5%;
     box-sizing: border-box;
 }
+.index-card:hover {
+    box-shadow: 0 0 20px 0 #dddddd;
 
-.card>img{
+  }
+
+.index-card>img{
     width: 14%;
 }
 
@@ -164,7 +169,7 @@ header>img{
     font-size: 1.1em;
     font-family: 'Arial';
     color: #bbbbbb;
-    margin-top:5%;
+    margin-top:4%;
     line-height: 1.4em;
 }
 
@@ -178,6 +183,8 @@ header>img{
     font-family: 'Arial';
     color: #000;
     cursor: pointer;
-    display: flex;
-    
+}
+
+.index-card>a:hover{
+    text-shadow: 0 0 10px #bed6e1;
 }
