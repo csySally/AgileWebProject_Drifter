@@ -99,7 +99,7 @@ hr {
 /* right-panel */
 .right-panel {
     float: right;
-    padding: 40px;
+    padding: 50px;
     background-color: #ffffff;
     width: 50%;
     height: 100vh;
@@ -107,7 +107,7 @@ hr {
 }
 
 h2 {
-    margin-top: 15vh;
+    margin-top: 10vh;
     color: #333;
     font-family: arial black;
     font-size: 3em;
