@@ -114,6 +114,7 @@ header>img{
     position: absolute;
     right: 8%;
     top: 5%;
+    z-index: 200;
 }
 
 #noteInput {
@@ -155,6 +156,7 @@ header>img{
     border-radius: 10px;
     letter-spacing: 0.07em;
     border: none;
+    z-index: 200;
 }
 
 .index-main>p{
