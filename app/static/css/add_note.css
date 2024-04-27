@@ -10,6 +10,10 @@ body{
     font-family: 'AppleChancery';
     src: url(../fonts/Apple\ Chancery.ttf);
 }
+@font-face {
+    font-family: 'WorstveldSling';
+    src: url('../fonts/WorstveldSling.otf');
+}
 
 /* header */
 header{
@@ -115,6 +119,13 @@ header>img{
     right: 8%;
     top: 5%;
     z-index: 200;
+    border: none;
+}
+
+/* delete the default focus css style from bootstrap */
+.btn-close:focus {
+    outline: none;
+    box-shadow: none;
 }
 
 #noteInput {
@@ -126,8 +137,8 @@ header>img{
     padding: 5.8%;
     resize: none; 
     overflow: auto; 
-    line-height: 2.45; 
-    font-size: 1.5em; 
+    line-height: 2.25; 
+    font-size: 1.7em; 
     color: #383838; 
     z-index: 100;
     position: absolute;
@@ -137,6 +148,7 @@ header>img{
     right: 0;
     top: 0;
     bottom: 0;
+    font-family: WorstveldSling;
 
   }
   
@@ -160,12 +172,12 @@ header>img{
 }
 
 .index-main>p{
-    width: 100%;
+    width: auto;
     font-size: 1em;
     font-family: 'Arial';
     position: absolute;
     bottom: 33%;
-    left: 27.7%;
+    right: 19%;
     transform: translateX(50%);
     color: #fff;
 }
