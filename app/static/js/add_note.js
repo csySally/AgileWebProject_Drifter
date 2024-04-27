@@ -8,9 +8,12 @@ $("#noteInput").focus();
 
 $("#noteInput").on("keyup", (event) => {
   let post = $(event.currentTarget).val();
-  let words = post.split(" ");
+  let words = post.trim().split(/\s+/);
   let wordCount = words.length;
-  let remaining = 60 - wordCount;
+  let remaining = 100 - wordCount;
+  if (post.trim().length === 0) {
+    remaining = 100;
+  }
   if (remaining <= 0) {
     $("#words").css("color", "red");
   } else {
@@ -19,7 +22,7 @@ $("#noteInput").on("keyup", (event) => {
   $("#words").html(remaining);
 });
 
-/* alert when you type more than 60 words and cannot click 'next' button */
+/* alert when you type more than 100 words and cannot click 'next' button */
 document.querySelector("#btn-next").addEventListener("click", function () {
   /* need to wait for the cursor leaves the text area and get the count from '#words' */
   let wordCount = parseInt($("#words").text());
