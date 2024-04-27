@@ -32,43 +32,20 @@
           accept="image/*"
           style="display: none"
         />
-        <a href="#" id="imageLink"
-          ><img src="../static/images/default-avatar.png" id="userImage"
-        /></a>
+        <img src="../static/images/default-avatar.png" id="userImage" />
         <p>Username</p>
-        <p id="notification">
-          It’s alright to keep the default avatar to be fully anonymous!
-        </p>
       </section>
       <section class="index-main">
-        <img src="../static/images/index-main.png" alt="" />
+        <img src="../static/images/add_note.png" alt="" />
+        <textarea
+          id="noteInput"
+          placeholder="Write your note here..."
+        ></textarea>
         <img src="../static/images/arrow2.png" alt="" />
         <img src="../static/images/arrow1.png" alt="" />
-        <div id="index-cards">
-          <div class="index-card">
-            <img src="../static/images/card2.png" alt="" />
-            <p class="card-title">Reply A Note</p>
-            <p class="card-explain">
-              Check a random note or search for a note with a specific topic?
-            </p>
-            <a href="#" id="explore">Explore&nbsp;&nbsp;&nbsp;>>></a>
-          </div>
-          <div class="index-card">
-            <img src="../static/images/card1.png" alt="" />
-            <p class="card-title">Write A Note</p>
-            <p class="card-explain">Send your stories here.</p>
-            <a href="#" id="draft">Draft&nbsp;&nbsp;&nbsp;>>></a>
-          </div>
-
-          <div class="index-card">
-            <img src="../static/images/card3.png" alt="" />
-            <p class="card-title">Check My Inbox</p>
-            <p class="card-explain">
-              What kinds of answers are waiting for you?
-            </p>
-            <a href="#" id="surprise">Surprise&nbsp;&nbsp;&nbsp;>>></a>
-          </div>
-        </div>
+        <p><span>60</span> words left</p>
+        <button type="button" class="btn-close" aria-label="Close"></button>
+        <button id="btn-next">Next</button>
       </section>
     </main>
     <script
