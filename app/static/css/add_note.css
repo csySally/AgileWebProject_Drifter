@@ -119,6 +119,13 @@ header>img{
     right: 8%;
     top: 5%;
     z-index: 200;
+    border: none;
+}
+
+/* delete the default focus css style from bootstrap */
+.btn-close:focus {
+    outline: none;
+    box-shadow: none;
 }
 
 #noteInput {
