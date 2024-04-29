@@ -182,14 +182,95 @@ header>img{
     color: #fff;
 }
 
+/* add label part */
 #cover{
     width: 100%;
     height: 100%;
     background-color: #d9d9d9;
-    opacity: 0.7;
+    opacity: 0.9;
     position: absolute;
     top: 0;
     left: 0;
     z-index: 600;
-    display: none;
+    /* display: none; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#label-div{
+    width: 50%;
+    height: 50%;
+    background-color: #5E616D;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 800;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding-top: 3%;
+}
+
+#label-div>h1{
+    font-family: 'Arial Black';
+    font-size: 1.5em;
+    color: #fff;
+    margin-bottom: 3%;
+}
+
+#label-div>input{
+    width: 70%;
+    height: 3.5vw;
+    border: none;
+    border-radius: 10px;
+    padding-left: 1%;
+    font-size: 1.2em;
+    margin-bottom: 6%;
+}
+
+#label-list{
+    display: flex;
+    flex-wrap: wrap;
+    width: 70%;
+    height: 30%;
+    margin-bottom: 5%;
+}
+
+#label-list>p{
+    width: auto;
+    height: 2.5vw;
+    background-color: #d9d9d9;
+    border-radius: 10px;
+    margin-right: 3%;
+    margin-bottom: 3%;
+    padding-left: 3%;
+    padding-right: 3%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1em;
+    font-family: 'Arial';
+    color: #000;
+}
+
+#label-list>p:hover{
+    background-color: #383838;
+    color: #fff;
+}
+
+#label-div>button{
+    width: 20%;
+    height: 3.5vw;
+    background-color: #000;
+    color: #fff;
+    font-family: arial;
+    font-weight: 500;
+    font-size: 1.2em;
+    border-radius: 10px;
+    letter-spacing: 0.07em;
+    border: none;
+    margin-bottom: 3%;
 }
