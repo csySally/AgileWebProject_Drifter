@@ -44,7 +44,12 @@
         <img src="../static/images/arrow2.png" alt="" />
         <img src="../static/images/arrow1.png" alt="" />
         <p><span id="words">100</span> words left</p>
-        <button type="button" class="btn-close" aria-label="Close"></button>
+        <button
+          type="button"
+          class="btn-close"
+          id="close-note"
+          aria-label="Close"
+        ></button>
         <button id="btn-next">Next</button>
       </section>
     </main>
@@ -52,13 +57,54 @@
       <div id="cover"></div>
       <div id="label-div">
         <h1>Please Enter Up To 5 Labels</h1>
+        <h2>For Example: love</h2>
         <input type="text" id="labelInput" />
         <div id="label-list">
-          <p class="label">Family</p>
-          <p class="label">Friends</p>
-          <p class="label">Work</p>
-          <p class="label">Study</p>
-          <p class="label">Travel</p>
+          <div>
+            <p class="label">family</p>
+            <button
+              type="button"
+              class="btn-close"
+              id="close-label"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div>
+            <p class="label">love</p>
+            <button
+              type="button"
+              class="btn-close"
+              id="close-label"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div>
+            <p class="label">friends</p>
+            <button
+              type="button"
+              class="btn-close"
+              id="close-label"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div>
+            <p class="label">school</p>
+            <button
+              type="button"
+              class="btn-close"
+              id="close-label"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div>
+            <p class="label">travel</p>
+            <button
+              type="button"
+              class="btn-close"
+              id="close-label"
+              saria-label="Close"
+            ></button>
+          </div>
         </div>
         <button id="btn-next2">OK!</button>
       </div>

@@ -112,7 +112,7 @@ header>img{
     bottom: 6%;
 }
 
-.btn-close{
+#close-note{
     width: 8vw;
     height: 8vw;
     position: absolute;
@@ -218,7 +218,16 @@ header>img{
     font-family: 'Arial Black';
     font-size: 1.5em;
     color: #fff;
+    margin-bottom: 2%;
+    
+}
+
+#label-div>h2{
+    font-size: 0.9em;
+    color: #fff;
+    opacity: 0.6;
     margin-bottom: 3%;
+    font-style: italic;
 }
 
 #label-div>input{
@@ -228,7 +237,7 @@ header>img{
     border-radius: 10px;
     padding-left: 1%;
     font-size: 1.2em;
-    margin-bottom: 6%;
+    margin-bottom: 5%;
 }
 
 #label-list{
@@ -239,11 +248,44 @@ header>img{
     margin-bottom: 5%;
 }
 
-#label-list>p{
+#label-list>div{
     width: auto;
-    height: 2.5vw;
+    height: 40%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 4%;
+    margin-bottom: 3%;
     background-color: #d9d9d9;
     border-radius: 10px;
+    position: relative;
+    padding-left: 3%;
+    padding-right: 3%;
+}
+
+#label-list>div:hover{
+    background-color: #ababab;
+    color: #fff;
+}
+
+#close-label{
+    width: 20px;
+    height: 20px;
+    font-size: 0.6em;
+    font-family: 'Arial';
+    background-color: white;
+    opacity: 1;
+    border-radius: 50%;
+    box-sizing: border-box;
+    position: absolute;
+    right: -8%;
+    top: -10%;
+    
+}
+
+.label{
+    width: auto;
+
     margin-right: 3%;
     margin-bottom: 3%;
     padding-left: 3%;
@@ -256,10 +298,7 @@ header>img{
     color: #000;
 }
 
-#label-list>p:hover{
-    background-color: #383838;
-    color: #fff;
-}
+
 
 #label-div>button{
     width: 20%;
