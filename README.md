@@ -38,7 +38,7 @@ Users can view the replies received to the notes they send.
 
 ### Future Improvements
 
-1. Users can insert pictures in the note.
+1. Use ChatGPT to answer the note as an option.
 2. Allow users to like or dislike the replies they receive.
 3. Users can save their favourite replies to a "favourites" list for later viewing.
 
