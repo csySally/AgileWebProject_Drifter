@@ -10,10 +10,6 @@ Welcome to "Drifter" - a unique platform for your questions to fly freely in an 
 
 Please speak up at Drifter!
 
-### Figma Design
-
-https://www.figma.com/file/SqRgaZQaXlgRzC7S6k2ZZA/React-%2F-Drifter?type=design&node-id=0%3A1&mode=design&t=WhWAFCeIrF83WT5R-1
-
 ### MVP
 
 1. User registration and login
