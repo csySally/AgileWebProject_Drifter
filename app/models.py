@@ -29,33 +29,33 @@ class PaginatedAPIMixin(object):
         }
         return data
 class User(PaginatedAPIMixin, UserMixin, db.Model):
-  id = db.Column(db.Integer, primary_key=True)
-  username = db.Column(db.String(64), index=True, unique=True)
-  email = db.Column(db.String(120), index=True, unique=True)
-  password_hash = db.Column(db.String(128))
-  posts = db.relationship('Post', backref='author', lazy='dynamic')
-  def __repr__(self):
-    return '<User {}>'.format(self.username)
-  
-  def set_password(self, password):
-    self.password_hash = generate_password_hash(password)
-  def check_password(self, password):
-    return check_password_hash(self.password_hash, password)
-  def posts_count(self):
-    query = sa.select(sa.func.count()).select_from(
-    self.posts.select().subquery())
-    return db.session.scalar(query)
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(64), index=True, unique=True)
+    password_hash = db.Column(db.String(128))
+    posts = db.relationship('Post', backref='author', lazy='dynamic')
 
-  def to_dict(self, include_email=False):
-      data = {
+    def __repr__(self):
+        return '<User {}>'.format(self.username)
+  
+    def set_password(self, password):
+        self.password_hash = generate_password_hash(password)
+
+    def check_password(self, password):
+        return check_password_hash(self.password_hash, password)
+
+    def posts_count(self):
+        query = sa.select(sa.func.count()).select_from(
+            self.posts.select().subquery())
+        return db.session.scalar(query)
+
+    def to_dict(self):
+        return {
             'id': self.id,
             'username': self.username
         }
-      if include_email:
-            data['email'] = self.email
-      return data
-  def from_dict(self, data, new_user=False):
-        for field in ['username', 'email']:
+
+    def from_dict(self, data, new_user=False):
+        for field in ['username']:
             if field in data:
                 setattr(self, field, data[field])
         if new_user and 'password' in data:
