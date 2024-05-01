@@ -1,5 +1,6 @@
 from app.api import bp
 from app.models import User
+from app import db
 
 @bp.route('/users/<int:id>', methods=['GET'])
 def get_user(id):
