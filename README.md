@@ -41,6 +41,7 @@ Users can view the replies received to the notes they send.
 1. Use ChatGPT to answer the note as an option.
 2. Allow users to like or dislike the replies they receive.
 3. Users can save their favourite replies to a "favourites" list for later viewing.
+4. Set a time after which a note sent by a user will expire and no longer receive a reply
 
 ## Group Members
 
