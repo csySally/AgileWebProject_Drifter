@@ -48,36 +48,47 @@ header>img{
 
 /* main */
 .user{
-    width: 100%;
-    height: 12vh;
-}
-
-
-.user img{
-    width: 6vw;
-    height: 6vw;
-    display: block;
+    width: 80vw;
+    height: 9vh;
+    display: flex;
     position: relative;
-    left: 50%;
-    transform: translateX(-50%);
-    top:-50%;
+    margin: 0 auto;
+    background-image: url('../images/rectangle.png');
+    background-size: cover; 
+    background-position: center; 
+    margin-top: 5vh;
+    
+}
+
+
+#check-reply-user{
+    width: 4vw;
+    height: 4vw;
+    display: flex;
+    align-items: center;
+    position: relative;
+    left: 6.5%;
+    top: 50%;
+    z-index: 100;
+}
+
+#check-reply-user>img{
+    width: 4vw;
+    height: 4vw;
+    display: block;
     border-radius: 50%;
-    border: 2px #ffffff solid;
+    margin-right: 30%;
 }
 
-.user>p:first-of-type{
-    width: 100%;
-    text-align: center;
-    font-size: 1.6em;
+#check-reply-user>p{
+    font-size: 1.2em;
     font-family: 'Arial Black';
-    margin-top: -2.4%;
 }
-
 
 
 .index-main{
     width: 100%;
-    height: 76vh;
+    height: 73vh;
     display: flex;
     position: relative;
     box-sizing: border-box;
@@ -92,9 +103,7 @@ header>img{
     display: block;
     left: 0;
     right: 0;
-    top: 0;
-    bottom: 0;
-    padding-top: 4%;
+
 }
 
 
@@ -113,32 +122,8 @@ header>img{
     z-index: -400;
 }
 
-
-#noteInput {
-    background: transparent;
-    border: none;
-    outline: none; 
-    width: 80vw;
-    height: 64vh;
-    padding: 5.8%;
-    resize: none; 
-    overflow: auto; 
-    line-height: 8vh; 
-    font-size: 1.7em; 
-    color: #383838; 
-    z-index: 100;
-    position: absolute;
-    margin: 0 auto;
-    display: block;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    font-family: WorstveldSling;
-
-  }
   
-  .index-bottom {
+.index-bottom {
     width: 100%;
     height: 16vh;
     display: flex;
@@ -169,4 +154,28 @@ header>img{
     width: 16vw;
 }
 
+/* add a note */
+#noteContentContainer {
+    background: transparent;
+    border: none;
+    outline: none; 
+    width: 80vw;
+    height: 64vh;
+    padding-left: 5.8%;
+    padding-right: 5.8%;
+    padding-top: 2.3%;
+    resize: none; 
+    overflow: auto; 
+    line-height: 8.9vh; 
+    font-size: 1.7em; 
+    color: #383838; 
+    z-index: 100;
+    position: absolute;
+    margin: 0 auto;
+    display: block;
+    left: 0;
+    right: 0;
+    font-family: WorstveldSling;
+    word-wrap: break-word;
 
+  }
