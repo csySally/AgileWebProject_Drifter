@@ -137,7 +137,7 @@ header>img{
     padding: 5.8%;
     resize: none; 
     overflow: auto; 
-    line-height: 2.25; 
+    line-height: 8vh; 
     font-size: 1.7em; 
     color: #383838; 
     z-index: 100;
