@@ -26,7 +26,6 @@ function read_labels() {
 $("#noteInput").on("keyup", (event) => {
   
   post = $(event.currentTarget).val();
-  console.log(post);
   let words = post.trim().split(/\s+/);
   let wordCount = words.length;
   let remaining = wordMax - wordCount;
@@ -48,9 +47,8 @@ $("#label-section").hide();
 document.querySelector("#btn-next").addEventListener("click", function () {
   /* need to wait for the cursor leaves the text area and get the count from '#words' */
   let wordCount = parseInt($("#words").text());
-  console.log(wordCount);
   if (wordCount < 0) {
-    alert("You can only type up to 60 words.");
+    alert("You can only type up to 100 words.");
   } 
   else if (wordCount == wordMax){
     alert("Please enter content before sending")
@@ -85,7 +83,6 @@ document.querySelector("#btn-next").addEventListener("click", function () {
     $("#btn-next2").click(function () {
       // check the number of labels to send 
       let childCount = $("#label-list").children().length;
-      console.log('num of lab'+childCount);
       // no sending if no label were added
       if (childCount == 0) {
         alert("Please add at least one label");
