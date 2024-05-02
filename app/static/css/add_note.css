@@ -73,8 +73,6 @@ header>img{
     margin-top: -2.4%;
 }
 
-
-
 .index-main{
     width: 100%;
     height: 76vh;
@@ -126,6 +124,17 @@ header>img{
 .btn-close:focus {
     outline: none;
     box-shadow: none;
+}
+
+#close-add-label{
+    width: 8vw;
+    height: 8vw;
+    position: absolute;
+    right: -10%;
+    top: 5%;
+    z-index: 200;
+    border: none;
+
 }
 
 #noteInput {
@@ -300,7 +309,7 @@ header>img{
 
 
 
-#label-div>button{
+#btn-next2{
     width: 20%;
     height: 3.5vw;
     background-color: #000;
