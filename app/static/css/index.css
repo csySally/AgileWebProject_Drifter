@@ -45,11 +45,12 @@ header{
     border-radius: 10%;
     /* border: 4px rgb(248, 229, 223) solid; */
     box-shadow: 0 0 2px 2px #dddddd;
+    cursor: pointer;
 }
 #logout:hover{
     color: #000;
     background-color: #f5c3b2;
-    border: 4px #f6d5cb solid;
+    /* border: 4px #f6d5cb solid; */
 }
 
 header>img{
