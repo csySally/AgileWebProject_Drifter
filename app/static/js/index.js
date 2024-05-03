@@ -20,7 +20,8 @@ document.querySelector("#logout").addEventListener("click", function() {
   if (r === true) {
     txt = "You pressed OK!";
     /* logout logic to be added here*/
-    window.location.href = "../templates/index.html";
+    
+    window.location.href = "../templates/login.html";
   } else {
     txt = "You pressed Cancel!";
   }

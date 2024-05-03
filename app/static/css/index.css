@@ -43,7 +43,7 @@ header{
     background-color: #F6CEC1;
     top: 30%;
     border-radius: 10%;
-    border: 4px rgb(248, 229, 223) solid;
+    /* border: 4px rgb(248, 229, 223) solid; */
     box-shadow: 0 0 2px 2px #dddddd;
 }
 #logout:hover{
