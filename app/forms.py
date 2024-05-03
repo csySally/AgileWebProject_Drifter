@@ -23,6 +23,8 @@ class RegistrationForm(FlaskForm):
 
 class SendForm(FlaskForm):
     send = TextAreaField('Send', validators=[DataRequired()])
+    label = StringField('Label')  
+    anonymous = BooleanField('Anonymous')
     submit = SubmitField('Send')
 
 class ReplyForm(FlaskForm):

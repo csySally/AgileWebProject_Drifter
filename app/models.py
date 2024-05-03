@@ -67,10 +67,9 @@ class Send(db.Model):
   id = db.Column(db.Integer, primary_key=True)
   body = db.Column(db.String(140))
   userId = db.Column(db.Integer, db.ForeignKey('user.id', name='fk_userId'))
-  labelsId = db.Column(db.Integer, db.ForeignKey('labels.id', name='fk_labelsId'))
+  labels = db.Column(db.String(140))
   anonymous = db.Column(db.Boolean)
   user = db.relationship('User', back_populates='sends')
-  labels = db.relationship('Labels', back_populates='sends')
   def __repr__(self):
     return '<Send {}>'.format(self.body)
   
@@ -87,7 +86,6 @@ class Reply(db.Model):
 class Labels(db.Model):
   id = db.Column(db.Integer, primary_key=True)
   label = db.Column(db.String(20))
-  sends = db.relationship('Send', back_populates='labels')
   def __repr__(self):
     return '<Labels {}>'.format(self.label)
   

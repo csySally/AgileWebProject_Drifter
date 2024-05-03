@@ -2,11 +2,30 @@
 <h1>Send a Message</h1>
 <form action="" method="post">
   {{ form.hidden_tag() }}
-  <p>
+  <div>
     {{ form.send.label }}<br />
     {{ form.send(size=32) }}
-  </p>
-  <p>{{ form.submit() }}</p>
-  <a href="{{ url_for('label') }}" class="btn btn-primary">Add Label</a>
+  </div>
+  <div>
+    <!-- Add this div for the label field -->
+    {{ form.label.label }}<br />
+    {{ form.label(size=32) }}
+  </div>
+  <div>
+    {{ form.anonymous() }}
+    <!-- Add this line -->
+    <button type="button" id="anonymousButton">Send Anonymously</button>
+  </div>
+  <div>{{ form.submit() }}</div>
 </form>
+
+<script>
+  document
+    .getElementById("anonymousButton")
+    .addEventListener("click", function () {
+      var anonymousField = document.getElementById("{{ form.anonymous.id }}");
+      anonymousField.value = !anonymousField.value;
+      this.classList.toggle("active", anonymousField.value);
+    });
+</script>
 {% endblock %}

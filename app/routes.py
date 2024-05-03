@@ -7,6 +7,7 @@ from app.forms import LoginForm
 from app.models import User, Send, Reply, Labels
 from flask import request
 from urllib.parse import urlparse
+from flask import session
 from app.forms import RegistrationForm, SendForm, ReplyForm, LabelForm
 
 @app.route('/')
@@ -68,8 +69,14 @@ def register():
 def send():
     form = SendForm()
     if form.validate_on_submit():
-        send = Send(body=form.send.data, author=current_user)
+
+        send = Send(body=form.send.data, author=current_user, anonymous=form.anonymous.data)
         db.session.add(send)
+
+        label = Labels(label=form.label.data)
+        db.session.add(label)
+
+        send.labels = label.label
         db.session.commit()
         flash('Your message has been sent!')
         return redirect(url_for('index'))
@@ -94,7 +101,7 @@ def label():
     if form.validate_on_submit():
         label = Labels(label=form.label.data)
         db.session.add(label)
-        db.session.commit()
-        flash('Your label has been added!')
+        db.session.commit()       
+        flash('Your label has been added!')   
         return redirect(url_for('send'))
     return render_template('flask_label.html', title='Add Label', form=form)
