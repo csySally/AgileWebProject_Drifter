@@ -1,0 +1,29 @@
+{% extends "base.html" %} {% block content %}
+<h1>Reply</h1>
+<form action="" method="post">
+  {{ form.hidden_tag() }} {{ form.reply.label }}<br />
+  {{ form.reply(size=32) }}<br />
+  {% for send in sends %}
+  <div>
+    <input type="radio" name="send_id" value="{{ send.id }}" />
+    {{ send.body }}
+  </div>
+
+  <div>
+    {{ form.anonymous() }}
+    <!-- Add this line -->
+    <button type="button" id="anonymousButton">Send Anonymously</button>
+  </div>
+  {% endfor %} {{ form.submit() }}
+</form>
+
+<script>
+  document
+    .getElementById("anonymousButton")
+    .addEventListener("click", function () {
+      var anonymousField = document.getElementById("{{ form.anonymous.id }}");
+      anonymousField.value = !anonymousField.value;
+      this.classList.toggle("active", anonymousField.value);
+    });
+</script>
+{% endblock %}
