@@ -1,8 +1,8 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField
 from wtforms.validators import DataRequired
 from wtforms.validators import ValidationError, DataRequired, Email, EqualTo
-from app.models import User
+from app.models import User, Send, Reply, Labels
 
 class LoginForm(FlaskForm):
   username = StringField('username', validators=[DataRequired()])
@@ -19,3 +19,16 @@ class RegistrationForm(FlaskForm):
     user = User.query.filter_by(username=username.data).first()
     if user is not None:
       raise ValidationError('Please use a different username.')
+
+
+class SendForm(FlaskForm):
+    send = TextAreaField('Send', validators=[DataRequired()])
+    submit = SubmitField('Send')
+
+class ReplyForm(FlaskForm):
+    reply = TextAreaField('Reply', validators=[DataRequired()])
+    submit = SubmitField('Reply')
+
+class LabelForm(FlaskForm):
+    label = StringField('Labels', validators=[DataRequired()])
+    submit = SubmitField('Add Label')
