@@ -32,7 +32,7 @@ class User(PaginatedAPIMixin, UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(64), index=True, unique=True)
     password_hash = db.Column(db.String(128))
-    posts = db.relationship('Post', backref='author', lazy='dynamic')
+    posts = db.relationship('Send', backref='author', lazy='dynamic')
 
     def __repr__(self):
         return '<User {}>'.format(self.username)
@@ -62,15 +62,32 @@ class User(PaginatedAPIMixin, UserMixin, db.Model):
             self.set_password(data['password'])
 
 
-class Post(db.Model):
+class Send(db.Model):
   id = db.Column(db.Integer, primary_key=True)
   body = db.Column(db.String(140))
-  timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
-  user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+  userId = db.Column(db.Integer, db.ForeignKey('user.id', name='fk_userId'))
+  labelsId = db.Column(db.Integer, db.ForeignKey('labels.id', name='fk_labelsId'))
+  anonymous = db.Column(db.Boolean)
   def __repr__(self):
-    return '<Post {}>'.format(self.body)
+    return '<Send {}>'.format(self.body)
+  
+class Reply(db.Model):
+  id = db.Column(db.Integer, primary_key=True)
+  body = db.Column(db.String(140))
+  userId = db.Column(db.Integer, db.ForeignKey('user.id', name='fk_userId'))
+  sendId = db.Column(db.Integer, db.ForeignKey('send.id', name='fk_sendId'))
+  anonymous = db.Column(db.Boolean)
+  def __repr__(self):
+    return '<Reply {}>'.format(self.body)
+  
+class Labels(db.Model):
+  id = db.Column(db.Integer, primary_key=True)
+  label = db.Column(db.String(20))
+  def __repr__(self):
+    return '<Label {}>'.format(self.label)
   
   @login.user_loader
   def load_user(id):
-    return User.query.get(int(id))
+    return User.query.get(int(id))  
+
 
