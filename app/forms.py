@@ -2,7 +2,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField
 from wtforms.validators import DataRequired
 from wtforms.validators import ValidationError, DataRequired, Email, EqualTo
-from app.models import User, Send, Reply, Labels
+from app.models import User, Send, Reply
 
 class LoginForm(FlaskForm):
   username = StringField('username', validators=[DataRequired()])
@@ -30,7 +30,8 @@ class SendForm(FlaskForm):
 class ReplyForm(FlaskForm):
     reply = TextAreaField('Reply', validators=[DataRequired()])
     submit = SubmitField('Reply')
-
+'''
 class LabelForm(FlaskForm):
     label = StringField('Labels', validators=[DataRequired()])
     submit = SubmitField('Add Label')
+'''

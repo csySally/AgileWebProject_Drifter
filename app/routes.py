@@ -4,11 +4,11 @@ from flask_login import logout_user
 from flask_login import login_required
 from app import app, db
 from app.forms import LoginForm
-from app.models import User, Send, Reply, Labels
+from app.models import User, Send, Reply
 from flask import request
 from urllib.parse import urlparse
 from flask import session
-from app.forms import RegistrationForm, SendForm, ReplyForm, LabelForm
+from app.forms import RegistrationForm, SendForm, ReplyForm
 
 @app.route('/')
 @app.route('/index')
@@ -70,13 +70,8 @@ def send():
     form = SendForm()
     if form.validate_on_submit():
 
-        send = Send(body=form.send.data, author=current_user, anonymous=form.anonymous.data)
+        send = Send(body=form.send.data, author=current_user, anonymous=form.anonymous.data, label=form.label.data)
         db.session.add(send)
-
-        label = Labels(label=form.label.data)
-        db.session.add(label)
-
-        send.labels = label.label
         db.session.commit()
         flash('Your message has been sent!')
         return redirect(url_for('index'))
@@ -93,7 +88,7 @@ def reply():
         flash('Your reply has been sent!')
         return redirect(url_for('index'))
     return render_template('flask_reply.html', title='Reply Message', form=form)
-  
+'''  
 @app.route('/label', methods=['GET', 'POST'])
 @login_required
 def label():
@@ -104,4 +99,4 @@ def label():
         db.session.commit()       
         flash('Your label has been added!')   
         return redirect(url_for('send'))
-    return render_template('flask_label.html', title='Add Label', form=form)
+    return render_template('flask_label.html', title='Add Label', form=form)'''
