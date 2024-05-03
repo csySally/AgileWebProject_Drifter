@@ -338,7 +338,7 @@ main{
     display: flex;
     align-items: center;
     position: absolute;
-    bottom: 15%;
+    bottom: 13%;
     left: 0;
     z-index: 100;
 }
