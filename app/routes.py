@@ -81,13 +81,15 @@ def send():
 @login_required
 def reply():
     form = ReplyForm()
+    sends = Send.query.order_by(Send.id.desc()).limit(5).all()
     if form.validate_on_submit():
-        reply = Reply(body=form.reply.data, author=current_user)
+        send = Send.query.get_or_404(form.send_id.data)
+        reply = Reply(body=form.reply.data, author=current_user, anonymous=form.anonymous.data, sendId=send.id)
         db.session.add(reply)
         db.session.commit()
-        flash('Your reply has been sent!')
+        flash('Your reply has been posted!')
         return redirect(url_for('index'))
-    return render_template('flask_reply.html', title='Reply Message', form=form)
+    return render_template('flask_reply.html', title='Reply Message', form=form, sends=sends)
 '''  
 @app.route('/label', methods=['GET', 'POST'])
 @login_required

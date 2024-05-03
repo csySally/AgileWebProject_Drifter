@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField, HiddenField
 from wtforms.validators import DataRequired
 from wtforms.validators import ValidationError, DataRequired, Email, EqualTo
 from app.models import User, Send, Reply
@@ -29,6 +29,8 @@ class SendForm(FlaskForm):
 
 class ReplyForm(FlaskForm):
     reply = TextAreaField('Reply', validators=[DataRequired()])
+    send_id = TextAreaField('Send ID')
+    anonymous = BooleanField('Anonymous')
     submit = SubmitField('Reply')
 '''
 class LabelForm(FlaskForm):
