@@ -13,3 +13,13 @@ document.getElementById("imageUpload").addEventListener("change", function () {
     reader.readAsDataURL(file);
   }
 });
+
+document.querySelector("#logout").addEventListener("click", function() {
+  var txt;
+  var r = confirm("Are you sure you want to log out");
+  if (r === true) {
+    txt = "You pressed OK!";
+  } else {
+    txt = "You pressed Cancel!";
+  }
+});
