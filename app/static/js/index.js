@@ -19,6 +19,8 @@ document.querySelector("#logout").addEventListener("click", function() {
   var r = confirm("Are you sure you want to log out");
   if (r === true) {
     txt = "You pressed OK!";
+    /* logout logic to be added here*/
+    window.location.href = "../templates/index.html";
   } else {
     txt = "You pressed Cancel!";
   }

@@ -38,10 +38,10 @@ header{
     text-align: center;
     padding: 1vw;
     position: absolute;
-    left: 80%;
+    right: 1%;
     transform: translateX(-50%);
     background-color: #F6CEC1;
-    top: 50%;
+    top: 30%;
     border-radius: 10%;
     border: 4px rgb(248, 229, 223) solid;
     box-shadow: 0 0 2px 2px #dddddd;
