@@ -25,32 +25,68 @@
       <img src="../static/images/menu-button.png" alt="menu" />
     </header>
     <main>
-      <section class="user">
-        <div id="check-reply-user">
-          <img src="../static/images/default-avatar.png" alt="" />
-          <p>From:&nbsp;&nbsp;&nbsp;</p>
-          <p>Username</p>
-        </div>
+      <section id="reply-content">
+        <section class="user">
+          <div id="check-reply-user">
+            <img src="../static/images/default-avatar.png" alt="" />
+            <p>From:&nbsp;&nbsp;&nbsp;</p>
+            <p>Username</p>
+          </div>
+        </section>
+        <section class="index-main">
+          <img src="../static/images/add_note.png" alt="" />
+          <img src="../static/images/arrow1.png" alt="" />
+          <img src="../static/images/bg-circle.png" alt="" />
+          <button
+            type="button"
+            class="btn-close"
+            id="close-note"
+            aria-label="Close"
+          ></button>
+          <!-- add a note -->
+          <div id="noteContentContainer">
+            sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
+          </div>
+          <div class="index-bottom">
+            <button id="reply">Reply</button>
+            <button id="check-next">Check Another One</button>
+          </div>
+        </section>
       </section>
-      <section class="index-main">
-        <img src="../static/images/add_note.png" alt="" />
-        <img src="../static/images/arrow1.png" alt="" />
-        <img src="../static/images/bg-circle.png" alt="" />
-        <button
-          type="button"
-          class="btn-close"
-          id="close-note"
-          aria-label="Close"
-        ></button>
-        <!-- add a note -->
-        <div id="noteContentContainer">
-          sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
-        </div>
-        <div class="index-bottom">
-          <button id="reply">Reply</button>
-          <!-- Add a tick box, Senders can choose to be anonymous or not -->
-          <button id="check-next">Check Another One</button>
-        </div>
+      <!-- reply a note -->
+      <section id="replyContainer">
+        <section id="reply-user">
+          <div>
+            <img src="../static/images/default-avatar.png" alt="" />
+            <p>From:&nbsp;&nbsp;&nbsp;</p>
+            <p>Username</p>
+          </div>
+        </section>
+        <section id="reply-input-area">
+          <textarea
+            id="replyInput"
+            placeholder="Write your reply here..."
+          ></textarea>
+          <img id="letter-bg" src="../static/images/add_note.png" alt="" />
+          <img src="../static/images/envelop.png" alt="" />
+          <img src="../static/images/bg-circle.png" alt="" />
+          <p><span id="words">100</span> words left</p>
+          <div class="index-bottom">
+            <button id="btn-send">Send</button>
+            <!-- Add a tick box, Senders can choose to be anonymous or not -->
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                value=""
+                id="flexCheckDefault"
+              />
+              <label class="form-check-label" for="flexCheckDefault"
+                >Be Anonymous</label
+              >
+            </div>
+          </div>
+        </section>
       </section>
     </main>
 
