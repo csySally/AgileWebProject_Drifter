@@ -11,9 +11,11 @@ from flask import session
 from app.forms import RegistrationForm, SendForm, ReplyForm
 
 @app.route('/')
-@app.route('/index')
+@app.route('/user/<username>', methods=['GET', 'POST'])
 @login_required
-def index():
+def user(username):
+  if current_user.username != username:
+    abort(403)  # HTTP status code for "Forbidden"
   user = {'username': 'Miguel'}
   posts = [
     {
@@ -29,7 +31,7 @@ def index():
 @app.route('/login',methods=['GET', 'POST'])
 def login():
   if current_user.is_authenticated:
-    return redirect(url_for('index'))
+    return redirect(url_for('user'))
   form = LoginForm()
   if form.validate_on_submit():
     user = User.query.filter_by(username=form.username.data).first()
@@ -39,20 +41,20 @@ def login():
     login_user(user)
     next_page = request.args.get('next')
     if not next_page or urlparse(next_page).netloc != '':
-      next_page = url_for('index')
+      next_page = url_for('user', username=current_user.username)
     return redirect(next_page)
   return render_template('flask_login.html', title='Sign In', form=form)
 
 @app.route('/logout')
 def logout():
   logout_user() 
-  return redirect(url_for('index')) 
+  return redirect(url_for('login')) 
 
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
   if current_user.is_authenticated:
-    return redirect(url_for('index'))
+    return redirect(url_for('user'))
   form = RegistrationForm()
   if form.validate_on_submit():
     user = User(username=form.username.data)
@@ -74,7 +76,7 @@ def send():
         db.session.add(send)
         db.session.commit()
         flash('Your message has been sent!')
-        return redirect(url_for('index'))
+        return redirect(url_for('user'))
     return render_template('flask_send.html', title='Send Message', form=form)
   
 @app.route('/reply', methods=['GET', 'POST'])
@@ -88,7 +90,7 @@ def reply():
         db.session.add(reply)
         db.session.commit()
         flash('Your reply has been posted!')
-        return redirect(url_for('index'))
+        return redirect(url_for('user'))
     return render_template('flask_reply.html', title='Reply Message', form=form, sends=sends)
 '''  
 @app.route('/label', methods=['GET', 'POST'])
