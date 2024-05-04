@@ -1,0 +1,163 @@
+body{
+    width: 100%;
+}
+/* font */
+@font-face {
+    font-family: 'BankScript';
+    src: url(../fonts/BanksScript.otf);
+}
+@font-face {
+    font-family: 'AppleChancery';
+    src: url(../fonts/Apple\ Chancery.ttf);
+}
+
+/* header */
+header{
+    width: 100%;
+    height: 12vh;
+    background-color: #D0DFE6;
+    box-sizing: border-box;
+    padding-left: 10%;
+    padding-top: 1.4%;
+    position: relative;
+}
+
+.logo {
+    height: 85%;
+    background-image: url('../images/login-logo.png');
+    background-size:contain;
+    background-repeat: no-repeat;
+    margin-bottom: 1.5%;
+    font-family: 'BankScript';
+    font-size: 1.8em;
+    box-sizing: border-box;
+    padding-left: 3.5%;
+    padding-top: 0.9%;
+}
+
+header>img{
+    width: 7%;
+    position: absolute;
+    right: 10%;
+    top: 0.5%;
+}
+
+/* main */
+.user{
+    width: 100%;
+    height: 12vh;
+}
+
+
+.user img{
+    width: 6vw;
+    height: 6vw;
+    display: block;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    top:-50%;
+    border-radius: 50%;
+    border: 2px #ffffff solid;
+}
+
+.user>p:first-of-type{
+    width: 100%;
+    text-align: center;
+    font-size: 1.6em;
+    font-family: 'Arial Black';
+    margin-top: -2.4%;
+}
+
+
+
+.index-main{
+    width: 100%;
+    height: 76vh;
+    display: flex;
+    position: relative;
+    box-sizing: border-box;
+    justify-content: center;
+}
+
+.index-main>img:first-of-type{
+    width: 60vw;
+    z-index: -100;
+    position: absolute;
+    margin: 0 auto;
+    display: block;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    padding-top: 1%;
+}
+
+.index-main>img:nth-of-type(2){
+    width: 14vw;
+    position: absolute;
+    left: 28%;
+    top: -2%;
+
+}
+
+.index-main>img:nth-of-type(3){
+    width: 25vw;
+    position: absolute;
+    right: 35%;
+    bottom: 6%;
+}
+
+.btn-close{
+    width: 2vw;
+    height: 2vw;
+    position: absolute;
+    right: 23%;
+    top:5%;
+    z-index: 200;
+    border-radius: 50%;
+    background-color: #fff;
+    opacity: 1;
+}
+
+.btn-close:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+.btn-close:hover{
+    opacity: 1;
+}
+
+#reply-envelop{
+    width: 60%;
+    height: 30vh;
+    display: flex;
+    justify-content: center;
+    padding: 0 6vw;
+    flex-wrap: wrap; 
+    overflow: auto;
+    margin-top: 13vh;
+
+}
+
+#reply-envelop a {
+    margin:0 1vw 5vh 1vw;
+    
+}
+
+#reply-envelop img{
+    width: 9vw;
+    height: 6vw;
+    display: block;
+    opacity: 0.8;
+   
+}
+
+#reply-envelop img:hover{
+    opacity: 1;
+}
+
+
+
+
