@@ -47,3 +47,22 @@ def get_user_send(id):
     sends = db.session.execute(sends_query).scalars().all()
     sends_data = [send.to_dict() for send in sends]
     return sends_data
+
+
+@bp.route('/users/<int:id>/send', methods=['POST'])
+def create_send(id):
+    user = User.query.get(id)
+    if not user:
+        return bad_request('can not find user with id')
+    data = request.get_json()
+
+    if 'body' not in data:
+        return bad_request('must include message field')
+      
+    send = Send(userId=id, body=data['body'], labels=data['labels'], anonymous=data['anonymous'])
+    send.from_dict(data)
+    db.session.add(send)
+    db.session.commit()
+
+    return user.to_dict(), 201, {'Location': url_for('api.get_user_send',
+                                                     id=user.id)}

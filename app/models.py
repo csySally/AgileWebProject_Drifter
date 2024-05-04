@@ -84,6 +84,14 @@ class Send(PaginatedAPIMixin,db.Model):
             'labels': self.labels,
             'anonymous': self.anonymous,
         }
+    
+    def from_dict(self, data):
+        id = data.get('id')
+        body = data.get('body')
+        userId = data.get('userId')
+        labels = data.get('labels')
+        anonymous = data.get('anonymous')
+        return Send(id=id, body=body, userId=userId, labels=labels, anonymous=anonymous)
 
   
 class Reply(db.Model):
