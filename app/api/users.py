@@ -1,5 +1,5 @@
 from app.api import bp
-from app.models import User
+from app.models import User, Send
 from app import db
 import sqlalchemy as sa
 from flask import request
@@ -7,7 +7,7 @@ from flask import url_for
 from app.api.errors import bad_request
 
 @bp.route('/users/<int:id>', methods=['GET'])
-def get_user(id):
+def get_user_byID(id):
     return db.get_or_404(User, id).to_dict()
 
 @bp.route('/users', methods=['GET'])
@@ -37,3 +37,13 @@ def create_user():
 @bp.route('/users/<int:id>', methods=['PUT'])
 def update_user(id):
     pass
+
+@bp.route('/users/<int:id>/send', methods=['GET'])
+def get_user_send(id):
+    user = User.query.get(id)
+    if not user:
+        return bad_request('User not found')
+    sends_query = sa.select(Send).where(Send.userId == user.id)
+    sends = db.session.execute(sends_query).scalars().all()
+    sends_data = [send.to_dict() for send in sends]
+    return sends_data
