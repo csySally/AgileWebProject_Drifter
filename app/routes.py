@@ -11,9 +11,17 @@ from flask import session
 from app.forms import RegistrationForm, SendForm, ReplyForm
 
 @app.route('/')
+def index():
+    if current_user.is_authenticated:
+        return redirect(url_for('user', username=current_user.username))
+    return redirect(url_for('login'))
+  
 @app.route('/user/<username>', methods=['GET', 'POST'])
 @login_required
 def user(username):
+  if username is None:
+        # Redirect to a default username or handle appropriately
+    return redirect(url_for('login'))
   if current_user.username != username:
     abort(403)  # HTTP status code for "Forbidden"
   user = {'username': 'Miguel'}
@@ -66,9 +74,11 @@ def register():
   return render_template('flask_register.html', title='Register', form=form)
 
 
-@app.route('/send', methods=['GET', 'POST'])
+@app.route('/user/<username>/send', methods=['GET', 'POST'])
 @login_required
-def send():
+def send(username):
+    if current_user.username != username:
+      abort(403)  # HTTP status code for "Forbidden"
     form = SendForm()
     if form.validate_on_submit():
 
@@ -76,10 +86,10 @@ def send():
         db.session.add(send)
         db.session.commit()
         flash('Your message has been sent!')
-        return redirect(url_for('user'))
+        return redirect(url_for('user', username=current_user.username))
     return render_template('flask_send.html', title='Send Message', form=form)
   
-@app.route('/reply', methods=['GET', 'POST'])
+@app.route('/user/<username>/reply', methods=['GET', 'POST'])
 @login_required
 def reply():
     form = ReplyForm()
@@ -90,7 +100,7 @@ def reply():
         db.session.add(reply)
         db.session.commit()
         flash('Your reply has been posted!')
-        return redirect(url_for('user'))
+        return redirect(url_for('user', username=current_user.username))
     return render_template('flask_reply.html', title='Reply Message', form=form, sends=sends)
 '''  
 @app.route('/label', methods=['GET', 'POST'])
