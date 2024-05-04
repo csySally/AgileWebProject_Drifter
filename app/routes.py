@@ -81,8 +81,7 @@ def send(username):
       abort(403)  # HTTP status code for "Forbidden"
     form = SendForm()
     if form.validate_on_submit():
-
-        send = Send(body=form.send.data, author=current_user, anonymous=form.anonymous.data, label=form.label.data)
+        send = Send(body=form.send.data, author=current_user, anonymous=form.anonymous.data, labels=form.label.data)
         db.session.add(send)
         db.session.commit()
         flash('Your message has been sent!')
@@ -91,7 +90,9 @@ def send(username):
   
 @app.route('/user/<username>/reply', methods=['GET', 'POST'])
 @login_required
-def reply():
+def reply(username):
+    if current_user.username != username:
+      abort(403) 
     form = ReplyForm()
     sends = Send.query.order_by(Send.id.desc()).limit(5).all()
     if form.validate_on_submit():
