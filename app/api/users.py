@@ -1,5 +1,5 @@
 from app.api import bp
-from app.models import User, Send
+from app.models import User, Send, Reply
 from app import db
 import sqlalchemy as sa
 from flask import request
@@ -66,3 +66,43 @@ def create_send(id):
 
     return user.to_dict(), 201, {'Location': url_for('api.get_user_send',
                                                      id=user.id)}
+    
+    
+@bp.route('/users/<int:id>/reply', methods=['GET'])
+def get_user_reply(id):
+    user = User.query.get(id)
+    if not user:
+        return bad_request('User not found')
+    reply_query = sa.select(Reply).where(Reply.userId == user.id)
+    replys = db.session.execute(reply_query).scalars().all()
+    reply_data = [reply.to_dict() for reply in replys]
+    return reply_data
+
+
+@bp.route('/users/<int:user_id>/reply', methods=['POST'])
+def create_reply(user_id):
+    user = User.query.get(user_id)
+    
+    if not user:
+        return bad_request('can not find user with id')
+
+    data = request.get_json()
+
+    if 'send_id' not in data:
+        return bad_request('must include send_id field')
+
+    send_id = data['send_id']
+    send = Send.query.get(send_id)
+
+    if not send:
+        return bad_request('can not find send with id')
+
+    if 'body' not in data:
+        return bad_request('must include body field')
+
+    reply = Reply(userId=user_id, body=data['body'], sendId=send_id, anonymous=data['anonymous'])
+    reply.from_dict(data)
+    db.session.add(reply)
+    db.session.commit()
+
+    return reply.to_dict(), 201, {'Location': url_for('api.get_user_reply', id=user.id)}
