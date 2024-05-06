@@ -1,12 +1,7 @@
-* {
-    box-sizing: border-box;
-}
-
-body {
+body{
     width: 100%;
 }
-
-/* Font definitions */
+/* font */
 @font-face {
     font-family: 'BankScript';
     src: url(../fonts/BanksScript.otf);
@@ -16,24 +11,26 @@ body {
     src: url(../fonts/Apple\ Chancery.ttf);
 }
 
-/* Left Panel Styles */
+/* left-panel */
 .left-panel {
     float: left;
     padding: 3%;
     background-color: #D0DFE6; 
     width: 50%;
     height: 100vh;
+    box-sizing: border-box;
 }
 
 .logo {
     width: 30%;
     height: 15%;
     background-image: url('../images/login-logo.png');
-    background-size: contain;
+    background-size:contain;
     background-repeat: no-repeat;
     margin-bottom: 1.5%;
     font-family: 'BankScript';
     font-size: 40px;
+    box-sizing: border-box;
     padding-left: 9%;
     padding-top: 2.8%;
 }
@@ -48,17 +45,17 @@ hr {
 .description {
     margin-top: 2%;
 }
-
-.des-top, .des-bottom {
+.des-top{
     display: flex;
-    padding-top: 1%;
 }
 
-.des-top>ul, .des-bottom>ul {
+.des-top>ul{
     width: 100%;
+    padding-top: 1%;
+    box-sizing: border-box;
 }
 
-.des-top>ul>li, .des-bottom>ul>li {
+.des-top>ul>li{
     width: 100%;
     height: 18.5%;
     border-bottom: 2px #ffffff solid;
@@ -66,16 +63,47 @@ hr {
     font-size: 26px;
     padding-top: 10%;
     padding-left: 8%;
+    box-sizing: border-box;
+}
+
+.des-right>img{
+    width: 22vw;
+}
+
+.des-bottom>ul{
+    width: 100%;
+    box-sizing: border-box;
+    padding-top: 1%;
+}
+
+.des-bottom>ul>li{
+    width: 100%;
+    border-bottom: 2px #ffffff solid;
+    height: 18.5%;
+    font-family: 'AppleChancery';
+    font-size: 26px;
+    padding-left: 4%;
+    box-sizing: border-box;
     margin-bottom: 5%;
 }
 
-/* Right Panel Styles */
+/* github icon */
+.footer-icon {
+    margin-top: 5%;
+}
+
+.footer-icon img{
+    width: 4%;
+}
+
+/* right-panel */
 .right-panel {
     float: right;
     padding: 40px;
     background-color: #ffffff;
     width: 50%;
     height: 100vh;
+    box-sizing: border-box;
 }
 
 h2 {
@@ -86,7 +114,6 @@ h2 {
     text-align: center;
     margin-bottom: 7vh;
 }
-
 form {
     width: 65%;
     margin: 0 auto;
@@ -95,6 +122,7 @@ form {
 .form-group {
     width: 100%;
     margin-bottom: 5vh;
+    box-sizing: border-box;
 }
 
 .form-group label {
@@ -109,6 +137,7 @@ form {
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 4px;
+    box-sizing: border-box;
 }
 
 .btn-sign-in {
@@ -120,6 +149,7 @@ form {
     color: #fff;
     border: none;
     cursor: pointer;
+    box-sizing: border-box;
     margin-bottom: 3vh;
 }
 
