@@ -35,6 +35,11 @@ body{
     padding-top: 2.8%;
 }
 
+.logo-link {
+    text-decoration: none;
+    color: inherit; 
+  }
+
 hr {
     border: 0;
     height: 5px;

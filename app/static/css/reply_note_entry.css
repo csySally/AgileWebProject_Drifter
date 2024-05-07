@@ -35,6 +35,11 @@ header{
     padding-top: 1%;
 }
 
+.logo-link {
+    text-decoration: none;
+    color: inherit; 
+  }
+
 header>img{
     width: 7%;
     position: absolute;
