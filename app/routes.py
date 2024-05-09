@@ -9,6 +9,7 @@ from flask import request
 from urllib.parse import urlparse
 from flask import session
 from app.forms import RegistrationForm, SendForm, ReplyForm
+from werkzeug.security import generate_password_hash
 
 
 @app.route("/index")
@@ -63,16 +64,41 @@ def logout():
 @app.route("/register", methods=["GET", "POST"])
 def register():
     if current_user.is_authenticated:
-        return redirect(url_for("user"))
-    form = RegistrationForm()
-    if form.validate_on_submit():
-        user = User(username=form.username.data)
-        user.set_password(form.password.data)
-        db.session.add(user)
+        return jsonify({"status": "error", "message": "Already logged in"}), 400
+
+    if request.method == "POST":
+        data = request.get_json()
+        username = data.get("username")
+        password = data.get("password")
+        if not username or not password:
+            return (
+                jsonify({"status": "error", "message": "Missing username or password"}),
+                400,
+            )
+        user = User.query.filter_by(username=username).first()
+        if user:
+            return (
+                jsonify({"status": "error", "message": "Username already exists"}),
+                409,
+            )
+        new_user = User(
+            username=username, password_hash=generate_password_hash(password)
+        )
+        db.session.add(new_user)
         db.session.commit()
-        flash("Congratulations, you are now a registered user!")
-        return redirect(url_for("login"))
-    return render_template("register.html", title="Register", form=form)
+        login_user(new_user)
+
+        return (
+            jsonify(
+                {
+                    "status": "success",
+                    "message": "Registration successful",
+                    "redirect": url_for("login"),
+                }
+            ),
+            200,
+        )
+    return render_template("register.html", title="Register")
 
 
 @app.route("/user/<username>/send", methods=["GET", "POST"])
