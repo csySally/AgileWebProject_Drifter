@@ -63,25 +63,64 @@ class User(PaginatedAPIMixin, UserMixin, db.Model):
             self.set_password(data['password'])
 
 
-class Send(db.Model):
-  id = db.Column(db.Integer, primary_key=True)
-  body = db.Column(db.String(140))
-  userId = db.Column(db.Integer, db.ForeignKey('user.id', name='fk_userId'))
-  labels = db.Column(db.String(140))
-  anonymous = db.Column(db.Boolean)
-  user = db.relationship('User', back_populates='sends')
-  def __repr__(self):
-    return '<Send {}>'.format(self.body)
+class Send(PaginatedAPIMixin,db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    body = db.Column(db.String(140))
+    userId = db.Column(db.Integer, db.ForeignKey('user.id', name='fk_userId'))
+    labels = db.Column(db.String(140))
+    anonymous = db.Column(db.Boolean)
+  #user = db.relationship('User', back_populates='sends')
+    def __repr__(self):
+        return '<Send {}>'.format(self.body)
+    def posts_count(self):
+        query = sa.select(sa.func.count()).select_from(self.posts.select().subquery())
+        return db.session.scalar(query)
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'body': self.body,
+            'userId': self.userId,
+            'labels': self.labels,
+            'anonymous': self.anonymous,
+        }
+    
+    def from_dict(self, data):
+        id = data.get('id')
+        body = data.get('body')
+        userId = data.get('userId')
+        labels = data.get('labels')
+        anonymous = data.get('anonymous')
+        return Send(id=id, body=body, userId=userId, labels=labels, anonymous=anonymous)
+
   
-class Reply(db.Model):
-  id = db.Column(db.Integer, primary_key=True)
-  body = db.Column(db.String(140))
-  userId = db.Column(db.Integer, db.ForeignKey('user.id', name='fk_userId'))
-  sendId = db.Column(db.Integer, db.ForeignKey('send.id', name='fk_sendId'))
-  anonymous = db.Column(db.Boolean)
-  user = db.relationship('User', back_populates='replies')
-  def __repr__(self):
-    return '<Reply {}>'.format(self.body)
+class Reply(PaginatedAPIMixin,db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    body = db.Column(db.String(140))
+    userId = db.Column(db.Integer, db.ForeignKey('user.id', name='fk_userId'))
+    sendId = db.Column(db.Integer, db.ForeignKey('send.id', name='fk_sendId'))
+    anonymous = db.Column(db.Boolean)
+  #user = db.relationship('User', back_populates='replies')
+    def __repr__(self):
+        return '<Reply {}>'.format(self.body)
+
+
+    def to_dict(self):
+            return {
+                'id': self.id,
+                'body': self.body,
+                'userId': self.userId,
+                'sendId': self.sendId,
+                'anonymous': self.anonymous,
+            }
+    
+    def from_dict(self, data):
+            id = data.get('id')
+            body = data.get('body')
+            userId = data.get('userId')
+            sendId = data.get('sendId')
+            anonymous = data.get('anonymous')
+            return Reply(id=id, body=body, userId=userId, sendId=sendId, anonymous=anonymous)
 
 #class Labels(db.Model):
   #id = db.Column(db.Integer, primary_key=True)
@@ -89,8 +128,8 @@ class Reply(db.Model):
   #def __repr__(self):
     #return '<Labels {}>'.format(self.label)
 
-  @login.user_loader
-  def load_user(id):
+@login.user_loader
+def load_user(id):
     return User.query.get(int(id))  
 
 

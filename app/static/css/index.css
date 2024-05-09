@@ -31,8 +31,27 @@ header{
     font-family: 'BankScript';
     font-size: 1.8em;
     box-sizing: border-box;
-    padding-left: 3.5%;
-    padding-top: 0.9%;
+    padding-left: 4%;
+    padding-top: 1%;
+}
+
+#logout{
+    text-align: center;
+    padding: 1vw;
+    position: absolute;
+    right: 1%;
+    transform: translateX(-50%);
+    background-color: #F6CEC1;
+    top: 30%;
+    border-radius: 10%;
+    /* border: 4px rgb(248, 229, 223) solid; */
+    box-shadow: 0 0 2px 2px #dddddd;
+    cursor: pointer;
+}
+#logout:hover{
+    color: #000;
+    background-color: #f5c3b2;
+    /* border: 4px #f6d5cb solid; */
 }
 
 header>img{

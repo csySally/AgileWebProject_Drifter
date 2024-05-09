@@ -1,0 +1,206 @@
+body{
+    width: 100%;
+}
+/* font */
+@font-face {
+    font-family: 'BankScript';
+    src: url(../fonts/BanksScript.otf);
+}
+@font-face {
+    font-family: 'AppleChancery';
+    src: url(../fonts/Apple\ Chancery.ttf);
+}
+@font-face {
+    font-family: 'WorstveldSling';
+    src: url('../fonts/WorstveldSling.otf');
+}
+
+/* header */
+header{
+    width: 100%;
+    height: 12vh;
+    background-color: #D0DFE6;
+    box-sizing: border-box;
+    padding-left: 10%;
+    padding-top: 1.4%;
+    position: relative;
+}
+
+.logo {
+    height: 85%;
+    background-image: url('../images/login-logo.png');
+    background-size:contain;
+    background-repeat: no-repeat;
+    margin-bottom: 1.5%;
+    font-family: 'BankScript';
+    font-size: 1.8em;
+    box-sizing: border-box;
+    padding-left: 4%;
+    padding-top: 1%;
+}
+
+.logo-link {
+    text-decoration: none;
+    color: inherit; 
+  }
+
+header>img{
+    width: 7%;
+    position: absolute;
+    right: 10%;
+    top: 0.5%;
+}
+
+/* main */
+main{
+    width: 100%;
+    height: 88vh;
+    display: flex;
+    position: relative;
+    justify-content: space-around;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+#section-note{
+    width: 35%;
+}
+
+#section-answer{
+    width: 50%;
+
+}
+
+#reply-content{
+    width: 100%;
+    height: 100%;
+    position: relative;
+    box-sizing: border-box;
+
+}
+
+.user{
+    width: 100%;
+    height: 9vh;
+    display: flex;
+    position: relative;
+    margin: 0 auto;
+    background-image: url('../images/rectangle.png');
+    background-size: cover; 
+    background-position: center; 
+    margin-top: 5vh;
+    
+}
+
+
+#check-reply-user{
+    width: 10vw;
+    height: 4vw;
+    display: flex;
+    align-items: center;
+    position: relative;
+    left: 6.5%;
+    top: 50%;
+    z-index: 100;
+}
+
+#check-reply-user>img{
+    width: 4vw;
+    height: 4vw;
+    display: block;
+    border-radius: 50%;
+    margin-right: 30%;
+}
+
+#check-reply-user>p{
+    width: auto;
+    font-size: 1.2em;
+    font-family: 'Arial Black';
+}
+
+
+.index-main{
+    width: 100%;
+    height: 73vh;
+    display: flex;
+    position: relative;
+    box-sizing: border-box;
+}
+
+.index-main>img:first-of-type{
+    width: 100%;
+    height: 62vh;
+    z-index: -100;
+    position: absolute;
+    margin: 0 auto;
+    display: block;
+    left: 0;
+    right: 0;
+
+}
+
+
+.index-main>img:nth-of-type(2){
+    width: 25vw;
+    position: absolute;
+    right: 30%;
+    bottom: 6%;
+}
+
+.index-main>img:nth-of-type(3){
+    width: 10vw;
+    position: absolute;
+    left: 4%;
+    top: 30%;
+    z-index: -400;
+}
+
+#close-note{
+    width: 8vw;
+    height: 8vw;
+    position: absolute;
+    right: -3%;
+    top: -17%;
+    z-index: 400;
+    border: none;
+}
+  
+.btn-close:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+/* add a note */
+.noteContentContainer {
+    background: transparent;
+    border: none;
+    outline: none; 
+    width: 100%;
+    height: 42vh;
+    resize: none; 
+    overflow: auto; 
+    line-height: 8.5vh; 
+    font-size: 1.7em; 
+    color: #383838; 
+    z-index: 100;
+    position: absolute;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+    font-family: WorstveldSling;
+    word-wrap: break-word;
+
+  }
+
+#myNote{
+    padding-left: 7%;
+    padding-right: 7%;
+    margin-top: 6%;
+}
+
+#noteAnswer{
+    padding-left: 7%;
+    padding-right: 6.8%;
+    margin-top: 4.4%;
+
+}

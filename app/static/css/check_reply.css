@@ -10,10 +10,6 @@ body{
     font-family: 'AppleChancery';
     src: url(../fonts/Apple\ Chancery.ttf);
 }
-@font-face {
-    font-family: 'WorstveldSling';
-    src: url('../fonts/WorstveldSling.otf');
-}
 
 /* header */
 header{
@@ -36,7 +32,7 @@ header{
     font-size: 1.8em;
     box-sizing: border-box;
     padding-left: 4%;
-    padding-top: 1%;
+    padding-top: 0.9%;
 }
 
 .logo-link {
@@ -86,11 +82,11 @@ header>img{
     display: flex;
     position: relative;
     box-sizing: border-box;
+    justify-content: center;
 }
 
 .index-main>img:first-of-type{
-    width: 66vw;
-    height: 64vh;
+    width: 60vw;
     z-index: -100;
     position: absolute;
     margin: 0 auto;
@@ -99,7 +95,7 @@ header>img{
     right: 0;
     top: 0;
     bottom: 0;
-    padding-top: 4%;
+    padding-top: 1%;
 }
 
 .index-main>img:nth-of-type(2){
@@ -117,22 +113,56 @@ header>img{
     bottom: 6%;
 }
 
-.index-main>img:nth-of-type(4){
-    width: 10vw;
+.btn-close{
+    width: 2vw;
+    height: 2vw;
     position: absolute;
-    left: 4%;
-    top: 30%;
+    right: 23%;
+    top:5%;
+    z-index: 200;
+    border-radius: 50%;
+    background-color: #fff;
+    opacity: 1;
 }
 
-#open{
-    width: auto;
-    font-size: 2.3em;
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    top: 50%;
-    color: white;
-    font-family: 'AppleChancery';
-    font-style: italic;
+.btn-close:focus {
+    outline: none;
+    box-shadow: none;
 }
+
+.btn-close:hover{
+    opacity: 1;
+}
+
+#reply-envelop{
+    width: 60%;
+    height: 30vh;
+    display: flex;
+    justify-content: center;
+    padding: 0 6vw;
+    flex-wrap: wrap; 
+    overflow: auto;
+    margin-top: 13vh;
+
+}
+
+#reply-envelop a {
+    margin:0 1vw 5vh 1vw;
+    
+}
+
+#reply-envelop img{
+    width: 9vw;
+    height: 6vw;
+    display: block;
+    opacity: 0.8;
+   
+}
+
+#reply-envelop img:hover{
+    opacity: 1;
+}
+
+
+
 

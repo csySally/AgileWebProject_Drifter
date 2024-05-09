@@ -35,9 +35,14 @@ header{
     font-family: 'BankScript';
     font-size: 1.8em;
     box-sizing: border-box;
-    padding-left: 3.5%;
-    padding-top: 0.9%;
+    padding-left: 4%;
+    padding-top: 1%;
 }
+
+.logo-link {
+    text-decoration: none;
+    color: inherit; 
+  }
 
 header>img{
     width: 7%;
@@ -330,7 +335,6 @@ header>img{
 
 .label{
     width: auto;
-
     margin-right: 3%;
     margin-bottom: 3%;
     padding-left: 3%;
@@ -342,8 +346,6 @@ header>img{
     font-family: 'Arial';
     color: #000;
 }
-
-
 
 #btn-next2{
     width: 20%;
