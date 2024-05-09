@@ -18,7 +18,6 @@ document.addEventListener("DOMContentLoaded", function () {
       data: JSON.stringify({ username: usn, password: pwd }),
       success: function (response) {
         // login successful
-        alert("You have registered succseefully!");
         window.location.href = "/index";
       },
       error: function (xhr, status, error) {

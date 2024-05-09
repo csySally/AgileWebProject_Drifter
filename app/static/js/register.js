@@ -37,10 +37,10 @@ function validateForm() {
 document.addEventListener("DOMContentLoaded", function () {
   var registerForm = document.getElementById("register-form");
   registerForm.addEventListener("submit", function (event) {
-    event.preventDefault(); // 阻止表单默认提交
+    event.preventDefault();
 
     if (!validateForm()) {
-      return false; // 如果客户端验证失败，停止执行
+      return false;
     }
 
     var data = {
@@ -53,16 +53,17 @@ document.addEventListener("DOMContentLoaded", function () {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Accept: "application/json", // 确保服务器知道我们期望的响应类型
+        Accept: "application/json",
       },
       body: JSON.stringify(data),
     })
       .then((response) => response.json())
       .then((data) => {
         if (data.status === "success") {
-          window.location.href = "/login"; // 如果注册成功，跳转到登录页
+          alert("You have registered succseefully!");
+          window.location.href = "/login";
         } else {
-          alert(data.message); // 显示错误消息
+          alert(data.message);
         }
       })
       .catch((error) => console.error("Error:", error));
