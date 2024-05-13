@@ -122,7 +122,7 @@ def send(username):
         db.session.commit()
         flash("Your message has been sent!")
         return redirect(url_for("user", username=current_user.username))
-    return render_template("flask_send.html", title="Send Message", form=form)
+    return render_template("add_note.html", title="Send Message", form=form)
 
 
 @app.route("/user/<username>/reply", methods=["GET", "POST"])
