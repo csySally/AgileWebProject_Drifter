@@ -14,15 +14,28 @@ document.getElementById("imageUpload").addEventListener("change", function () {
   }
 });
 
-document.querySelector("#logout").addEventListener("click", function() {
+document.querySelector("#logout").addEventListener("click", function () {
   var txt;
   var r = confirm("Are you sure you want to log out");
   if (r === true) {
     txt = "You pressed OK!";
     /* logout logic to be added here*/
-    
+
     window.location.href = "../templates/login.html";
   } else {
     txt = "You pressed Cancel!";
   }
+});
+
+$(document).ready(function () {
+  $.ajax({
+    url: "/get_user_info",
+    type: "GET",
+    success: function (response) {
+      $("#username").text(response.username);
+    },
+    error: function (error) {
+      console.log("Error:", error);
+    },
+  });
 });

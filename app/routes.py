@@ -12,6 +12,7 @@ from app.forms import RegistrationForm, SendForm, ReplyForm
 from werkzeug.security import generate_password_hash
 
 
+@app.route("/")
 @app.route("/index")
 def index():
     if current_user.is_authenticated:
@@ -27,12 +28,15 @@ def user(username):
         return redirect(url_for("login"))
     if current_user.username != username:
         abort(403)  # HTTP status code for "Forbidden"
-    user = {"username": "Miguel"}
-    posts = [
-        {"author": {"username": "John"}, "body": "Beautiful day in Portland!"},
-        {"author": {"username": "Susan"}, "body": "The Avengers movie was so cool!"},
-    ]
-    return render_template("index.html", title="Home Page", posts=posts)
+    return render_template("index.html", username=username)
+
+
+@app.route("/get_user_info")
+@login_required
+def get_user_info():
+    if current_user.is_authenticated:
+        return jsonify(username=current_user.username)
+    return jsonify(username="unknown"), 403
 
 
 @app.route("/login", methods=["GET", "POST"])
