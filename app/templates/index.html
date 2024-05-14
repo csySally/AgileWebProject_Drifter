@@ -62,7 +62,11 @@
             <img src="../static/images/card1.png" alt="" />
             <p class="card-title">Write A Note</p>
             <p class="card-explain">Send your stories here.</p>
-            <a href="./add_note.html" id="draft">Draft&nbsp;&nbsp;&nbsp;>>></a>
+            <a
+              href="{{ url_for('send', username=current_user.username) }}"
+              id="draft"
+              >Draft&nbsp;&nbsp;&nbsp;>>></a
+            >
           </div>
 
           <div class="index-card">
