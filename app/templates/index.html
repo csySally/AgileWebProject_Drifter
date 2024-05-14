@@ -35,8 +35,10 @@
           accept="image/*"
           style="display: none"
         />
-        <a href="#" id="imageLink"
-          ><img src="../static/images/default-avatar.png" id="userImage"
+        <a href="#" id="imageLink"></a>
+          <img
+            src="{{ url_for('static', filename=user.avatar_path or 'images/default-avatar.png') }}"
+            id="userImage"
         /></a>
         <p id="username">Username</p>
         <p id="notification">

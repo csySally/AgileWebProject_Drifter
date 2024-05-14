@@ -10,6 +10,8 @@ from urllib.parse import urlparse
 from flask import session
 from app.forms import RegistrationForm, SendForm, ReplyForm
 from werkzeug.security import generate_password_hash
+from werkzeug.utils import secure_filename
+import os
 
 
 @app.route("/")
@@ -28,7 +30,7 @@ def user(username):
         return redirect(url_for("login"))
     if current_user.username != username:
         abort(403)  # HTTP status code for "Forbidden"
-    return render_template("index.html", username=username)
+    return render_template("index.html", username=username, user=current_user)
 
 
 @app.route("/get_user_info")
@@ -124,7 +126,7 @@ def send(username):
         db.session.add(send)
         db.session.commit()
         return jsonify({"message": "Your message has been sent!"}), 200
-    return render_template("add_note.html", title="Send Message")
+    return render_template("add_note.html", title="Send Message", user=current_user)
 
 
 @app.route("/user/<username>/reply", methods=["GET", "POST"])
@@ -147,7 +149,11 @@ def reply(username):
         flash("Your reply has been posted!")
         return redirect(url_for("user", username=current_user.username))
     return render_template(
-        "flask_reply.html", title="Reply Message", form=form, sends=sends
+        "flask_reply.html",
+        title="Reply Message",
+        form=form,
+        sends=sends,
+        user=current_user,
     )
 
 
@@ -163,3 +169,19 @@ def label():
         flash('Your label has been added!')   
         return redirect(url_for('send'))
     return render_template('flask_label.html', title='Add Label', form=form)"""
+
+
+@app.route("/upload_image", methods=["POST"])
+def upload_image():
+    file = request.files["image"]
+    if file:
+        filename = secure_filename(file.filename)
+        filepath = os.path.join(app.config["UPLOAD_FOLDER"], filename)
+        file.save(filepath)
+
+        relative_path = os.path.normpath(os.path.join("uploads", filename)).replace("\\", "/")
+        current_user.avatar_path = relative_path
+        db.session.commit()
+
+        return jsonify({"message": "Image uploaded successfully"}), 200
+    return jsonify({"error": "No file uploaded"}), 400

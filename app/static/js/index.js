@@ -11,6 +11,18 @@ document.getElementById("imageUpload").addEventListener("change", function () {
       document.getElementById("userImage").src = e.target.result;
     };
     reader.readAsDataURL(file);
+
+    var formData = new FormData();
+    formData.append("image", file);
+
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "/upload_image", true);
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState === 4 && xhr.status === 200) {
+        console.log("Image uploaded successfully");
+      }
+    };
+    xhr.send(formData);
   }
 });
 
