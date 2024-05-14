@@ -179,7 +179,7 @@ def upload_image():
         filepath = os.path.join(app.config["UPLOAD_FOLDER"], filename)
         file.save(filepath)
 
-        relative_path = os.path.join("uploads", filename)
+        relative_path = os.path.normpath(os.path.join("uploads", filename)).replace("\\", "/")
         current_user.avatar_path = relative_path
         db.session.commit()
 
