@@ -47,7 +47,7 @@
           src="{{ url_for('static', filename='images/default-avatar.png')}}"
           id="userImage"
         />
-        <p>Username</p>
+        <p id="username">Username</p>
       </section>
       <section class="index-main">
         <img
@@ -83,7 +83,11 @@
               value=""
               id="flexCheckDefault"
             />
-            <label class="form-check-label" for="flexCheckDefault">
+            <label
+              class="form-check-label"
+              for="flexCheckDefault"
+              id="flexCheckDefault"
+            >
               Be Anonymous
             </label>
           </div>
@@ -106,24 +110,6 @@
         <div id="label-list">
           <div>
             <p class="label">family</p>
-            <button
-              type="button"
-              class="btn-close"
-              id="close-label"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div>
-            <p class="label">love</p>
-            <button
-              type="button"
-              class="btn-close"
-              id="close-label"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div>
-            <p class="label">friends</p>
             <button
               type="button"
               class="btn-close"

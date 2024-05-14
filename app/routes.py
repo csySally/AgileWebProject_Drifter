@@ -110,19 +110,21 @@ def register():
 def send(username):
     if current_user.username != username:
         abort(403)  # HTTP status code for "Forbidden"
-    form = SendForm()
-    if form.validate_on_submit():
+    if request.method == "POST":
+        data = request.get_json()
+        if not data:
+            return jsonify({"error": "No data provided"}), 400
+
         send = Send(
-            body=form.send.data,
+            body=data.get("note"),
             author=current_user,
-            anonymous=form.anonymous.data,
-            labels=form.label.data,
+            anonymous=data.get("anonymous"),
+            labels=data.get("labels"),
         )
         db.session.add(send)
         db.session.commit()
-        flash("Your message has been sent!")
-        return redirect(url_for("user", username=current_user.username))
-    return render_template("add_note.html", title="Send Message", form=form)
+        return jsonify({"message": "Your message has been sent!"}), 200
+    return render_template("add_note.html", title="Send Message")
 
 
 @app.route("/user/<username>/reply", methods=["GET", "POST"])
