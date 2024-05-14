@@ -34,7 +34,10 @@
           accept="image/*"
           style="display: none"
         />
-        <img src="../static/images/default-avatar.png" id="userImage" />
+        <img
+          src="{{ url_for('static', filename=user.avatar_path or 'images/default-avatar.png') }}"
+          id="userImage"
+        />
         <p>Username</p>
       </section>
       <section class="index-main">
