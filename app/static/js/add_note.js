@@ -59,6 +59,7 @@ $(document).ready(function () {
       console.log("Stored Username:", storedUsername);
 
       attachEventHandlers(storedUsername);
+      backToIndex(storedUsername);
     },
     error: function (error) {
       console.log("Error:", error);
@@ -66,9 +67,16 @@ $(document).ready(function () {
   });
 
   /* return to the index when click the btn-close button */
-  document.querySelector("#close-note").addEventListener("click", function () {
-    window.history.back();
-  });
+  function backToIndex(username) {
+    document
+      .querySelector("#close-note")
+      .addEventListener("click", function () {
+        window.location.href = "/user/" + username;
+      });
+    document.querySelector(".logo-link").addEventListener("click", function () {
+      window.location.href = "/user/" + username;
+    });
+  }
   document
     .querySelector("#close-add-label")
     .addEventListener("click", function () {

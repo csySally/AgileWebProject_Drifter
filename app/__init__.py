@@ -16,7 +16,7 @@ login = LoginManager(app)
 login.login_view = "login"
 
 
-app.config["UPLOAD_FOLDER"] = os.path.join(app.root_path, "static", "uploads")
+app.config["UPLOAD_FOLDER"] = os.path.join(app.static_folder, "uploads")
 app.config["MAX_CONTENT_LENGTH"] = 4 * 1024 * 1024
 
 from app import routes, models
