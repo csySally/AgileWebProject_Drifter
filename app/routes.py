@@ -10,6 +10,8 @@ from urllib.parse import urlparse
 from flask import session
 from app.forms import RegistrationForm, SendForm, ReplyForm
 from werkzeug.security import generate_password_hash
+from werkzeug.utils import secure_filename
+import os
 
 
 @app.route("/")
@@ -163,3 +165,13 @@ def label():
         flash('Your label has been added!')   
         return redirect(url_for('send'))
     return render_template('flask_label.html', title='Add Label', form=form)"""
+
+
+@app.route("/upload_image", methods=["POST"])
+def upload_image():
+    file = request.files["image"]
+    if file:
+        filename = secure_filename(file.filename)
+        file.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))
+        return jsonify({"message": "Image uploaded successfully"}), 200
+    return jsonify({"error": "No file uploaded"}), 400
