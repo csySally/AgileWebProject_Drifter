@@ -12,19 +12,6 @@ $(document).ready(function () {
     fetchRandomNote();
   });
 
-  function fetchRandomNote() {
-    $.ajax({
-      url: "#",
-      method: "GET",
-      success: function (data) {
-        updateNoteContent(data);
-      },
-      error: function (error) {
-        console.error("Error fetching next note:", error);
-      },
-    });
-  }
-
   $(document).on("click", "#reply", function () {
     $("#reply-content").hide();
     $("#replyContainer").css("display", "block");

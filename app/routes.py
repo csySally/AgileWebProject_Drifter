@@ -12,6 +12,7 @@ from app.forms import RegistrationForm, SendForm, ReplyForm
 from werkzeug.security import generate_password_hash
 from werkzeug.utils import secure_filename
 import os
+import random
 
 
 @app.route("/")
@@ -129,6 +130,24 @@ def send(username):
     return render_template("add_note.html", title="Send Message", user=current_user)
 
 
+@app.route("/api/random_other_note")
+@login_required
+def random_other_note():
+    all_other_notes = Send.query.filter(Send.userId != current_user.id).all()
+    if not all_other_notes:
+        return jsonify({"error": "No other notes available"}), 404
+
+    random_note = random.choice(all_other_notes)
+    return jsonify(
+        {
+            "id": random_note.id,
+            "body": random_note.body,
+            "author": random_note.author.username,
+            "anonymous": random_note.anonymous,
+        }
+    )
+
+
 @app.route("/reply-note")
 @login_required
 def reply_note():
@@ -139,6 +158,12 @@ def reply_note():
 @login_required
 def reply_note_random():
     return render_template("reply_random.html", user=current_user)
+
+
+@app.route("/reply-note-check")
+@login_required
+def reply_note_check():
+    return render_template("check_and_reply.html", user=current_user)
 
 
 @app.route("/user/<username>/reply", methods=["GET", "POST"])
