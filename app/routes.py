@@ -135,6 +135,12 @@ def reply_note():
     return render_template("reply_note_entry.html", user=current_user)
 
 
+@app.route("/reply-note-random")
+@login_required
+def reply_note_random():
+    return render_template("reply_random.html", user=current_user)
+
+
 @app.route("/user/<username>/reply", methods=["GET", "POST"])
 @login_required
 def reply(username):
