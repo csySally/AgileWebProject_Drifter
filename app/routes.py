@@ -138,12 +138,24 @@ def random_other_note():
         return jsonify({"error": "No other notes available"}), 404
 
     random_note = random.choice(all_other_notes)
+    if random_note.anonymous:
+        avatar_url = url_for("static", filename="images/default-avatar.png")
+    else:
+        avatar_url = url_for(
+            "static",
+            filename=(
+                random_note.author.avatar_path
+                if random_note.author.avatar_path
+                else "images/default-avatar.png"
+            ),
+        )
     return jsonify(
         {
             "id": random_note.id,
             "body": random_note.body,
             "author": random_note.author.username,
             "anonymous": random_note.anonymous,
+            "avatar_url": avatar_url,
         }
     )
 
