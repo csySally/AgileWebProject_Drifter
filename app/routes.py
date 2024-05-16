@@ -12,6 +12,7 @@ from app.forms import RegistrationForm, SendForm, ReplyForm
 from werkzeug.security import generate_password_hash
 from werkzeug.utils import secure_filename
 import os
+import random
 
 
 @app.route("/")
@@ -129,32 +130,77 @@ def send(username):
     return render_template("add_note.html", title="Send Message", user=current_user)
 
 
+@app.route("/api/random_other_note")
+@login_required
+def random_other_note():
+    all_other_notes = Send.query.filter(Send.userId != current_user.id).all()
+    if not all_other_notes:
+        return jsonify({"error": "No other notes available"}), 404
+
+    random_note = random.choice(all_other_notes)
+    if random_note.anonymous:
+        avatar_url = url_for("static", filename="images/default-avatar.png")
+    else:
+        avatar_url = url_for(
+            "static",
+            filename=(
+                random_note.author.avatar_path
+                if random_note.author.avatar_path
+                else "images/default-avatar.png"
+            ),
+        )
+    return jsonify(
+        {
+            "id": random_note.id,
+            "body": random_note.body,
+            "author": random_note.author.username,
+            "anonymous": random_note.anonymous,
+            "avatar_url": avatar_url,
+        }
+    )
+
+
+@app.route("/reply-note")
+@login_required
+def reply_note():
+    return render_template("reply_note_entry.html", user=current_user)
+
+
+@app.route("/reply-note-random")
+@login_required
+def reply_note_random():
+    return render_template("reply_random.html", user=current_user)
+
+
+@app.route("/reply-note-check")
+@login_required
+def reply_note_check():
+    return render_template("check_and_reply.html", user=current_user)
+
+
 @app.route("/user/<username>/reply", methods=["GET", "POST"])
 @login_required
 def reply(username):
     if current_user.username != username:
         abort(403)
-    form = ReplyForm()
-    sends = Send.query.order_by(Send.id.desc()).limit(5).all()
-    if form.validate_on_submit():
-        send = Send.query.get_or_404(form.send_id.data)
-        reply = Reply(
-            body=form.reply.data,
-            author=current_user,
-            anonymous=form.anonymous.data,
-            sendId=send.id,
-        )
-        db.session.add(reply)
-        db.session.commit()
-        flash("Your reply has been posted!")
-        return redirect(url_for("user", username=current_user.username))
-    return render_template(
-        "flask_reply.html",
-        title="Reply Message",
-        form=form,
-        sends=sends,
-        user=current_user,
+
+    data = request.get_json()
+    if not data or "note_id" not in data or "reply_body" not in data:
+        return jsonify({"error": "Missing data"}), 400
+
+    note_id = data["note_id"]
+    reply_body = data["reply_body"]
+    anonymous = data.get("anonymous", False)
+
+    note = Send.query.get_or_404(note_id)
+    reply = Reply(
+        body=reply_body, userId=current_user.id, sendId=note.id, anonymous=anonymous
     )
+
+    db.session.add(reply)
+    db.session.commit()
+
+    return jsonify({"message": "Reply successfully posted"}), 200
 
 
 """  
@@ -179,7 +225,9 @@ def upload_image():
         filepath = os.path.join(app.config["UPLOAD_FOLDER"], filename)
         file.save(filepath)
 
-        relative_path = os.path.normpath(os.path.join("uploads", filename)).replace("\\", "/")
+        relative_path = os.path.normpath(os.path.join("uploads", filename)).replace(
+            "\\", "/"
+        )
         current_user.avatar_path = relative_path
         db.session.commit()
 

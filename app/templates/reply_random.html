@@ -21,7 +21,7 @@
   </head>
   <body>
     <header>
-      <a href="index.html" class="logo-link">
+      <a href="#" class="logo-link">
         <div class="logo"></div>
       </a>
       <img src="../static/images/menu-button.png" alt="menu" />
@@ -34,15 +34,18 @@
           accept="image/*"
           style="display: none"
         />
-        <img src="../static/images/default-avatar.png" id="userImage" />
-        <p>Username</p>
+        <img
+          src="{{ url_for('static', filename=user.avatar_path or 'images/default-avatar.png') }}"
+          id="userImage"
+        />
+        <p id="username">Username</p>
       </section>
       <section class="index-main">
         <img src="../static/images/envelop.png" alt="" />
         <img src="../static/images/arrow2.png" alt="" />
         <img src="../static/images/arrow1.png" alt="" />
         <img src="../static/images/bg-circle.png" alt="" />
-        <a href="#" id="open">OPEN</a>
+        <a href="{{ url_for('reply_note_check') }}" id="open">OPEN</a>
       </section>
     </main>
 

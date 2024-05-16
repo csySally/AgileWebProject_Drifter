@@ -21,7 +21,7 @@
   </head>
   <body>
     <header>
-      <a href="index.html" class="logo-link">
+      <a href="#" class="logo-link">
         <div class="logo"></div>
       </a>
       <img src="../static/images/menu-button.png" alt="menu" />
@@ -30,7 +30,11 @@
       <section id="reply-content">
         <section class="user">
           <div id="check-reply-user">
-            <img src="../static/images/default-avatar.png" alt="" />
+            <img
+              src="../static/images/default-avatar.png"
+              alt=""
+              id="check-reply-user-img"
+            />
             <p>From:&nbsp;&nbsp;&nbsp;</p>
             <p>Username</p>
           </div>
@@ -46,9 +50,7 @@
             aria-label="Close"
           ></button>
           <!-- add a note -->
-          <div id="noteContentContainer">
-            sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
-          </div>
+          <div id="noteContentContainer"></div>
           <div class="index-bottom">
             <button id="reply">Reply</button>
             <button id="check-next">Check Another One</button>
@@ -83,7 +85,10 @@
                 value=""
                 id="flexCheckDefault"
               />
-              <label class="form-check-label" for="flexCheckDefault"
+              <label
+                class="form-check-label"
+                id="flexCheckDefault"
+                for="flexCheckDefault"
                 >Be Anonymous</label
               >
             </div>
