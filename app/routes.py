@@ -62,9 +62,10 @@ def login():
     return render_template("login.html")
 
 
-@app.route("/logout")
+@app.route("/logout", methods=["POST"])
 def logout():
     logout_user()
+    print('logout')
     return redirect(url_for("login"))
 
 
