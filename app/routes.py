@@ -183,27 +183,24 @@ def reply_note_check():
 def reply(username):
     if current_user.username != username:
         abort(403)
-    form = ReplyForm()
-    sends = Send.query.order_by(Send.id.desc()).limit(5).all()
-    if form.validate_on_submit():
-        send = Send.query.get_or_404(form.send_id.data)
-        reply = Reply(
-            body=form.reply.data,
-            author=current_user,
-            anonymous=form.anonymous.data,
-            sendId=send.id,
-        )
-        db.session.add(reply)
-        db.session.commit()
-        flash("Your reply has been posted!")
-        return redirect(url_for("user", username=current_user.username))
-    return render_template(
-        "flask_reply.html",
-        title="Reply Message",
-        form=form,
-        sends=sends,
-        user=current_user,
+
+    data = request.get_json()
+    if not data or "note_id" not in data or "reply_body" not in data:
+        return jsonify({"error": "Missing data"}), 400
+
+    note_id = data["note_id"]
+    reply_body = data["reply_body"]
+    anonymous = data.get("anonymous", False)
+
+    note = Send.query.get_or_404(note_id)
+    reply = Reply(
+        body=reply_body, userId=current_user.id, sendId=note.id, anonymous=anonymous
     )
+
+    db.session.add(reply)
+    db.session.commit()
+
+    return jsonify({"message": "Reply successfully posted"}), 200
 
 
 """  

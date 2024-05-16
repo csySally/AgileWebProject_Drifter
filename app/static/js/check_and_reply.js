@@ -14,7 +14,7 @@ $(document).ready(function () {
   }
 
   function updateNoteContent(data) {
-    $("#noteContentContainer").html(data.body);
+    $("#noteContentContainer").html(data.body).data("send-id", data.id);
     $("#check-reply-user-img").attr("src", data.avatar_url);
     $("#check-reply-user p:last-child").text(
       data.anonymous ? "Anonymous" : data.author
@@ -27,7 +27,6 @@ $(document).ready(function () {
     fetchRandomNote();
   });
 
-  // click close note button to return to the reply_note_entry page
   $.ajax({
     url: "/get_user_info",
     type: "GET",
@@ -66,5 +65,31 @@ $(document).ready(function () {
   $(document).on("click", "#reply", function () {
     $("#reply-content").hide();
     $("#replyContainer").css("display", "block");
+  });
+
+  $(document).on("click", "#btn-send", function () {
+    var replyBody = $("#replyInput").val();
+    var isAnonymous = $("#flexCheckDefault").is(":checked");
+    var username = localStorage.getItem("username");
+    var sendId = $("#noteContentContainer").data("send-id");
+
+    $.ajax({
+      url: "/user/" + username + "/reply",
+      method: "POST",
+      contentType: "application/json",
+      data: JSON.stringify({
+        reply_body: replyBody,
+        anonymous: isAnonymous,
+        note_id: sendId,
+      }),
+      success: function (response) {
+        console.log("Reply sent successfully");
+        alert("Reply sent successfully!");
+        window.location.href = "/user/" + username;
+      },
+      error: function (error) {
+        console.error("Error sending reply:", error);
+      },
+    });
   });
 });
