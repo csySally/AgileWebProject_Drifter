@@ -216,6 +216,12 @@ def reply_note_check():
     return render_template("check_and_reply.html", user=current_user, label=label)
 
 
+@app.route("/check-my-reply")
+@login_required
+def check_my_reply():
+    return render_template("check_reply.html", user=current_user)
+
+
 @app.route("/user/<username>/reply", methods=["GET", "POST"])
 @login_required
 def reply(username):
