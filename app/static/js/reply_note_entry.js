@@ -32,9 +32,6 @@ $(document).ready(function () {
     const searchInput = $("#search-input").val();
     if (searchInput.length > 0) {
       $("#search-label-btn").prop("disabled", false);
-      $("#search-label-btn").on("click", () => {
-        window.location.href = "../templates/check_and_reply.html";
-      });
       // after return key is pressed, can also trigger the click event
       $("#search-input").on("keypress", (e) => {
         if (e.which === 13) {
@@ -43,6 +40,17 @@ $(document).ready(function () {
       });
     } else {
       $("#search-label-btn").prop("disabled", true);
+    }
+  });
+
+  /* search for a label */
+  $(document).on("click", "#search-label-btn", function () {
+    var label = $("#search-input").val().trim();
+    if (label) {
+      window.location.href =
+        "/reply-note-check?label=" + encodeURIComponent(label);
+    } else {
+      alert("Please enter a label to search.");
     }
   });
 });
