@@ -160,6 +160,43 @@ def random_other_note():
     )
 
 
+@app.route("/api/random_note_by_label", methods=["GET"])
+@login_required
+def random_note_by_label():
+    label = request.args.get("label", None)
+    if label:
+        filtered_notes = Send.query.filter(
+            Send.userId != current_user.id, Send.labels.ilike(f"%{label}%")
+        ).all()
+    else:
+        filtered_notes = Send.query.filter(Send.userId != current_user.id).all()
+
+    if not filtered_notes:
+        return jsonify({"error": "No notes available with the given label"}), 404
+
+    random_note = random.choice(filtered_notes)
+    if random_note.anonymous:
+        avatar_url = url_for("static", filename="images/default-avatar.png")
+    else:
+        avatar_url = url_for(
+            "static",
+            filename=(
+                random_note.author.avatar_path
+                if random_note.author.avatar_path
+                else "images/default-avatar.png"
+            ),
+        )
+    return jsonify(
+        {
+            "id": random_note.id,
+            "body": random_note.body,
+            "author": random_note.author.username,
+            "anonymous": random_note.anonymous,
+            "avatar_url": avatar_url,
+        }
+    )
+
+
 @app.route("/reply-note")
 @login_required
 def reply_note():
@@ -175,7 +212,8 @@ def reply_note_random():
 @app.route("/reply-note-check")
 @login_required
 def reply_note_check():
-    return render_template("check_and_reply.html", user=current_user)
+    label = request.args.get("label", None)
+    return render_template("check_and_reply.html", user=current_user, label=label)
 
 
 @app.route("/user/<username>/reply", methods=["GET", "POST"])

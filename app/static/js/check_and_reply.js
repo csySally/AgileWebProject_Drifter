@@ -1,4 +1,13 @@
 $(document).ready(function () {
+  var params = new URLSearchParams(window.location.search);
+  var label = params.get("label");
+  var username = localStorage.getItem("username");
+  if (label) {
+    fetchNotesByLabel(label);
+  } else {
+    fetchRandomNote();
+  }
+
   function fetchRandomNote() {
     $.ajax({
       url: "/api/random_other_note",
@@ -12,6 +21,22 @@ $(document).ready(function () {
       },
     });
   }
+  function fetchNotesByLabel(label) {
+    $.ajax({
+      url: "/api/random_note_by_label?label=" + encodeURIComponent(label),
+      method: "GET",
+      success: function (data) {
+        if (data.body) {
+          updateNoteContent(data);
+        }
+      },
+      error: function (error) {
+        console.error("Error fetching note by label:", error);
+        alert("No notes found for this label.");
+        window.location.href = "/user/" + username;
+      },
+    });
+  }
 
   function updateNoteContent(data) {
     $("#noteContentContainer").html(data.body).data("send-id", data.id);
@@ -21,10 +46,18 @@ $(document).ready(function () {
     );
   }
 
-  fetchRandomNote();
+  if (label) {
+    fetchNotesByLabel(label);
+  } else {
+    fetchRandomNote();
+  }
 
   $(document).on("click", "#check-next", function () {
-    fetchRandomNote();
+    if (label) {
+      fetchNotesByLabel(label);
+    } else {
+      fetchRandomNote();
+    }
   });
 
   $.ajax({
@@ -56,10 +89,6 @@ $(document).ready(function () {
 
   $(document).on("click", ".btn-close", function () {
     $("#contentContainer").empty();
-  });
-
-  $(document).on("click", "#check-next", function () {
-    fetchRandomNote();
   });
 
   $(document).on("click", "#reply", function () {
