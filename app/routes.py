@@ -247,6 +247,55 @@ def reply(username):
     return jsonify({"message": "Reply successfully posted"}), 200
 
 
+@app.route("/user/<username>/sent_notes")
+@login_required
+def sent_notes(username):
+    if current_user.username != username:
+        abort(403)
+
+    user_notes = Send.query.filter_by(userId=current_user.id).all()
+    notes_with_replies = []
+    for note in user_notes:
+        replies = Reply.query.filter_by(sendId=note.id).all()
+        notes_with_replies.append(
+            {
+                "note": note.to_dict(),
+                "replies": [reply.to_dict() for reply in replies],
+            }
+        )
+
+    return jsonify(notes_with_replies=notes_with_replies)
+
+
+@app.route("/user/<username>/note/<int:note_id>")
+@login_required
+def note_detail(username, note_id):
+    if current_user.username != username:
+        abort(403)
+
+    note = Send.query.get_or_404(note_id)
+    replies = Reply.query.filter_by(sendId=note.id).all()
+
+    note_data = {
+        "id": note.id,
+        "body": note.body,
+        "anonymous": note.anonymous,
+        "labels": note.labels,
+    }
+
+    reply_data = [
+        {
+            "id": reply.id,
+            "body": reply.body,
+            "from_user": User.query.get(reply.userId).username,
+            "anonymous": reply.anonymous,
+        }
+        for reply in replies
+    ]
+
+    return render_template("note_detail.html", note=note_data, replies=reply_data)
+
+
 """  
 @app.route('/label', methods=['GET', 'POST'])
 @login_required
