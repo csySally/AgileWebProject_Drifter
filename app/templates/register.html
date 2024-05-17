@@ -16,7 +16,7 @@
   <body>
     <section class="left-panel">
       <a href="index.html" class="logo-link">
-        <div class="logo">Drifter</div>
+        <div class="logo"></div>
       </a>
       <hr />
       <hr />
@@ -53,7 +53,7 @@
     </section>
     <section class="right-panel">
         <h2>Join Us!</h2>
-        <form action="" method="" onsubmit="return validateForm()">
+        <form action="" method="" onsubmit="return validateForm()" id="register-form">
             <div class="form-group">
                 <label for="username">User Name</label>
                 <input type="text" id="username" name="username" >
@@ -68,7 +68,7 @@
           </div>
             <button type="submit" class="btn-sign-in" id="btn-register">REGISTER</button>
             <div class="signup-link">
-                Already have an account? <a href="../templates/login.html">Sign In</a>
+                Already have an account? <a href="{{ url_for('login') }}">Sign In</a>
             </div>
         </form>
     </section>

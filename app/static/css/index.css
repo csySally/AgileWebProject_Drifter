@@ -67,16 +67,6 @@ header>img{
     height: 12vh;
 }
 
-.user a {
-    width: 6vw;
-    height: 6vw;
-    display: block;
-    position: relative;
-    left: 50%;
-    transform: translateX(-50%);
-    top:-50%;
-
-}
 .user img{
     width: 6vw;
     height: 6vw;
@@ -84,6 +74,7 @@ header>img{
     position: relative;
     left: 50%;
     transform: translateX(-50%);
+    top:-50%;
     border-radius: 50%;
     border: 2px #ffffff solid;
 }

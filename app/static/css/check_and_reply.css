@@ -270,11 +270,11 @@ main{
     border: none;
     outline: none; 
     width: 80vw;
-    height: 64vh;
+    height: 48vh;
     padding: 5.8%;
     resize: none; 
     overflow: auto; 
-    line-height: 8vh; 
+    line-height: 7.8vh; 
     font-size: 1.7em; 
     color: #383838; 
     z-index: 1000;
@@ -359,7 +359,7 @@ main{
     border-radius: 10px;
     letter-spacing: 0.07em;
     border: none;
-    z-index: 200;
+    z-index: 2000;
     margin-left: 15%;
 } 
 

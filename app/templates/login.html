@@ -16,7 +16,7 @@
   <body>
     <section class="left-panel">
       <a href="index.html" class="logo-link">
-        <div class="logo">Drifter</div>
+        <div class="logo"></div>
       </a>
       <hr />
       <hr />
@@ -52,7 +52,7 @@
     </section>
     <section class="right-panel">
         <h2>Welcome!</h2>
-        <form action="" method="">
+        <form id="login-form" action="" method="">
             <div class="form-group">
                 <label for="username">User Name</label>
                 <input type="text" id="username" name="username" >
@@ -63,9 +63,11 @@
             </div>
             <button type="submit" class="btn-sign-in">SIGN IN</button>
             <div class="signup-link">
-                Don’t have an account? <a href="../templates/register.html">Sign Up</a>
+                Don’t have an account? <a href="{{ url_for('register') }}">Sign Up</a>
             </div>
         </form>
     </section>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="../static/js/login.js"></script>
   </body>
 </html>

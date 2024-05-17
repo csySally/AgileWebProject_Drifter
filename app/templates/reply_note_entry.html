@@ -21,8 +21,8 @@
   </head>
   <body>
     <header>
-      <a href="index.html" class="logo-link">
-        <div class="logo">Drifter</div>
+      <a href="#" class="logo-link">
+        <div class="logo"></div>
       </a>
       <img src="../static/images/menu-button.png" alt="menu" />
     </header>
@@ -34,8 +34,11 @@
           accept="image/*"
           style="display: none"
         />
-        <img src="../static/images/default-avatar.png" id="userImage" />
-        <p>Username</p>
+        <img
+          src="{{ url_for('static', filename=user.avatar_path or 'images/default-avatar.png') }}"
+          id="userImage"
+        />
+        <p id="username">Username</p>
       </section>
       <section class="index-main">
         <img src="../static/images/reply_entry.png" alt="" />
@@ -50,7 +53,7 @@
               Send a reply to a randomly chosen note. Share your thoughts, offer
               advice, or simply let another soul know they're heard.
             </p>
-            <a href="../templates/reply_random.html" id="reply"
+            <a href="{{ url_for('reply_note_random') }}" id="reply"
               >Reply&nbsp;&nbsp;&nbsp;>>></a
             >
           </div>

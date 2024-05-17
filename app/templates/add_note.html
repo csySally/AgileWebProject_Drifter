@@ -11,20 +11,29 @@
       integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" href="../static/css/reset.css" />
-    <link rel="stylesheet" href="../static/css/add_note.css" />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/reset.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/add_note.css') }}"
+    />
     <link
       rel="shortcut icon"
-      href="../static/images/logo.png"
+      href="{{ url_for('static', filename='images/logo.png')}}"
       type="image/x-icon"
     />
   </head>
   <body>
     <header>
-      <a href="index.html" class="logo-link">
-        <div class="logo">Drifter</div>
+      <a href="#" class="logo-link">
+        <div class="logo"></div>
       </a>
-      <img src="../static/images/menu-button.png" alt="menu" />
+      <img
+        src="{{ url_for('static', filename='images/menu-button.png')}}"
+        alt="menu"
+      />
     </header>
     <main>
       <section class="user">
@@ -34,17 +43,29 @@
           accept="image/*"
           style="display: none"
         />
-        <img src="../static/images/default-avatar.png" id="userImage" />
-        <p>Username</p>
+        <img
+          src="{{ url_for('static', filename=user.avatar_path or 'images/default-avatar.png') }}"
+          id="userImage"
+        />
+        <p id="username">Username</p>
       </section>
       <section class="index-main">
-        <img src="../static/images/add_note.png" alt="" />
+        <img
+          src="{{ url_for('static', filename='images/add_note.png')}}"
+          alt=""
+        />
         <textarea
           id="noteInput"
           placeholder="Write your note here..."
         ></textarea>
-        <img src="../static/images/arrow2.png" alt="" />
-        <img src="../static/images/arrow1.png" alt="" />
+        <img
+          src="{{ url_for('static', filename='images/arrow2.png')}}"
+          alt=""
+        />
+        <img
+          src="{{ url_for('static', filename='images/arrow1.png')}}"
+          alt=""
+        />
         <p><span id="words">100</span> words left</p>
         <button
           type="button"
@@ -62,7 +83,11 @@
               value=""
               id="flexCheckDefault"
             />
-            <label class="form-check-label" for="flexCheckDefault">
+            <label
+              class="form-check-label"
+              for="flexCheckDefault"
+              id="flexCheckDefault"
+            >
               Be Anonymous
             </label>
           </div>
@@ -77,41 +102,12 @@
           class="btn-close"
           id="close-add-label"
           aria-label="Close"
-          style="position: absolute;
-          margin-left: 100px;"
+          style="position: absolute; margin-left: 100px"
         ></button>
         <h1>Please Enter Up To 5 Labels</h1>
         <h2>For Example: love</h2>
         <input type="text" id="labelInput" />
-        <div id="label-list">
-          <div>
-            <p class="label">family</p>
-            <button
-              type="button"
-              class="btn-close"
-              id="close-label"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div>
-            <p class="label">love</p>
-            <button
-              type="button"
-              class="btn-close"
-              id="close-label"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div>
-            <p class="label">friends</p>
-            <button
-              type="button"
-              class="btn-close"
-              id="close-label"
-              aria-label="Close"
-            ></button>
-          </div>
-        </div>
+        <div id="label-list"></div>
         <button id="btn-next2">OK!</button>
       </div>
     </section>
@@ -127,6 +123,6 @@
       integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
       crossorigin="anonymous"
     ></script>
-    <script src="../static/js/add_note.js"></script>
+    <script src="{{ url_for('static', filename='js/add_note.js') }}"></script>
   </body>
 </html>
