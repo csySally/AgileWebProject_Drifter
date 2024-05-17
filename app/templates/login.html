@@ -68,31 +68,6 @@
         </form>
     </section>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-      document.getElementById('login-form').onsubmit = async function(event) {
-          event.preventDefault();
-          const form = event.target;
-          const formData = new FormData(form);
-          const data = {
-              username: formData.get('username'),
-              password: formData.get('password')
-          };
-          const response = await fetch('/login', {
-              method: 'POST',
-              headers: {
-                  'Content-Type': 'application/json'
-              },
-              body: JSON.stringify(data)
-          });
-          const message = await response.text();
-          if (response.status !== 200) {
-              alert(message);
-              document.getElementById('password').value = '';
-          } else {
-              alert(message);
-              window.location.href = '/';
-          }
-      };
-    </script>
+    <script src="../static/js/login.js"></script>
   </body>
 </html>
