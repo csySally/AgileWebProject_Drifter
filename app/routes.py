@@ -1,4 +1,4 @@
-from flask import render_template, redirect, url_for, flash, jsonify
+from flask import render_template, redirect, url_for, jsonify, abort
 from flask_login import current_user, login_user
 from flask_login import logout_user
 from flask_login import login_required
@@ -62,7 +62,7 @@ def login():
     return render_template("login.html")
 
 
-@app.route("/logout")
+@app.route("/logout", methods=["POST"])
 def logout():
     logout_user()
     return redirect(url_for("login"))
@@ -216,6 +216,41 @@ def reply_note_check():
     return render_template("check_and_reply.html", user=current_user, label=label)
 
 
+@app.route("/check-my-reply")
+@login_required
+def check_my_reply():
+    user_notes = Send.query.filter_by(userId=current_user.id).all()
+    notes_with_replies = []
+    for note in user_notes:
+        replies = Reply.query.filter_by(sendId=note.id).all()
+        note_with_replies = {"note": note, "replies": replies}
+        notes_with_replies.append(note_with_replies)
+
+        for reply in replies:
+            print(note.id, reply.id)
+
+    return render_template(
+        "check_reply.html", user=current_user, notes=notes_with_replies
+    )
+
+
+@app.route("/api/user/<username>/notes_with_replies")
+@login_required
+def api_get_notes_with_replies(username):
+    if current_user.username != username:
+        abort(403)
+
+    user_notes = Send.query.filter_by(userId=current_user.id).all()
+    notes_with_replies = []
+    for note in user_notes:
+        replies = Reply.query.filter_by(sendId=note.id).all()
+        notes_with_replies.append(
+            {"note": note.to_dict(), "replies": [reply.to_dict() for reply in replies]}
+        )
+
+    return jsonify(notes_with_replies=notes_with_replies)
+
+
 @app.route("/user/<username>/reply", methods=["GET", "POST"])
 @login_required
 def reply(username):
@@ -232,7 +267,10 @@ def reply(username):
 
     note = Send.query.get_or_404(note_id)
     reply = Reply(
-        body=reply_body, userId=current_user.id, sendId=note.id, anonymous=anonymous
+        body=reply_body,
+        userId=current_user.id,
+        sendId=note.id,
+        anonymous=anonymous,
     )
 
     db.session.add(reply)
@@ -241,18 +279,70 @@ def reply(username):
     return jsonify({"message": "Reply successfully posted"}), 200
 
 
-"""  
-@app.route('/label', methods=['GET', 'POST'])
+@app.route("/user/<username>/sent_notes")
 @login_required
-def label():
-    form = LabelForm()
-    if form.validate_on_submit():
-        label = Labels(label=form.label.data)
-        db.session.add(label)
-        db.session.commit()       
-        flash('Your label has been added!')   
-        return redirect(url_for('send'))
-    return render_template('flask_label.html', title='Add Label', form=form)"""
+def sent_notes(username):
+    if current_user.username != username:
+        abort(403)
+
+    user_notes = Send.query.filter_by(userId=current_user.id).all()
+    notes_with_replies = []
+    for note in user_notes:
+        replies = Reply.query.filter_by(sendId=note.id).all()
+        notes_with_replies.append(
+            {
+                "note": note.to_dict(),  # 确保to_dict方法正确返回所需的数据字段
+                "replies": [reply.to_dict() for reply in replies],
+            }
+        )
+
+    return jsonify(notes_with_replies=notes_with_replies)
+
+
+@app.route(
+    "/api/user/<username>/note/<int:note_id>/reply/<int:reply_id>", methods=["GET"]
+)
+@login_required
+def api_note_reply_detail(username, note_id, reply_id):
+    if current_user.username != username:
+        abort(403)
+    note = Send.query.get_or_404(note_id)
+    reply = Reply.query.get_or_404(reply_id)
+    user = User.query.get(reply.userId)
+
+    note_data = {
+        "id": note.id,
+        "body": note.body,
+        "anonymous": note.anonymous,
+        "labels": note.labels,
+    }
+
+    reply_data = {
+        "id": reply.id,
+        "body": reply.body,
+        "from_user": (
+            User.query.get(reply.userId).username
+            if not reply.anonymous
+            else "Anonymous"
+        ),
+        "anonymous": reply.anonymous,
+        "avatar_path": (
+            user.avatar_path if user.avatar_path else "images/default-avatar.png"
+        ),
+    }
+
+    return jsonify({"note": note_data, "reply": reply_data})
+
+
+@app.route("/user/<username>/note/<int:note_id>/reply/<int:reply_id>", methods=["GET"])
+@login_required
+def note_reply_detail(username, note_id, reply_id):
+    if current_user.username != username:
+        abort(403)
+    note = Send.query.get_or_404(note_id)
+    reply = Reply.query.get_or_404(reply_id)
+
+    return render_template("open_note_answer.html", note=note, reply=reply)
 
 
 @app.route("/upload_image", methods=["POST"])

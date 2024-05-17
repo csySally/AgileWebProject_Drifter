@@ -96,7 +96,6 @@ $(document).ready(function () {
     }
     return true;
   }
-  function read_labels() {}
 
   $("#noteInput").on("keyup", (event) => {
     post = $(event.currentTarget).val();

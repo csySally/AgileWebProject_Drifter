@@ -61,9 +61,12 @@
       <section id="replyContainer">
         <section id="reply-user">
           <div>
-            <img src="../static/images/default-avatar.png" alt="" />
+            <img
+              src="{{ url_for('static', filename=user.avatar_path or 'images/default-avatar.png') }}"
+              id="userImage"
+            />
             <p>From:&nbsp;&nbsp;&nbsp;</p>
-            <p>Username</p>
+            <p id="username">Username</p>
           </div>
         </section>
         <section id="reply-input-area">

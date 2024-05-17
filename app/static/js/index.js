@@ -27,15 +27,24 @@ document.getElementById("imageUpload").addEventListener("change", function () {
 });
 
 document.querySelector("#logout").addEventListener("click", function () {
-  var txt;
-  var r = confirm("Are you sure you want to log out");
+  var r = confirm("Are you sure you want to log out?");
   if (r === true) {
-    txt = "You pressed OK!";
-    /* logout logic to be added here*/
-
-    window.location.href = "../templates/login.html";
-  } else {
-    txt = "You pressed Cancel!";
+    $.ajax({
+      type: "POST",
+      url: "/logout",
+      success: function (response) {
+        // show response
+        console.log(response);
+        alert("Log out successfully!");
+        window.location.href = "/";
+      },
+      error: function (xhr, status, error) {
+        // show error if failed to logout
+        console.log(xhr, status, error);
+        console.log("Error: " + error);
+        alert(status);
+      },
+    });
   }
 });
 
