@@ -11,20 +11,29 @@
       integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" href="../static/css/reset.css" />
-    <link rel="stylesheet" href="../static/css/open_note_answer.css" />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/reset.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/open_note_answer.css') }}"
+    />
     <link
       rel="shortcut icon"
-      href="../static/images/logo.png"
+      href="{{ url_for('static', filename='images/logo.png') }}"
       type="image/x-icon"
     />
   </head>
   <body>
     <header>
-      <a href="index.html" class="logo-link">
+      <a href="#" class="logo-link">
         <div class="logo"></div>
       </a>
-      <img src="../static/images/menu-button.png" alt="menu" />
+      <img
+        src="{{ url_for('static', filename='images/menu-button.png') }}"
+        alt="menu"
+      />
     </header>
     <main>
       <section id="section-note">
@@ -35,37 +44,49 @@
             </div>
           </section>
           <section class="index-main">
-            <img src="../static/images/add_note.png" alt="" />
-            <!-- add a note -->
-            <div class="noteContentContainer" id="myNote">
-              sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
-            </div>
+            <img
+              src="{{ url_for('static', filename='images/add_note.png') }}"
+              alt=""
+            />
+            <!-- my note -->
+            <div class="noteContentContainer" id="myNote"></div>
           </section>
         </section>
       </section>
+      <!-- answer to my note -->
       <section id="section-answer">
         <section id="reply-content">
           <section class="user">
             <div id="check-reply-user">
-              <img src="../static/images/default-avatar.png" alt="" />
+              <img
+                src="{{ url_for('static', filename='images/default-avatar.png') }}"
+                alt="User Avatar"
+                id="reply-user-avatar"
+              />
               <p style="margin-left: -2vw">From:&nbsp;&nbsp;&nbsp;</p>
-              <p>Username</p>
+              <p id="reply-username">Username</p>
             </div>
           </section>
           <section class="index-main">
-            <img src="../static/images/add_note.png" alt="" />
-            <img src="../static/images/arrow1.png" alt="" />
-            <img src="../static/images/bg-circle.png" alt="" />
+            <img
+              src="{{ url_for('static', filename='images/add_note.png') }}"
+              alt=""
+            />
+            <img
+              src="{{ url_for('static', filename='images/arrow1.png') }}"
+              alt=""
+            />
+            <img
+              src="{{ url_for('static', filename='images/bg-circle.png') }}"
+              alt=""
+            />
             <button
               type="button"
               class="btn-close"
               id="close-note"
               aria-label="Close"
             ></button>
-            <!-- add a note -->
-            <div class="noteContentContainer" id="noteAnswer">
-              sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
-            </div>
+            <div class="noteContentContainer" id="noteAnswer"></div>
           </section>
         </section>
       </section>
@@ -83,6 +104,6 @@
       integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
       crossorigin="anonymous"
     ></script>
-    <script src="../static/js/open_note_answer.js"></script>
+    <script src="{{ url_for('static', filename='js/open_note_answer.js') }}"></script>
   </body>
 </html>
