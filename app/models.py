@@ -105,7 +105,6 @@ class Reply(PaginatedAPIMixin, db.Model):
     userId = db.Column(db.Integer, db.ForeignKey("user.id", name="fk_userId"))
     sendId = db.Column(db.Integer, db.ForeignKey("send.id", name="fk_sendId"))
     anonymous = db.Column(db.Boolean)
-    avatar_path = db.Column(db.String(256), nullable=True)
 
     # user = db.relationship('User', back_populates='replies')
     def __repr__(self):

@@ -271,11 +271,6 @@ def reply(username):
         userId=current_user.id,
         sendId=note.id,
         anonymous=anonymous,
-        avatar_path=(
-            user.avatar_path
-            if user.avatar_path and not anonymous
-            else "images/default-avatar.png"
-        ),
     )
 
     db.session.add(reply)
@@ -348,20 +343,6 @@ def note_reply_detail(username, note_id, reply_id):
     reply = Reply.query.get_or_404(reply_id)
 
     return render_template("open_note_answer.html", note=note, reply=reply)
-
-
-"""  
-@app.route('/label', methods=['GET', 'POST'])
-@login_required
-def label():
-    form = LabelForm()
-    if form.validate_on_submit():
-        label = Labels(label=form.label.data)
-        db.session.add(label)
-        db.session.commit()       
-        flash('Your label has been added!')   
-        return redirect(url_for('send'))
-    return render_template('flask_label.html', title='Add Label', form=form)"""
 
 
 @app.route("/upload_image", methods=["POST"])

@@ -60,8 +60,8 @@ $(document).ready(function () {
 
     const userName = reply.anonymous ? "Anonymous" : reply.from_user;
     const userAvatarSrc = reply.anonymous
-      ? "../static/images/default-avatar.png"
-      : `../static/${reply.avatar_path}`;
+      ? "/static/images/default-avatar.png"
+      : `/static/${reply.avatar_path}`;
 
     replyUsername.innerHTML = userName;
     replyContainer.innerHTML = reply.body;
