@@ -10,11 +10,10 @@ $(document).ready(function () {
       backToIndex(storedUsername);
     },
     error: function (error) {
-      console.log("Error:", error);
+      console.log("Error fetching user info:", error);
     },
   });
 
-  /* return to the index when click the btn-close button */
   function backToIndex(username) {
     document.querySelector(".btn-close").addEventListener("click", function () {
       window.location.href = "/user/" + username;
@@ -22,5 +21,48 @@ $(document).ready(function () {
     document.querySelector(".logo-link").addEventListener("click", function () {
       window.location.href = "/user/" + username;
     });
+  }
+
+  var path = window.location.pathname;
+  var segments = path.split("/");
+  var noteId = segments[segments.length - 3];
+  var replyId = segments[segments.length - 1];
+  var username = segments[segments.length - 5];
+
+  if (noteId && username && replyId) {
+    fetchNoteAndReply(username, noteId, replyId);
+  }
+
+  function fetchNoteAndReply(username, noteId, replyId) {
+    $.ajax({
+      url: `/api/user/${username}/note/${noteId}/reply/${replyId}`,
+      method: "GET",
+      success: function (data) {
+        console.log(data);
+        displayNoteDetails(data);
+      },
+      error: function (error) {
+        console.error("Failed to fetch note and reply details:", error);
+      },
+    });
+  }
+
+  function displayNoteDetails(data) {
+    const note = data.note;
+    const reply = data.reply;
+
+    const noteContainer = document.getElementById("myNote");
+    const replyContainer = document.getElementById("noteAnswer");
+    const replyUsername = document.getElementById("reply-username");
+
+    noteContainer.innerHTML = note.body;
+
+    const userName = reply.anonymous ? "Anonymous" : reply.from_user;
+    const userAvatarSrc = reply.anonymous
+      ? "../static/images/default-avatar.png"
+      : "../static/images/user-avatar.png";
+
+    replyUsername.innerHTML = userName;
+    replyContainer.innerHTML = reply.body;
   }
 });

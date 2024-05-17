@@ -11,11 +11,10 @@ $(document).ready(function () {
       fetchNotesAndReplies(storedUsername);
     },
     error: function (error) {
-      console.log("Error:", error);
+      console.log("Error fetching user info:", error);
     },
   });
 
-  /* return to the index when click the btn-close button */
   function backToIndex(username) {
     document.querySelector(".btn-close").addEventListener("click", function () {
       window.location.href = "/user/" + username;
@@ -25,34 +24,38 @@ $(document).ready(function () {
     });
   }
 
-  /* fetch notes and their replies */
   function fetchNotesAndReplies(username) {
+    if (!username) {
+      console.error("Username not available for fetching notes and replies.");
+      return;
+    }
+    console.log("Fetching notes for username:", username);
     $.ajax({
-      url: "/user/" + username + "/sent_notes",
+      url: `/api/user/${username}/notes_with_replies`,
       method: "GET",
       success: function (response) {
-        displayEnvelopes(response.notes_with_replies);
+        displayEnvelopes(response.notes_with_replies, username);
       },
-      error: function (error) {
-        console.error("Failed to fetch notes and replies:", error);
+      error: function (xhr, status, error) {
+        console.error("Failed to fetch notes and replies:", xhr.responseText);
       },
     });
   }
 
-  /* display all the replies in the envelops */
-  function displayEnvelopes(notesWithReplies) {
+  function displayEnvelopes(notesWithReplies, username) {
+    console.log("Notes with replies:", notesWithReplies);
     const container = $("#reply-envelop");
-    container.empty(); // Clear existing content
+    container.empty();
 
-    notesWithReplies.forEach((note) => {
-      note.replies.forEach((reply) => {
-        container.append(
-          '<a href="/templates/open_note_answer.html"><img src="../static/images/reply_envelop.png" alt="Reply Envelope" /></a>'
-        );
-      });
+    notesWithReplies.forEach((item) => {
+      if (item.replies.length > 0) {
+        item.replies.forEach((reply) => {
+          const replyDetailUrl = `/user/${username}/note/${item.note.id}/reply/${reply.id}`;
+          container.append(
+            `<a href="${replyDetailUrl}"><img src="../static/images/reply_envelop.png" alt="View Reply"></a>`
+          );
+        });
+      }
     });
   }
-
-  // Initial fetch of notes and replies
-  fetchNotesAndReplies();
 });
