@@ -267,7 +267,15 @@ def reply(username):
 
     note = Send.query.get_or_404(note_id)
     reply = Reply(
-        body=reply_body, userId=current_user.id, sendId=note.id, anonymous=anonymous
+        body=reply_body,
+        userId=current_user.id,
+        sendId=note.id,
+        anonymous=anonymous,
+        avatar_path=(
+            user.avatar_path
+            if user.avatar_path and not anonymous
+            else "images/default-avatar.png"
+        ),
     )
 
     db.session.add(reply)
@@ -305,6 +313,7 @@ def api_note_reply_detail(username, note_id, reply_id):
         abort(403)
     note = Send.query.get_or_404(note_id)
     reply = Reply.query.get_or_404(reply_id)
+    user = User.query.get(reply.userId)
 
     note_data = {
         "id": note.id,
@@ -322,6 +331,9 @@ def api_note_reply_detail(username, note_id, reply_id):
             else "Anonymous"
         ),
         "anonymous": reply.anonymous,
+        "avatar_path": (
+            user.avatar_path if user.avatar_path else "images/default-avatar.png"
+        ),
     }
 
     return jsonify({"note": note_data, "reply": reply_data})

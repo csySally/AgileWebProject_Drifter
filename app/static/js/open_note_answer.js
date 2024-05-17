@@ -54,15 +54,17 @@ $(document).ready(function () {
     const noteContainer = document.getElementById("myNote");
     const replyContainer = document.getElementById("noteAnswer");
     const replyUsername = document.getElementById("reply-username");
+    const replyUserAvatar = document.getElementById("reply-user-avatar");
 
     noteContainer.innerHTML = note.body;
 
     const userName = reply.anonymous ? "Anonymous" : reply.from_user;
     const userAvatarSrc = reply.anonymous
       ? "../static/images/default-avatar.png"
-      : "../static/images/user-avatar.png";
+      : `../static/${reply.avatar_path}`;
 
     replyUsername.innerHTML = userName;
     replyContainer.innerHTML = reply.body;
+    replyUserAvatar.src = userAvatarSrc;
   }
 });
