@@ -60,7 +60,7 @@ document.addEventListener("DOMContentLoaded", function () {
       .then((response) => response.json())
       .then((data) => {
         if (data.status === "success") {
-          alert("You have registered succseefully!");
+          alert("You have registered successfully!");
           window.location.href = "/login";
         } else {
           alert(data.message);
