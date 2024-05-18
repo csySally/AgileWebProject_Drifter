@@ -1,4 +1,5 @@
 from flask import render_template, redirect, url_for, jsonify, abort
+from flask import current_app
 from flask_login import current_user, login_user
 from flask_login import logout_user
 from flask_login import login_required
@@ -353,7 +354,7 @@ def upload_image():
     file = request.files["image"]
     if file:
         filename = secure_filename(file.filename)
-        filepath = os.path.join(app.config["UPLOAD_FOLDER"], filename)
+        filepath = os.path.join(current_app.config["UPLOAD_FOLDER"], filename)
         file.save(filepath)
 
         relative_path = os.path.normpath(os.path.join("uploads", filename)).replace(

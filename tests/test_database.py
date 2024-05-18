@@ -17,7 +17,7 @@ class DatabaseTestCase(unittest.TestCase):
         self.app_context.pop()
 
     def test_user_creation(self):
-        user = User(username='testuser', email='test@example.com')
+        user = User(username='testuser')
         user.set_password('testpassword')
         db.session.add(user)
         db.session.commit()
@@ -26,7 +26,7 @@ class DatabaseTestCase(unittest.TestCase):
         self.assertEqual(user.username, 'testuser')
 
     def test_send_creation(self):
-        user = User(username='testuser', email='test@example.com')
+        user = User(username='testuser')
         user.set_password('testpassword')
         db.session.add(user)
         db.session.commit()
@@ -39,7 +39,7 @@ class DatabaseTestCase(unittest.TestCase):
         self.assertEqual(send.author.username, 'testuser')
 
     def test_reply_creation(self):
-        user = User(username='testuser', email='test@example.com')
+        user = User(username='testuser')
         user.set_password('testpassword')
         db.session.add(user)
         db.session.commit()
@@ -57,7 +57,7 @@ class DatabaseTestCase(unittest.TestCase):
         self.assertEqual(reply.sendId, send.id)
 
     def test_user_to_dict(self):
-        user = User(username='testuser', email='test@example.com')
+        user = User(username='testuser')
         user.set_password('testpassword')
         db.session.add(user)
         db.session.commit()
@@ -65,7 +65,7 @@ class DatabaseTestCase(unittest.TestCase):
         self.assertEqual(user_dict['username'], 'testuser')
 
     def test_send_to_dict(self):
-        user = User(username='testuser', email='test@example.com')
+        user = User(username='testuser')
         user.set_password('testpassword')
         db.session.add(user)
         db.session.commit()
@@ -77,7 +77,7 @@ class DatabaseTestCase(unittest.TestCase):
         self.assertEqual(send_dict['body'], 'This is a test message')
 
     def test_reply_to_dict(self):
-        user = User(username='testuser', email='test@example.com')
+        user = User(username='testuser')
         user.set_password('testpassword')
         db.session.add(user)
         db.session.commit()

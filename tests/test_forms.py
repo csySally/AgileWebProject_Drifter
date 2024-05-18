@@ -41,7 +41,7 @@ class FormsTestCase(unittest.TestCase):
         self.assertIn('Field must be equal to password.', form.password2.errors)
 
     def test_registration_form_duplicate_username(self):
-        user = User(username='existinguser', email='test@example.com')
+        user = User(username='existinguser')
         user.set_password('password')
         db.session.add(user)
         db.session.commit()

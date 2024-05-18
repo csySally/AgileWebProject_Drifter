@@ -8,6 +8,7 @@ class RoutesTestCase(unittest.TestCase):
 
     def setUp(self):
         self.app = create_app('app.config.TestingConfig')
+        self.app.config['SERVER_NAME'] = 'localhost.localdomain'  
         self.app_context = self.app.app_context()
         self.app_context.push()
         self.client = self.app.test_client()
@@ -20,7 +21,7 @@ class RoutesTestCase(unittest.TestCase):
         self.app_context.pop()
 
     def create_user(self):
-        user = User(username='testuser', email='test@example.com')
+        user = User(username='testuser')
         user.set_password('testpassword')
         db.session.add(user)
         db.session.commit()
@@ -66,7 +67,7 @@ class RoutesTestCase(unittest.TestCase):
     def test_index_redirect(self):
         response = self.client.get(url_for('main.index'))
         self.assertEqual(response.status_code, 302)
-        self.assertIn(url_for('main.login'), response.location)
+        self.assertIn(url_for('main.login', _external=False), response.location)
 
     def test_user_page(self):
         self.login('testuser', 'testpassword')
@@ -185,7 +186,7 @@ class RoutesTestCase(unittest.TestCase):
 
     def test_upload_image(self):
         self.login('testuser', 'testpassword')
-        with open('tests/test_image.png', 'rb') as img:
+        with open('tests/test_image.jpg', 'rb') as img:
             response = self.client.post(url_for('main.upload_image'), content_type='multipart/form-data', data={
                 'image': img
             }, follow_redirects=True)

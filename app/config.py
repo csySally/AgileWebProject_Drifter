@@ -16,6 +16,10 @@ class TestingConfig(Config):
     SQLALCHEMY_DATABASE_URI = "sqlite:///:memory:"
     TESTING = True
     WTF_CSRF_ENABLED = False
+    SERVER_NAME = 'localhost.localdomain'  
+    APPLICATION_ROOT = '/'
+    PREFERRED_URL_SCHEME = 'http'
+
 
 class ProductionConfig(Config):
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
