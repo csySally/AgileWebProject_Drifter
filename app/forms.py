@@ -32,8 +32,3 @@ class ReplyForm(FlaskForm):
     send_id = TextAreaField('Send ID')
     anonymous = BooleanField('Anonymous')
     submit = SubmitField('Reply')
-'''
-class LabelForm(FlaskForm):
-    label = StringField('Labels', validators=[DataRequired()])
-    submit = SubmitField('Add Label')
-'''
