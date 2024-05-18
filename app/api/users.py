@@ -142,3 +142,92 @@ def random_other_note():
             "avatar_url": avatar_url,
         }
     )
+    
+@bp.route("/random_note_by_label", methods=["GET"])
+@login_required
+def random_note_by_label():
+    #Returns a random note filtered by the specified label as JSON. If no notes are available, returns a 404 status code
+    label = request.args.get("label", None)
+    if label:
+        filtered_notes = Send.query.filter(
+            Send.userId != current_user.id, Send.labels.ilike(f"%{label}%")
+        ).all()
+    else:
+        filtered_notes = Send.query.filter(Send.userId != current_user.id).all()
+
+    if not filtered_notes:
+        return jsonify({"error": "No notes available with the given label"}), 404
+
+    random_note = random.choice(filtered_notes)
+    if random_note.anonymous:
+        avatar_url = url_for("static", filename="images/default-avatar.png")
+    else:
+        avatar_url = url_for(
+            "static",
+            filename=(
+                random_note.author.avatar_path
+                if random_note.author.avatar_path
+                else "images/default-avatar.png"
+            ),
+        )
+    return jsonify(
+        {
+            "id": random_note.id,
+            "body": random_note.body,
+            "author": random_note.author.username,
+            "anonymous": random_note.anonymous,
+            "avatar_url": avatar_url,
+        }
+    )
+    
+@bp.route("/user/<username>/notes_with_replies")
+@login_required
+def api_get_notes_with_replies(username):
+    #Returns the user's notes with their replies as JSON. If the current user is not authorized, returns a 403 status code.
+    if current_user.username != username:
+        abort(403)
+
+    user_notes = Send.query.filter_by(userId=current_user.id).all()
+    notes_with_replies = []
+    for note in user_notes:
+        replies = Reply.query.filter_by(sendId=note.id).all()
+        notes_with_replies.append(
+            {"note": note.to_dict(), "replies": [reply.to_dict() for reply in replies]}
+        )
+
+    return jsonify(notes_with_replies=notes_with_replies)
+
+
+@bp.route(
+    "/user/<username>/note/<int:note_id>/reply/<int:reply_id>", methods=["GET"]
+)
+@login_required
+def api_note_reply_detail(username, note_id, reply_id):
+    if current_user.username != username:
+        abort(403)
+    note = Send.query.get_or_404(note_id)
+    reply = Reply.query.get_or_404(reply_id)
+    user = User.query.get(reply.userId)
+
+    note_data = {
+        "id": note.id,
+        "body": note.body,
+        "anonymous": note.anonymous,
+        "labels": note.labels,
+    }
+
+    reply_data = {
+        "id": reply.id,
+        "body": reply.body,
+        "from_user": (
+            User.query.get(reply.userId).username
+            if not reply.anonymous
+            else "Anonymous"
+        ),
+        "anonymous": reply.anonymous,
+        "avatar_path": (
+            user.avatar_path if user.avatar_path else "images/default-avatar.png"
+        ),
+    }
+
+    return jsonify({"note": note_data, "reply": reply_data})
