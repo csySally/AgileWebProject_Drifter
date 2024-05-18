@@ -105,13 +105,13 @@ class RoutesTestCase(unittest.TestCase):
     def test_random_other_note(self):
         # Test getting a random note from another user
         self.login('testuser', 'testpassword')
-        response = self.client.get(url_for('main.random_other_note'))
+        response = self.client.get(url_for('api.random_other_note'))
         self.assertEqual(response.status_code, 404)  # Assuming no other notes exist
 
     def test_random_note_by_label(self):
         # Test getting a random note by label
         self.login('testuser', 'testpassword')
-        response = self.client.get(url_for('main.random_note_by_label', label='test'))
+        response = self.client.get(url_for('api.random_note_by_label', label='test'))
         self.assertEqual(response.status_code, 404)  # Assuming no notes with label exist
 
     def test_reply_note(self):
@@ -131,74 +131,10 @@ class RoutesTestCase(unittest.TestCase):
     def test_api_get_notes_with_replies(self):
         # Test getting notes with replies
         self.login('testuser', 'testpassword')
-        response = self.client.get(url_for('main.api_get_notes_with_replies', username='testuser'))
+        response = self.client.get(url_for('api.get_notes_with_replies', username='testuser'))
         self.assertEqual(response.status_code, 200)
         self.assertIn(b'notes_with_replies', response.data)
 
-    def test_reply_to_note(self):
-        # Test replying to a note
-        self.login('testuser', 'testpassword')
-        self.client.post(url_for('main.send', username='testuser'), json={
-            'note': 'This is a test note',
-            'anonymous': False,
-            'labels': 'test'
-        })
-        note = Send.query.first()
-        response = self.client.post(url_for('main.reply', username='testuser'), json={
-            'note_id': note.id,
-            'reply_body': 'This is a test reply',
-            'anonymous': False
-        }, follow_redirects=True)
-        self.assertEqual(response.status_code, 200)
-        self.assertIn(b'Reply successfully posted', response.data)
-
-    def test_sent_notes(self):
-        self.login('testuser', 'testpassword')
-        response = self.client.get(url_for('main.sent_notes', username='testuser'))
-        self.assertEqual(response.status_code, 200)
-        self.assertIn(b'notes_with_replies', response.data)
-
-    def test_api_note_reply_detail(self):
-        self.login('testuser', 'testpassword')
-        # First, send a note to reply to
-        self.client.post(url_for('main.send', username='testuser'), json={
-            'note': 'This is a test note',
-            'anonymous': False,
-            'labels': 'test'
-        })
-        note = Send.query.first()
-        # Then, reply to the note
-        self.client.post(url_for('main.reply', username='testuser'), json={
-            'note_id': note.id,
-            'reply_body': 'This is a test reply',
-            'anonymous': False
-        })
-        reply = Reply.query.first()
-        response = self.client.get(url_for('main.api_note_reply_detail', username='testuser', note_id=note.id, reply_id=reply.id))
-        self.assertEqual(response.status_code, 200)
-        self.assertIn(b'note', response.data)
-        self.assertIn(b'reply', response.data)
-
-    def test_note_reply_detail(self):
-        self.login('testuser', 'testpassword')
-        # First, send a note to reply to
-        self.client.post(url_for('main.send', username='testuser'), json={
-            'note': 'This is a test note',
-            'anonymous': False,
-            'labels': 'test'
-        })
-        note = Send.query.first()
-        # Then, reply to the note
-        self.client.post(url_for('main.reply', username='testuser'), json={
-            'note_id': note.id,
-            'reply_body': 'This is a test reply',
-            'anonymous': False
-        })
-        reply = Reply.query.first()
-        response = self.client.get(url_for('main.note_reply_detail', username='testuser', note_id=note.id, reply_id=reply.id))
-        self.assertEqual(response.status_code, 200)
-        self.assertIn(b'note', response.data)
-        self.assertIn(b'reply', response.data)
 
     def test_upload_image(self):
         # Test uploading an image

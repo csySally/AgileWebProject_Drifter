@@ -16,24 +16,21 @@ import os
 import random
 from flask import Blueprint
 
+# Blueprint for web routes
 bp = Blueprint('main', __name__)
-
 
 @bp.route("/")
 @bp.route("/index")
 def index():
-
-    #Redirects authenticated users to their user page and unauthenticated users to the login page.
-
+    # Redirects authenticated users to their user page and unauthenticated users to the login page.
     if current_user.is_authenticated:
         return redirect(url_for("main.user", username=current_user.username))
     return redirect(url_for("main.login"))
 
-
 @bp.route("/user/<username>", methods=["GET", "POST"])
 @login_required
 def user(username):
-    #Displays the user's main page. Redirects to the login page if the username is not provided or does not match the current user.
+    # Displays the user's main page. Redirects to the login page if the username is not provided or does not match the current user.
     if username is None:
         # Redirect to a default username or handle appropriately
         return redirect(url_for("main.login"))
@@ -41,19 +38,17 @@ def user(username):
         abort(403)  # HTTP status code for "Forbidden"
     return render_template("index.html", username=username, user=current_user)
 
-
 @bp.route("/get_user_info")
 @login_required
 def get_user_info():
-    #Returns the username of the currently authenticated user as JSON.
+    # Returns the username of the currently authenticated user as JSON.
     if current_user.is_authenticated:
         return jsonify(username=current_user.username)
     return jsonify(username="unknown"), 403
 
-
 @bp.route("/login", methods=["GET", "POST"])
 def login():
-    #Handles user login. Redirects authenticated users to the index page.
+    # Handles user login. Redirects authenticated users to the index page.
     if current_user.is_authenticated:
         return redirect(url_for("main.index"))
 
@@ -71,17 +66,15 @@ def login():
 
     return render_template("login.html")
 
-
 @bp.route("/logout", methods=["POST"])
 def logout():
+    # Logs out the current user and redirects to the login page.
     logout_user()
-    #Logs out the current user and redirects to the login page.
     return redirect(url_for("main.login"))
-
 
 @bp.route("/register", methods=["GET", "POST"])
 def register():
-    #Handles user registration. Registers a new user if they are not already logged in.
+    # Handles user registration. Registers a new user if they are not already logged in.
     if current_user.is_authenticated:
         return jsonify({"status": "error", "message": "Already logged in"}), 400
 
@@ -119,12 +112,10 @@ def register():
         )
     return render_template("register.html", title="Register")
 
-
 @bp.route("/user/<username>/send", methods=["GET", "POST"])
 @login_required
 def send(username):
-    #Allows the user to send a message. If the user is not authorized, returns a 403 status code.
-    #Processes the note submission and stores it in the database.
+    # Allows the user to send a message. If the user is not authorized, returns a 403 status code.
     if current_user.username != username:
         abort(403)  # HTTP status code for "Forbidden"
     if request.method == "POST":
@@ -142,134 +133,6 @@ def send(username):
         db.session.commit()
         return jsonify({"message": "Your message has been sent!"}), 200
     return render_template("add_note.html", title="Send Message", user=current_user)
-
-
-@bp.route("/api/random_other_note")
-@login_required
-def random_other_note():
-    #Returns a random note from other users as JSON. If no notes are available, returns a 404 status code.
-    all_other_notes = Send.query.filter(Send.userId != current_user.id).all()
-    if not all_other_notes:
-        return jsonify({"error": "No other notes available"}), 404
-
-    random_note = random.choice(all_other_notes)
-    if random_note.anonymous:
-        avatar_url = url_for("static", filename="images/default-avatar.png")
-    else:
-        avatar_url = url_for(
-            "static",
-            filename=(
-                random_note.author.avatar_path
-                if random_note.author.avatar_path
-                else "images/default-avatar.png"
-            ),
-        )
-    return jsonify(
-        {
-            "id": random_note.id,
-            "body": random_note.body,
-            "author": random_note.author.username,
-            "anonymous": random_note.anonymous,
-            "avatar_url": avatar_url,
-        }
-    )
-
-
-@bp.route("/api/random_note_by_label", methods=["GET"])
-@login_required
-def random_note_by_label():
-    #Returns a random note filtered by the specified label as JSON. If no notes are available, returns a 404 status code
-    label = request.args.get("label", None)
-    if label:
-        filtered_notes = Send.query.filter(
-            Send.userId != current_user.id, Send.labels.ilike(f"%{label}%")
-        ).all()
-    else:
-        filtered_notes = Send.query.filter(Send.userId != current_user.id).all()
-
-    if not filtered_notes:
-        return jsonify({"error": "No notes available with the given label"}), 404
-
-    random_note = random.choice(filtered_notes)
-    if random_note.anonymous:
-        avatar_url = url_for("static", filename="images/default-avatar.png")
-    else:
-        avatar_url = url_for(
-            "static",
-            filename=(
-                random_note.author.avatar_path
-                if random_note.author.avatar_path
-                else "images/default-avatar.png"
-            ),
-        )
-    return jsonify(
-        {
-            "id": random_note.id,
-            "body": random_note.body,
-            "author": random_note.author.username,
-            "anonymous": random_note.anonymous,
-            "avatar_url": avatar_url,
-        }
-    )
-
-
-@bp.route("/reply-note")
-@login_required
-def reply_note():
-    return render_template("reply_note_entry.html", user=current_user)
-
-
-@bp.route("/reply-note-random")
-@login_required
-def reply_note_random():
-    #Renders the reply random note page.
-    return render_template("reply_random.html", user=current_user)
-
-
-@bp.route("/reply-note-check")
-@login_required
-def reply_note_check():
-    #Renders the check and reply page for notes with a specified label.
-    label = request.args.get("label", None)
-    return render_template("check_and_reply.html", user=current_user, label=label)
-
-
-@bp.route("/check-my-reply")
-@login_required
-def check_my_reply():
-    #Renders the page to check replies to the user's notes.
-    user_notes = Send.query.filter_by(userId=current_user.id).all()
-    notes_with_replies = []
-    for note in user_notes:
-        replies = Reply.query.filter_by(sendId=note.id).all()
-        note_with_replies = {"note": note, "replies": replies}
-        notes_with_replies.append(note_with_replies)
-
-        for reply in replies:
-            print(note.id, reply.id)
-
-    return render_template(
-        "check_reply.html", user=current_user, notes=notes_with_replies
-    )
-
-
-@bp.route("/api/user/<username>/notes_with_replies")
-@login_required
-def api_get_notes_with_replies(username):
-    #Returns the user's notes with their replies as JSON. If the current user is not authorized, returns a 403 status code.
-    if current_user.username != username:
-        abort(403)
-
-    user_notes = Send.query.filter_by(userId=current_user.id).all()
-    notes_with_replies = []
-    for note in user_notes:
-        replies = Reply.query.filter_by(sendId=note.id).all()
-        notes_with_replies.append(
-            {"note": note.to_dict(), "replies": [reply.to_dict() for reply in replies]}
-        )
-
-    return jsonify(notes_with_replies=notes_with_replies)
-
 
 @bp.route("/user/<username>/reply", methods=["GET", "POST"])
 @login_required
@@ -299,61 +162,41 @@ def reply(username):
 
     return jsonify({"message": "Reply successfully posted"}), 200
 
-
-@bp.route("/user/<username>/sent_notes")
+@bp.route("/reply-note")
 @login_required
-def sent_notes(username):
-    if current_user.username != username:
-        abort(403)
+def reply_note():
+    return render_template("reply_note_entry.html", user=current_user)
 
+@bp.route("/reply-note-random")
+@login_required
+def reply_note_random():
+    # Renders the reply random note page.
+    return render_template("reply_random.html", user=current_user)
+
+@bp.route("/reply-note-check")
+@login_required
+def reply_note_check():
+    # Renders the check and reply page for notes with a specified label.
+    label = request.args.get("label", None)
+    return render_template("check_and_reply.html", user=current_user, label=label)
+
+@bp.route("/check-my-reply")
+@login_required
+def check_my_reply():
+    # Renders the page to check replies to the user's notes.
     user_notes = Send.query.filter_by(userId=current_user.id).all()
     notes_with_replies = []
     for note in user_notes:
         replies = Reply.query.filter_by(sendId=note.id).all()
-        notes_with_replies.append(
-            {
-                "note": note.to_dict(),  
-                "replies": [reply.to_dict() for reply in replies],
-            }
-        )
+        note_with_replies = {"note": note, "replies": replies}
+        notes_with_replies.append(note_with_replies)
 
-    return jsonify(notes_with_replies=notes_with_replies)
+        for reply in replies:
+            print(note.id, reply.id)
 
-
-@bp.route(
-    "/api/user/<username>/note/<int:note_id>/reply/<int:reply_id>", methods=["GET"]
-)
-@login_required
-def api_note_reply_detail(username, note_id, reply_id):
-    if current_user.username != username:
-        abort(403)
-    note = Send.query.get_or_404(note_id)
-    reply = Reply.query.get_or_404(reply_id)
-    user = User.query.get(reply.userId)
-
-    note_data = {
-        "id": note.id,
-        "body": note.body,
-        "anonymous": note.anonymous,
-        "labels": note.labels,
-    }
-
-    reply_data = {
-        "id": reply.id,
-        "body": reply.body,
-        "from_user": (
-            User.query.get(reply.userId).username
-            if not reply.anonymous
-            else "Anonymous"
-        ),
-        "anonymous": reply.anonymous,
-        "avatar_path": (
-            user.avatar_path if user.avatar_path else "images/default-avatar.png"
-        ),
-    }
-
-    return jsonify({"note": note_data, "reply": reply_data})
-
+    return render_template(
+        "check_reply.html", user=current_user, notes=notes_with_replies
+    )
 
 @bp.route("/user/<username>/note/<int:note_id>/reply/<int:reply_id>", methods=["GET"])
 @login_required
@@ -364,7 +207,6 @@ def note_reply_detail(username, note_id, reply_id):
     reply = Reply.query.get_or_404(reply_id)
 
     return render_template("open_note_answer.html", note=note, reply=reply)
-
 
 @bp.route("/upload_image", methods=["POST"])
 def upload_image():
@@ -382,3 +224,4 @@ def upload_image():
 
         return jsonify({"message": "Image uploaded successfully"}), 200
     return jsonify({"error": "No file uploaded"}), 400
+
