@@ -8,6 +8,7 @@ from selenium.common.exceptions import NoSuchElementException, NoAlertPresentExc
 from selenium.webdriver.chrome.options import Options
 from app import create_app, db
 from app.config import TestingConfig
+from selenium.webdriver.common.keys import Keys 
 
 localHost = "http://127.0.0.1:5000/"
 
@@ -48,7 +49,7 @@ class SeleniumTestCase(unittest.TestCase):
         driver = self.driver
         driver.get('http://127.0.0.1:5000/register')
 
-        unique_username = f"user{uuid.uuid4().hex[:6]}"
+        self.unique_username = f"user{uuid.uuid4().hex[:6]}"
         password = "Password1"
 
         try:
@@ -57,7 +58,7 @@ class SeleniumTestCase(unittest.TestCase):
             password2_input = driver.find_element(By.NAME, 'confirmPassword')
             submit_button = driver.find_element(By.CSS_SELECTOR, 'button.btn-sign-in')
 
-            username_input.send_keys(unique_username)
+            username_input.send_keys(self.unique_username)
             password_input.send_keys(password)
             password2_input.send_keys(password)
             submit_button.click()
@@ -79,7 +80,7 @@ class SeleniumTestCase(unittest.TestCase):
             password_input = driver.find_element(By.NAME, 'password')
             submit_button = driver.find_element(By.CSS_SELECTOR, 'button.btn-sign-in')
 
-            username_input.send_keys(unique_username)
+            username_input.send_keys(self.unique_username)
             password_input.send_keys(password)
             submit_button.click()
 
@@ -88,12 +89,67 @@ class SeleniumTestCase(unittest.TestCase):
 
             self.assertIn('/user/', current_url)
             body_text = driver.find_element(By.TAG_NAME, 'body').text
-            self.assertIn(unique_username, body_text)
-            print(f"Username {unique_username} found on user page.")
+            self.assertIn(self.unique_username, body_text)
+            print(f"Username {self.unique_username} found on user page.")
 
         except NoSuchElementException as e:
             print(f"Element not found: {e}")
             self.fail("Test failed due to missing element.")
+            
+            
+            
+    def test_send_message(self):
+        self.test_register_and_login() 
+
+        driver = self.driver
+        driver.get(localHost + 'user/' + self.unique_username)
+
+        try:
+            draft_link = driver.find_element(By.ID, 'draft')
+            draft_link.click()
+
+            time.sleep(2) 
+
+            note_input = driver.find_element(By.ID, 'noteInput')
+            next_button = driver.find_element(By.ID, 'btn-next')
+
+            note_input.send_keys("This is a test message.")
+            next_button.click()
+
+            time.sleep(2) 
+
+            label_input = driver.find_element(By.ID, 'labelInput')
+            label_input.send_keys("test")
+            label_input.send_keys(Keys.RETURN)
+
+            time.sleep(1)  
+
+            ok_button = driver.find_element(By.ID, 'btn-next2')
+            ok_button.click()
+
+            time.sleep(2)  
+
+
+            try:
+                alert = driver.switch_to.alert
+                alert_text = alert.text
+                print(f"Alert text: {alert_text}")
+                self.assertEqual(alert_text, 'You have successfully added a note!')
+                alert.accept()
+                print("Message sending successful.")
+            except NoAlertPresentException:
+                print("No alert present after sending note.")
+
+            time.sleep(2)  
+            current_url = driver.current_url
+
+            self.assertIn('/user/' + self.unique_username, current_url)
+            print("Returned to user page.")
+
+        except NoSuchElementException as e:
+            print(f"Element not found: {e}")
+            self.fail("Test failed due to missing element.")
+
 
 if __name__ == '__main__':
     unittest.main()
