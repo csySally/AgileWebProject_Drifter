@@ -56,6 +56,7 @@ Users can view the replies received to the notes they send.
 4. Users can save their favourite replies to a "favourites" list for later viewing.
 5. Set a time after which a note sent by a user will expire and no longer receive a reply.
 6. Add appropriate filters to prevent users from posting notices of pornography, gambling, drugs and other social hazards.
+7. When random notes are shown, the displayed notes will not be repeated.
 
 ## Group Members
 
