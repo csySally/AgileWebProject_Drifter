@@ -16,7 +16,7 @@ In "Drifter", our design concept was to create a warm, simple and inclusive plat
 
 Simple interaction design is another major feature. A simple and intuitive interface reduces the cost of learning.
 
-The UI design of the website was done through <b>Figma</b> and all sketches are included in the deliverable folder.
+The UI design of the website was done through <b>Figma</b> and all sketches are included in the deliverable folder.https://www.figma.com/design/SqRgaZQaXlgRzC7S6k2ZZA/Drifter?node-id=2%3A352&t=fnpLmyMZOMQvr4Jc-1
 
 Anonymity is a core element of "Drifter". Here, everyone is free to express their true feelings and thoughts without the constraints of identity. This anonymity not only protects the privacy of the users, but also provides a safe environment for them to speak out what would normally be difficult for them to say.
 
