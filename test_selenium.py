@@ -9,6 +9,8 @@ from selenium.webdriver.chrome.options import Options
 from app import create_app, db
 from app.config import TestingConfig
 from selenium.webdriver.common.keys import Keys 
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import WebDriverWait
 
 localHost = "http://127.0.0.1:5000/"
 
@@ -136,13 +138,14 @@ class SeleniumTestCase(unittest.TestCase):
             time.sleep(2)  
             try:
                 # Attempt to switch to the alert if it is present
+                WebDriverWait(driver, 10).until(EC.alert_is_present(),
+                                     "Waiting for alert to appear after sending note.")
                 alert = driver.switch_to.alert
                 alert_text = alert.text
                 print(f"Alert text: {alert_text}")
                 # Assert that the alert text matches the expected message
                 self.assertEqual(alert_text, 'You have successfully added a note!')
                 alert.accept()
-                print("Message sending successful.")
             except NoAlertPresentException:
                 print("No alert present after sending note.")
 
