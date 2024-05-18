@@ -16,8 +16,21 @@ import os
 import random
 from flask import Blueprint
 
+from dotenv import load_dotenv
+from openai import OpenAI
+
+
 # Blueprint for web routes
 bp = Blueprint('main', __name__)
+
+# Load environment variables from .env file
+load_dotenv()
+
+# Set your OpenAI API key from the environment variable
+OpenAI.api_key = os.getenv('OPENAI_API_KEY')
+
+if not OpenAI.api_key:
+    raise ValueError("No OpenAI API key found. Please set the 'OPENAI_API_KEY' environment variable.")
 
 @bp.route("/")
 @bp.route("/index")
@@ -112,12 +125,14 @@ def register():
         )
     return render_template("register.html", title="Register")
 
+
 @bp.route("/user/<username>/send", methods=["GET", "POST"])
 @login_required
 def send(username):
     # Allows the user to send a message. If the user is not authorized, returns a 403 status code.
     if current_user.username != username:
         abort(403)  # HTTP status code for "Forbidden"
+    
     if request.method == "POST":
         data = request.get_json()
         if not data:
@@ -131,8 +146,45 @@ def send(username):
         )
         db.session.add(send)
         db.session.commit()
+        
+        # Attempt to generate GPT reply only if API is available
+        gpt_reply = None
+        try:
+            gpt_reply = generate_gpt_reply(data.get("note")).content
+        except Exception as e:
+            print(f"Failed to generate GPT reply: {e}")
+        
+        if gpt_reply:
+            # Save GPT reply to database only if it was successfully generated
+            gpt_user = User.query.filter_by(username='Harbor').first()
+            if not gpt_user:
+                gpt_user = User(username='Harbor', password_hash=generate_password_hash('password'))
+                db.session.add(gpt_user)
+                db.session.commit()
+
+            reply = Reply(
+                body=gpt_reply,
+                userId=gpt_user.id,  # Reply from 'Harbor' user
+                sendId=send.id,
+                anonymous=False  # GPT replies are not anonymous
+            )
+            db.session.add(reply)
+            db.session.commit()
+
         return jsonify({"message": "Your message has been sent!"}), 200
     return render_template("add_note.html", title="Send Message", user=current_user)
+
+def generate_gpt_reply(note):
+    client = OpenAI()
+    response = client.chat.completions.create(
+        model="gpt-3.5-turbo",
+        messages=[
+            {"role": "system", "content": "You are a helpful assistant."},
+            {"role": "user", "content": note}
+        ],
+        max_tokens=150
+    )
+    return response.choices[0].message
 
 @bp.route("/user/<username>/reply", methods=["GET", "POST"])
 @login_required
