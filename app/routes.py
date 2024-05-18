@@ -2,7 +2,7 @@ from flask import render_template, redirect, url_for, jsonify, abort
 from flask_login import current_user, login_user
 from flask_login import logout_user
 from flask_login import login_required
-from app import app, db
+from app import db
 from app.forms import LoginForm
 from app.models import User, Send, Reply
 from flask import request
@@ -13,28 +13,31 @@ from werkzeug.security import generate_password_hash
 from werkzeug.utils import secure_filename
 import os
 import random
+from flask import Blueprint
+
+bp = Blueprint('main', __name__)
 
 
-@app.route("/")
-@app.route("/index")
+@bp.route("/")
+@bp.route("/index")
 def index():
     if current_user.is_authenticated:
-        return redirect(url_for("user", username=current_user.username))
-    return redirect(url_for("login"))
+        return redirect(url_for("main.user", username=current_user.username))
+    return redirect(url_for("main.login"))
 
 
-@app.route("/user/<username>", methods=["GET", "POST"])
+@bp.route("/user/<username>", methods=["GET", "POST"])
 @login_required
 def user(username):
     if username is None:
         # Redirect to a default username or handle appropriately
-        return redirect(url_for("login"))
+        return redirect(url_for("main.login"))
     if current_user.username != username:
         abort(403)  # HTTP status code for "Forbidden"
     return render_template("index.html", username=username, user=current_user)
 
 
-@app.route("/get_user_info")
+@bp.route("/get_user_info")
 @login_required
 def get_user_info():
     if current_user.is_authenticated:
@@ -42,7 +45,7 @@ def get_user_info():
     return jsonify(username="unknown"), 403
 
 
-@app.route("/login", methods=["GET", "POST"])
+@bp.route("/login", methods=["GET", "POST"])
 def login():
     if current_user.is_authenticated:
         return redirect(url_for("index"))
@@ -62,13 +65,13 @@ def login():
     return render_template("login.html")
 
 
-@app.route("/logout", methods=["POST"])
+@bp.route("/logout", methods=["POST"])
 def logout():
     logout_user()
-    return redirect(url_for("login"))
+    return redirect(url_for("main.login"))
 
 
-@app.route("/register", methods=["GET", "POST"])
+@bp.route("/register", methods=["GET", "POST"])
 def register():
     if current_user.is_authenticated:
         return jsonify({"status": "error", "message": "Already logged in"}), 400
@@ -100,7 +103,7 @@ def register():
                 {
                     "status": "success",
                     "message": "Registration successful",
-                    "redirect": url_for("login"),
+                    "redirect": url_for("main.login"),
                 }
             ),
             200,
@@ -108,7 +111,7 @@ def register():
     return render_template("register.html", title="Register")
 
 
-@app.route("/user/<username>/send", methods=["GET", "POST"])
+@bp.route("/user/<username>/send", methods=["GET", "POST"])
 @login_required
 def send(username):
     if current_user.username != username:
@@ -130,7 +133,7 @@ def send(username):
     return render_template("add_note.html", title="Send Message", user=current_user)
 
 
-@app.route("/api/random_other_note")
+@bp.route("/api/random_other_note")
 @login_required
 def random_other_note():
     all_other_notes = Send.query.filter(Send.userId != current_user.id).all()
@@ -160,7 +163,7 @@ def random_other_note():
     )
 
 
-@app.route("/api/random_note_by_label", methods=["GET"])
+@bp.route("/api/random_note_by_label", methods=["GET"])
 @login_required
 def random_note_by_label():
     label = request.args.get("label", None)
@@ -197,26 +200,26 @@ def random_note_by_label():
     )
 
 
-@app.route("/reply-note")
+@bp.route("/reply-note")
 @login_required
 def reply_note():
     return render_template("reply_note_entry.html", user=current_user)
 
 
-@app.route("/reply-note-random")
+@bp.route("/reply-note-random")
 @login_required
 def reply_note_random():
     return render_template("reply_random.html", user=current_user)
 
 
-@app.route("/reply-note-check")
+@bp.route("/reply-note-check")
 @login_required
 def reply_note_check():
     label = request.args.get("label", None)
     return render_template("check_and_reply.html", user=current_user, label=label)
 
 
-@app.route("/check-my-reply")
+@bp.route("/check-my-reply")
 @login_required
 def check_my_reply():
     user_notes = Send.query.filter_by(userId=current_user.id).all()
@@ -234,7 +237,7 @@ def check_my_reply():
     )
 
 
-@app.route("/api/user/<username>/notes_with_replies")
+@bp.route("/api/user/<username>/notes_with_replies")
 @login_required
 def api_get_notes_with_replies(username):
     if current_user.username != username:
@@ -251,7 +254,7 @@ def api_get_notes_with_replies(username):
     return jsonify(notes_with_replies=notes_with_replies)
 
 
-@app.route("/user/<username>/reply", methods=["GET", "POST"])
+@bp.route("/user/<username>/reply", methods=["GET", "POST"])
 @login_required
 def reply(username):
     if current_user.username != username:
@@ -279,7 +282,7 @@ def reply(username):
     return jsonify({"message": "Reply successfully posted"}), 200
 
 
-@app.route("/user/<username>/sent_notes")
+@bp.route("/user/<username>/sent_notes")
 @login_required
 def sent_notes(username):
     if current_user.username != username:
@@ -291,7 +294,7 @@ def sent_notes(username):
         replies = Reply.query.filter_by(sendId=note.id).all()
         notes_with_replies.append(
             {
-                "note": note.to_dict(),  # 确保to_dict方法正确返回所需的数据字段
+                "note": note.to_dict(),  
                 "replies": [reply.to_dict() for reply in replies],
             }
         )
@@ -299,7 +302,7 @@ def sent_notes(username):
     return jsonify(notes_with_replies=notes_with_replies)
 
 
-@app.route(
+@bp.route(
     "/api/user/<username>/note/<int:note_id>/reply/<int:reply_id>", methods=["GET"]
 )
 @login_required
@@ -334,7 +337,7 @@ def api_note_reply_detail(username, note_id, reply_id):
     return jsonify({"note": note_data, "reply": reply_data})
 
 
-@app.route("/user/<username>/note/<int:note_id>/reply/<int:reply_id>", methods=["GET"])
+@bp.route("/user/<username>/note/<int:note_id>/reply/<int:reply_id>", methods=["GET"])
 @login_required
 def note_reply_detail(username, note_id, reply_id):
     if current_user.username != username:
@@ -345,7 +348,7 @@ def note_reply_detail(username, note_id, reply_id):
     return render_template("open_note_answer.html", note=note, reply=reply)
 
 
-@app.route("/upload_image", methods=["POST"])
+@bp.route("/upload_image", methods=["POST"])
 def upload_image():
     file = request.files["image"]
     if file:

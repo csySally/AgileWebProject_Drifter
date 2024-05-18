@@ -56,14 +56,14 @@
             <p class="card-explain">
               Check a random note or search for a note with a specific topic?
             </p>
-            <a href="{{ url_for('reply_note') }}">Explore&nbsp;&nbsp;&nbsp;>></a>
+            <a href="{{ url_for('main.reply_note') }}">Explore&nbsp;&nbsp;&nbsp;>></a>
           </div>
           <div class="index-card">
             <img src="../static/images/card1.png" alt="" />
             <p class="card-title">Write A Note</p>
             <p class="card-explain">Send your stories here.</p>
             <a
-              href="{{ url_for('send', username=current_user.username) }}"
+              href="{{ url_for('main.send', username=current_user.username) }}"
               id="draft"
               >Draft&nbsp;&nbsp;&nbsp;>>></a
             >
@@ -75,7 +75,7 @@
             <p class="card-explain">
               What kinds of answers are waiting for you?
             </p>
-            <a href="{{ url_for('check_my_reply') }}" id="surprise"
+            <a href="{{ url_for('main.check_my_reply') }}" id="surprise"
               >Surprise&nbsp;&nbsp;&nbsp;>>></a
             >
           </div>
