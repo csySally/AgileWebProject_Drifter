@@ -48,15 +48,17 @@ Users can reply anonymously or not to the received note. If the user can't answe
 
 Users can view the replies received to the notes they send.
 
+6. GPT reply
+   For each send notes, user will receive one reply from "Harbor"(ChatGPT 3.5).
+
 ### Future Improvements
 
-1. Use ChatGPT to answer the note as an option.
-2. Replies that are read will not appear in the inbox again.
-3. Allow users to like or dislike the replies they receive.
-4. Users can save their favourite replies to a "favourites" list for later viewing.
-5. Set a time after which a note sent by a user will expire and no longer receive a reply.
-6. Add appropriate filters to prevent users from posting notices of pornography, gambling, drugs and other social hazards.
-7. When random notes are shown, the displayed notes will not be repeated.
+1. Replies that are read will not appear in the inbox again.
+2. Allow users to like or dislike the replies they receive.
+3. Users can save their favourite replies to a "favourites" list for later viewing.
+4. Set a time after which a note sent by a user will expire and no longer receive a reply.
+5. Add appropriate filters to prevent users from posting notices of pornography, gambling, drugs and other social hazards.
+6. When random notes are shown, the displayed notes will not be repeated.
 
 ## Group Members
 
