@@ -22,7 +22,11 @@ document.addEventListener("DOMContentLoaded", function () {
       },
       error: function (xhr, status, error) {
         // login failed and show error
-        alert(xhr.responseText);
+        const errorMessage = xhr.responseJSON.error;
+        console.log(errorMessage);
+        alert(errorMessage);
+        // clear password field
+        document.getElementById("password").value = "";
       },
     });
   });
