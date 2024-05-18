@@ -10,34 +10,53 @@ Welcome to "Drifter" - a unique platform for your questions to fly freely in an 
 
 Please speak up at Drifter!
 
-### MVP
+## Deisgn
+
+In "Drifter", our design concept was to create a warm, simple and inclusive platform for anonymous communication. The idea was inspired by some famous dating apps, but our platform is not about making friends, it is about getting different responses to one's thoughts, so that everyone can feel free to speak their mind. Designer <b>Sally Chen</b>, chose pink and blue as the main colours, soft colours that convey a sense of calm and comfort, helping users to feel relaxed, quiet, gentle and happy during use.
+
+Simple interaction design is another major feature. A simple and intuitive interface reduces the cost of learning.
+
+The UI design of the website was done through <b>Figma</b> and all sketches are included in the deliverable folder.https://www.figma.com/design/SqRgaZQaXlgRzC7S6k2ZZA/Drifter?node-id=2%3A352&t=fnpLmyMZOMQvr4Jc-1
+
+Anonymity is a core element of "Drifter". Here, everyone is free to express their true feelings and thoughts without the constraints of identity. This anonymity not only protects the privacy of the users, but also provides a safe environment for them to speak out what would normally be difficult for them to say.
+
+We welcome everyone with a story in their heart to come to "Drifter" and find a place to talk and resonate with each other.
+
+## MVP / Use
 
 1. User registration and login
 
-Allow users to create accounts and log in to secure user information.
+Allow users to create accounts and log in to secure user information. Users can also log out after using.
 
-2. Send a text note
+2. Change the avatar or keep anonymous
 
-Users can send notes anonymously, the content can be anything.
+Users can choose to change their avatar or keep the default one.
 
-3. Receive Notes
+3. Send notes
 
-Users randomly receive secret notes from anonymous users. Plus Users can also search for notes containing specific keywords, such as "love".
+Users can send notes anonymously or not, the content can be anything.
 
-4. Anonymous Reply
+4. Receive notes
 
-Users can reply anonymously to the received note. If the user can't answer or doesn't want to answer the current note, he/she can choose to read the next one.
+Users randomly receive secret notes from other users. Plus Users can also search for notes containing specific keywords, such as "love".
 
-5. View Reply
+5. Anonymous reply
+
+Users can reply anonymously or not to the received note. If the user can't answer or doesn't want to answer the current note, he/she can choose to read the next one.
+
+6. View replies
 
 Users can view the replies received to the notes they send.
 
 ### Future Improvements
 
 1. Use ChatGPT to answer the note as an option.
-2. Allow users to like or dislike the replies they receive.
-3. Users can save their favourite replies to a "favourites" list for later viewing.
-4. Set a time after which a note sent by a user will expire and no longer receive a reply
+2. Replies that are read will not appear in the inbox again.
+3. Allow users to like or dislike the replies they receive.
+4. Users can save their favourite replies to a "favourites" list for later viewing.
+5. Set a time after which a note sent by a user will expire and no longer receive a reply.
+6. Add appropriate filters to prevent users from posting notices of pornography, gambling, drugs and other social hazards.
+7. When random notes are shown, the displayed notes will not be repeated.
 
 ## Group Members
 
@@ -46,84 +65,82 @@ Users can view the replies received to the notes they send.
 | 23687599 | Sally Chen  | csySally        |
 | 23212326 | Lili Liu    | LiliLiu09       |
 | 24117922 | Zhengxu Jin | joshjin11       |
-| 23495103 | David Pan   | xxxxx           |
+| 23495103 | David Pan   | Dave-114-P      |
 
-## Agile Marking:
+## How To Launch
 
-Marks will be given for evidence of Agile development practices, i.e.
+To launch this application, follow the steps below. These instructions assume you have Git and Python installed on your system.
 
-- appropriately sized commits with meaningful messages.
-- planning of short-term goals via the Issues tab.
-- reproducible bug reports via the Issues tab.
-- use pull requests to merge in new features via the Pull Requests tab.
-- exhibiting teamwork by contributing to discussions on the Issues
-- exhibiting teamwork by adding code reviews to other people's Pull Requests.
-- intermediate deliverables, pinpointed with Git tags.
+### Step 1: Clone the Repository
 
-### Issue Creating
-
-1. On the GitHub repository page, click the "Issues" tab.
-2. Click the "New issue" button to start creating a new issue.
-3. Fill in the title and description for the issue. The title should summarise the issue or requirement, while the description should detail the problem, desired behaviour, steps to reproduce it, etc.
-
-#### Managing Issues
-
-- Use Labels: We can categorise issues by setting different labels for them (e.g. "bug", "feature request", "help wanted "), we can categorise issues for easy tracking and management.
-- Assignees: We can assign one or more people to work on a particular issue, which helps to clarify the division of labour.
-- Comments and Updates: Project team members should discuss under issues to provide progress updates, solutions or further questions.
-
-#### Closing an Issue
-
-An issue can be closed when it is resolved or a requirement is met by providing a short resolution statement in the issue discussion and clicking the "Close issue" button. If the issue reappears later, we can reopen the issue.
-
-### Branch Creating
-
-- Main branch is kept stable and all new development work is done on a separate branch.
-- Each branch corresponds to an issue, making it easier to track work and review history.
-
-#### How to Name A Branch?
-
-Use a naming convention that includes the issue number and a short description, such as <b>issue-123-add-login-function</b>, so that we can learn directly from the branch name which issue it was created to resolve.
-
-#### How to Create A New Branch from Main?
-
-1. Switch to the main branch and pull the latest changes from the remote repository.
+First, clone the repository to your local machine using Git:
 
 ```
-git checkout main
-git pull origin main
-
+git clone https://github.com/LiliLiu09/CITS5505_AgileWebProject2.git
 ```
 
-2. Create a new branch from main to develop your new feature.
-
 ```
-git checkout -b issue-123-add-login-function
-
+cd CITS5505_AgileWebProject2
 ```
 
-### Pull Request (PR) Guidelines
-
-#### Creating a Pull Request
-
-1. Branch Preparation: Ensure your feature branch is up-to-date with the latest changes from the main branch. This reduces the likelihood of merge conflicts.
-2. Initiate the PR: From the GitHub repository page, navigate to the "Pull Requests" tab and click the "New pull request" button. Select your feature branch as the "compare" branch and main (or the appropriate target branch) as the "base" branch.
-3. PR Description: Fill in a detailed description of the pull request. Include the purpose of the changes, which issue(s) the PR addresses, and a summary of the main changes. Linking the issue(s) by number (e.g., #123) will automatically associate the PR with those issues.
-4. Review and Discussion: Before finalizing the PR, request reviews from team members. This promotes collaboration and code quality. Engage in discussions within the PR if there are comments or suggestions.
-
-#### Reviewing a Pull Request
-
-1. Code Review: Review the code changes for clarity, efficiency, and adherence to project standards. Look for any potential issues or improvements.
-2. Feedback: Provide constructive feedback and suggestions for improvements. If changes are required, request changes; otherwise, approve the PR.
-
-#### Merging a Pull Request
-
-1. Close Linked Issues: If the PR description or commits didn’t automatically close the related issues, manually close them by mentioning the PR number (e.g., Closes #123 due to PR #456).
-2. Post-Merge Cleanup: Delete the feature branch if it's no longer needed, to keep the repository tidy.
+### Step 2: Set up a Virtual Environment
 
 ```
-git checkout main
-git merge issue-123-add-login-function
-git push origin main
+python -m venv venv
+```
 
+To activate the virtual environment, use:
+-On Windows:
+
+```
+.\venv\Scripts\activate
+```
+
+-On Unix or MacOS:
+
+```
+source venv/bin/activate
+```
+
+### Step 3: Install Dependencies
+
+With the virtual environment activated, install the project dependencies using:
+pip install -r requirements.txt
+
+### Step 4: Set Environment Variables
+
+-On Windows:
+
+```
+set FLASK_APP=app.py
+set FLASK_ENV=development
+```
+
+-On Unix or MacOS:
+
+```
+export FLASK_APP=app.py
+export FLASK_ENV=development
+```
+
+### Step 5: Run the Application
+
+```
+flask run
+```
+
+The application should now be running on http://localhost:5000
+
+## How To Run Tests
+
+-Run unittest:
+
+```
+pytest tests
+```
+
+-Run Sellenium test:
+
+```
+python test_selenium.py
 ```
