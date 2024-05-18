@@ -27,36 +27,43 @@ class RoutesTestCase(unittest.TestCase):
         db.session.commit()
 
     def login(self, username, password):
+        # Log in with the given username and password
         return self.client.post(url_for('main.login'), json={
             'username': username,
             'password': password
         }, follow_redirects=True)
 
     def logout(self):
+        # Log out the current user
         return self.client.post(url_for('main.logout'), follow_redirects=True)
 
     def test_login_page(self):
+        # Test the login page
         response = self.client.get(url_for('main.login'))
         self.assertEqual(response.status_code, 200)
         self.assertIn(b'Login', response.data)
 
     def test_valid_login(self):
+        # Test logging in with valid credentials
         response = self.login('testuser', 'testpassword')
         self.assertEqual(response.status_code, 200)
         self.assertIn(b'Login successful', response.data)
 
     def test_invalid_login(self):
+        # Test logging in with invalid credentials
         response = self.login('wronguser', 'wrongpassword')
         self.assertEqual(response.status_code, 401)
         self.assertIn(b'Invalid username or password', response.data)
 
     def test_logout(self):
+        # Test logging out
         self.login('testuser', 'testpassword')
         response = self.logout()
         self.assertEqual(response.status_code, 200)
         self.assertIn(b'Login', response.data)
 
     def test_register(self):
+        # Test user registration
         response = self.client.post(url_for('main.register'), json={
             'username': 'newuser',
             'password': 'newpassword'
@@ -65,23 +72,27 @@ class RoutesTestCase(unittest.TestCase):
         self.assertIn(b'Registration successful', response.data)
 
     def test_index_redirect(self):
+        # Test redirect to login page
         response = self.client.get(url_for('main.index'))
         self.assertEqual(response.status_code, 302)
         self.assertIn(url_for('main.login', _external=False), response.location)
 
     def test_user_page(self):
+        # Test user page
         self.login('testuser', 'testpassword')
         response = self.client.get(url_for('main.user', username='testuser'))
         self.assertEqual(response.status_code, 200)
         self.assertIn(b'testuser', response.data)
 
     def test_get_user_info(self):
+        # Test getting user information
         self.login('testuser', 'testpassword')
         response = self.client.get(url_for('main.get_user_info'))
         self.assertEqual(response.status_code, 200)
         self.assertIn(b'testuser', response.data)
 
     def test_send_note(self):
+        # Test sending a note
         self.login('testuser', 'testpassword')
         response = self.client.post(url_for('main.send', username='testuser'), json={
             'note': 'This is a test note',
@@ -92,36 +103,41 @@ class RoutesTestCase(unittest.TestCase):
         self.assertIn(b'Your message has been sent!', response.data)
 
     def test_random_other_note(self):
+        # Test getting a random note from another user
         self.login('testuser', 'testpassword')
         response = self.client.get(url_for('main.random_other_note'))
         self.assertEqual(response.status_code, 404)  # Assuming no other notes exist
 
     def test_random_note_by_label(self):
+        # Test getting a random note by label
         self.login('testuser', 'testpassword')
         response = self.client.get(url_for('main.random_note_by_label', label='test'))
         self.assertEqual(response.status_code, 404)  # Assuming no notes with label exist
 
     def test_reply_note(self):
+        # Test replying to a note
         self.login('testuser', 'testpassword')
         response = self.client.get(url_for('main.reply_note'))
         self.assertEqual(response.status_code, 200)
         self.assertIn(b'Reply', response.data)
 
     def test_check_my_reply(self):
+        # Test checking replies to notes
         self.login('testuser', 'testpassword')
         response = self.client.get(url_for('main.check_my_reply'))
         self.assertEqual(response.status_code, 200)
         self.assertIn(b'Check', response.data)
 
     def test_api_get_notes_with_replies(self):
+        # Test getting notes with replies
         self.login('testuser', 'testpassword')
         response = self.client.get(url_for('main.api_get_notes_with_replies', username='testuser'))
         self.assertEqual(response.status_code, 200)
         self.assertIn(b'notes_with_replies', response.data)
 
     def test_reply_to_note(self):
+        # Test replying to a note
         self.login('testuser', 'testpassword')
-        # First, send a note to reply to
         self.client.post(url_for('main.send', username='testuser'), json={
             'note': 'This is a test note',
             'anonymous': False,
@@ -185,6 +201,7 @@ class RoutesTestCase(unittest.TestCase):
         self.assertIn(b'reply', response.data)
 
     def test_upload_image(self):
+        # Test uploading an image
         self.login('testuser', 'testpassword')
         with open('tests/test_image.jpg', 'rb') as img:
             response = self.client.post(url_for('main.upload_image'), content_type='multipart/form-data', data={

@@ -8,10 +8,12 @@ from app.api.errors import bad_request
 
 @bp.route('/users/<int:id>', methods=['GET'])
 def get_user_byID(id):
+    #Retrieve a user by their ID.
     return db.get_or_404(User, id).to_dict()
 
 @bp.route('/users', methods=['GET'])
 def get_users():
+    #Retrieve all users.
     users_query = sa.select(User)
     users = db.session.execute(users_query).scalars().all()
     users_data = [user.to_dict() for user in users]
@@ -19,6 +21,7 @@ def get_users():
 
 @bp.route('/users', methods=['POST'])
 def create_user():
+    #Create a new user.
     data = request.get_json()
 
     if 'username' not in data or 'password' not in data:
@@ -40,6 +43,7 @@ def update_user(id):
 
 @bp.route('/users/<int:id>/send', methods=['GET'])
 def get_user_send(id):
+    #Retrieve all messages (sends) sent by a user.
     user = User.query.get(id)
     if not user:
         return bad_request('User not found')
@@ -51,6 +55,7 @@ def get_user_send(id):
 
 @bp.route('/users/<int:id>/send', methods=['POST'])
 def create_send(id):
+    #Create a new message (send) for a user.
     user = User.query.get(id)
     if not user:
         return bad_request('can not find user with id')
@@ -70,6 +75,7 @@ def create_send(id):
     
 @bp.route('/users/<int:id>/reply', methods=['GET'])
 def get_user_reply(id):
+    #Retrieve all replies made by a user.
     user = User.query.get(id)
     if not user:
         return bad_request('User not found')
@@ -81,6 +87,7 @@ def get_user_reply(id):
 
 @bp.route('/users/<int:user_id>/reply', methods=['POST'])
 def create_reply(user_id):
+    #Create a new reply to a message (send) for a user.
     user = User.query.get(user_id)
     
     if not user:

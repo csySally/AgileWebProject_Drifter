@@ -6,6 +6,7 @@ from app.models import User, Send, Reply
 class APITestCase(unittest.TestCase):
 
     def setUp(self):
+        # Create a test client and set up the database
         self.app = create_app('app.config.TestingConfig')
         self.app.config['SERVER_NAME'] = 'localhost.localdomain'
         self.app_context = self.app.app_context()
@@ -13,19 +14,22 @@ class APITestCase(unittest.TestCase):
         self.client = self.app.test_client()
         db.create_all()
         self.create_user()
-
+    
     def tearDown(self):
+        # Clean up the database session and drop all tables
         db.session.remove()
         db.drop_all()
         self.app_context.pop()
 
     def create_user(self):
+        # Create a test user
         self.user = User(username='testuser')
         self.user.set_password('testpassword')
         db.session.add(self.user)
         db.session.commit()
 
     def login(self):
+        # Log in the test user
         return self.client.post(url_for('main.login'), json={
             'username': 'testuser',
             'password': 'testpassword'
@@ -57,6 +61,7 @@ class APITestCase(unittest.TestCase):
         self.assertIn(b'This is another test message', response.data)
 
     def test_random_note_by_label_no_note(self):
+        # Ensure there are no notes with the label 'nonexistent'
         self.login()
         response = self.client.get(url_for('main.random_note_by_label', label='nonexistent'))
         self.assertEqual(response.status_code, 404)
@@ -79,6 +84,7 @@ class APITestCase(unittest.TestCase):
         self.assertIn(b'This is another test message', response.data)
 
     def test_get_notes_with_replies(self):
+        # Ensure the API endpoint returns notes with replies
         self.login()
         response = self.client.get(url_for('main.api_get_notes_with_replies', username='testuser'))
         self.assertEqual(response.status_code, 200)
