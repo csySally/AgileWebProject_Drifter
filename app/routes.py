@@ -134,6 +134,34 @@ def send(username):
         return jsonify({"message": "Your message has been sent!"}), 200
     return render_template("add_note.html", title="Send Message", user=current_user)
 
+@bp.route("/user/<username>/reply", methods=["GET", "POST"])
+@login_required
+def reply(username):
+    #Processes the reply submission and stores it in the database.
+    if current_user.username != username:
+        abort(403)
+
+    data = request.get_json()
+    if not data or "note_id" not in data or "reply_body" not in data:
+        return jsonify({"error": "Missing data"}), 400
+
+    note_id = data["note_id"]
+    reply_body = data["reply_body"]
+    anonymous = data.get("anonymous", False)
+
+    note = Send.query.get_or_404(note_id)
+    reply = Reply(
+        body=reply_body,
+        userId=current_user.id,
+        sendId=note.id,
+        anonymous=anonymous,
+    )
+
+    db.session.add(reply)
+    db.session.commit()
+
+    return jsonify({"message": "Reply successfully posted"}), 200
+
 @bp.route("/reply-note")
 @login_required
 def reply_note():

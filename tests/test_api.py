@@ -40,7 +40,7 @@ class APITestCase(unittest.TestCase):
         # Ensure there are no other notes
         Send.query.delete()
         db.session.commit()
-        response = self.client.get(url_for('main.random_other_note'))
+        response = self.client.get(url_for('api.random_other_note'))
         self.assertEqual(response.status_code, 404)
         self.assertIn(b'No other notes available', response.data)
 
@@ -56,14 +56,14 @@ class APITestCase(unittest.TestCase):
         db.session.add(other_note)
         db.session.commit()
 
-        response = self.client.get(url_for('main.random_other_note'))
+        response = self.client.get(url_for('api.random_other_note'))
         self.assertEqual(response.status_code, 200)
         self.assertIn(b'This is another test message', response.data)
 
     def test_random_note_by_label_no_note(self):
         # Ensure there are no notes with the label 'nonexistent'
         self.login()
-        response = self.client.get(url_for('main.random_note_by_label', label='nonexistent'))
+        response = self.client.get(url_for('api.random_note_by_label', label='nonexistent'))
         self.assertEqual(response.status_code, 404)
         self.assertIn(b'No notes available with the given label', response.data)
 
@@ -79,14 +79,14 @@ class APITestCase(unittest.TestCase):
         db.session.add(other_note)
         db.session.commit()
 
-        response = self.client.get(url_for('main.random_note_by_label', label='test'))
+        response = self.client.get(url_for('api.random_note_by_label', label='test'))
         self.assertEqual(response.status_code, 200)
         self.assertIn(b'This is another test message', response.data)
 
     def test_get_notes_with_replies(self):
         # Ensure the API endpoint returns notes with replies
         self.login()
-        response = self.client.get(url_for('main.api_get_notes_with_replies', username='testuser'))
+        response = self.client.get(url_for('api.get_notes_with_replies', username='testuser'))
         self.assertEqual(response.status_code, 200)
         self.assertIn(b'notes_with_replies', response.data)
 
@@ -104,7 +104,7 @@ class APITestCase(unittest.TestCase):
         db.session.add(reply)
         db.session.commit()
 
-        response = self.client.get(url_for('main.api_note_reply_detail', username='testuser', note_id=note.id, reply_id=reply.id))
+        response = self.client.get(url_for('api.note_reply_detail', username='testuser', note_id=note.id, reply_id=reply.id))
         self.assertEqual(response.status_code, 200)
         self.assertIn(b'This is a test reply', response.data)
 

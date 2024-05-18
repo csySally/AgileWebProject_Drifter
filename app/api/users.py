@@ -182,7 +182,7 @@ def random_note_by_label():
     
 @bp.route("/user/<username>/notes_with_replies")
 @login_required
-def api_get_notes_with_replies(username):
+def get_notes_with_replies(username):
     #Returns the user's notes with their replies as JSON. If the current user is not authorized, returns a 403 status code.
     if current_user.username != username:
         abort(403)
@@ -202,7 +202,7 @@ def api_get_notes_with_replies(username):
     "/user/<username>/note/<int:note_id>/reply/<int:reply_id>", methods=["GET"]
 )
 @login_required
-def api_note_reply_detail(username, note_id, reply_id):
+def note_reply_detail(username, note_id, reply_id):
     if current_user.username != username:
         abort(403)
     note = Send.query.get_or_404(note_id)
