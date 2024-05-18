@@ -130,13 +130,6 @@ class Reply(PaginatedAPIMixin, db.Model):
         )
 
 
-# class Labels(db.Model):
-# id = db.Column(db.Integer, primary_key=True)
-# label = db.Column(db.String(20))
-# def __repr__(self):
-# return '<Labels {}>'.format(self.label)
-
-
 @login.user_loader
 def load_user(id):
     return User.query.get(int(id))

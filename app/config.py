@@ -16,7 +16,7 @@ class TestingConfig(Config):
     SQLALCHEMY_DATABASE_URI = "sqlite:///:memory:"
     TESTING = True
     WTF_CSRF_ENABLED = False
-    SERVER_NAME = 'localhost.localdomain'  
+    SERVER_NAME = '127.0.0.1:5000'  
     APPLICATION_ROOT = '/'
     PREFERRED_URL_SCHEME = 'http'
 

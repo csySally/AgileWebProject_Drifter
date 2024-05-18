@@ -49,7 +49,7 @@ def get_user_info():
 @bp.route("/login", methods=["GET", "POST"])
 def login():
     if current_user.is_authenticated:
-        return redirect(url_for("index"))
+        return redirect(url_for("main.index"))
 
     if request.method == "POST":
         data = request.get_json()
