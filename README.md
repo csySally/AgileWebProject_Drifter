@@ -69,4 +69,50 @@ Users can view the replies received to the notes they send.
 
 ## How To Launch
 
+To launch this application, follow the steps below. These instructions assume you have Git and Python installed on your system.
+
+### Step 1: Clone the Repository
+
+First, clone the repository to your local machine using Git:
+git clone https://github.com/LiliLiu09/CITS5505_AgileWebProject2.git
+cd CITS5505_AgileWebProject2
+
+### Step 2: Set up a Virtual Environment
+
+python -m venv venv
+To activate the virtual environment, use:
+-On Windows:
+.\venv\Scripts\activate
+-On Unix or MacOS:
+source venv/bin/activate
+
+### Step 3: Install Dependencies
+
+With the virtual environment activated, install the project dependencies using:
+pip install -r requirements.txt
+
+### Step 4: Set Environment Variables
+
+-On Windows:
+set FLASK_APP=app.py
+set FLASK_ENV=development
+-On Unix or MacOS:
+export FLASK_APP=app.py
+export FLASK_ENV=development
+
+### Step 5: Run the Application
+
+flask run
+
+The application should now be running on http://localhost:5000
+
 ## How To Run Tests
+
+-Run unittest:
+'''
+pytest tests
+'''
+-Run Sellenium test:
+'''
+python test_selenium.py
+'''
