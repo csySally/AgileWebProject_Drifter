@@ -22,6 +22,9 @@ bp = Blueprint('main', __name__)
 @bp.route("/")
 @bp.route("/index")
 def index():
+
+    #Redirects authenticated users to their user page and unauthenticated users to the login page.
+
     if current_user.is_authenticated:
         return redirect(url_for("main.user", username=current_user.username))
     return redirect(url_for("main.login"))
@@ -30,6 +33,7 @@ def index():
 @bp.route("/user/<username>", methods=["GET", "POST"])
 @login_required
 def user(username):
+    #Displays the user's main page. Redirects to the login page if the username is not provided or does not match the current user.
     if username is None:
         # Redirect to a default username or handle appropriately
         return redirect(url_for("main.login"))
@@ -41,6 +45,7 @@ def user(username):
 @bp.route("/get_user_info")
 @login_required
 def get_user_info():
+    #Returns the username of the currently authenticated user as JSON.
     if current_user.is_authenticated:
         return jsonify(username=current_user.username)
     return jsonify(username="unknown"), 403
@@ -48,6 +53,7 @@ def get_user_info():
 
 @bp.route("/login", methods=["GET", "POST"])
 def login():
+    #Handles user login. Redirects authenticated users to the index page.
     if current_user.is_authenticated:
         return redirect(url_for("main.index"))
 
@@ -69,11 +75,13 @@ def login():
 @bp.route("/logout", methods=["POST"])
 def logout():
     logout_user()
+    #Logs out the current user and redirects to the login page.
     return redirect(url_for("main.login"))
 
 
 @bp.route("/register", methods=["GET", "POST"])
 def register():
+    #Handles user registration. Registers a new user if they are not already logged in.
     if current_user.is_authenticated:
         return jsonify({"status": "error", "message": "Already logged in"}), 400
 
@@ -115,6 +123,8 @@ def register():
 @bp.route("/user/<username>/send", methods=["GET", "POST"])
 @login_required
 def send(username):
+    #Allows the user to send a message. If the user is not authorized, returns a 403 status code.
+    #Processes the note submission and stores it in the database.
     if current_user.username != username:
         abort(403)  # HTTP status code for "Forbidden"
     if request.method == "POST":
@@ -137,6 +147,7 @@ def send(username):
 @bp.route("/api/random_other_note")
 @login_required
 def random_other_note():
+    #Returns a random note from other users as JSON. If no notes are available, returns a 404 status code.
     all_other_notes = Send.query.filter(Send.userId != current_user.id).all()
     if not all_other_notes:
         return jsonify({"error": "No other notes available"}), 404
@@ -167,6 +178,7 @@ def random_other_note():
 @bp.route("/api/random_note_by_label", methods=["GET"])
 @login_required
 def random_note_by_label():
+    #Returns a random note filtered by the specified label as JSON. If no notes are available, returns a 404 status code
     label = request.args.get("label", None)
     if label:
         filtered_notes = Send.query.filter(
@@ -210,12 +222,14 @@ def reply_note():
 @bp.route("/reply-note-random")
 @login_required
 def reply_note_random():
+    #Renders the reply random note page.
     return render_template("reply_random.html", user=current_user)
 
 
 @bp.route("/reply-note-check")
 @login_required
 def reply_note_check():
+    #Renders the check and reply page for notes with a specified label.
     label = request.args.get("label", None)
     return render_template("check_and_reply.html", user=current_user, label=label)
 
@@ -223,6 +237,7 @@ def reply_note_check():
 @bp.route("/check-my-reply")
 @login_required
 def check_my_reply():
+    #Renders the page to check replies to the user's notes.
     user_notes = Send.query.filter_by(userId=current_user.id).all()
     notes_with_replies = []
     for note in user_notes:
@@ -241,6 +256,7 @@ def check_my_reply():
 @bp.route("/api/user/<username>/notes_with_replies")
 @login_required
 def api_get_notes_with_replies(username):
+    #Returns the user's notes with their replies as JSON. If the current user is not authorized, returns a 403 status code.
     if current_user.username != username:
         abort(403)
 
@@ -258,6 +274,7 @@ def api_get_notes_with_replies(username):
 @bp.route("/user/<username>/reply", methods=["GET", "POST"])
 @login_required
 def reply(username):
+    #Processes the reply submission and stores it in the database.
     if current_user.username != username:
         abort(403)
 
