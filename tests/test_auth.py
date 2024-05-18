@@ -6,6 +6,7 @@ from app.models import User
 class AuthTestCase(unittest.TestCase):
 
     def setUp(self):
+        # Create a test client and set up the database
         self.app = create_app('app.config.TestingConfig')
         self.app_context = self.app.app_context()
         self.app_context.push()
@@ -13,11 +14,13 @@ class AuthTestCase(unittest.TestCase):
         db.create_all()
 
     def tearDown(self):
+        # Clean up the database session and drop all tables
         db.session.remove()
         db.drop_all()
         self.app_context.pop()
 
     def test_register(self):
+        # Test user registration
         response = self.client.post(url_for('main.register'), json={
             'username': 'newuser',
             'password': 'newpassword'
@@ -29,6 +32,7 @@ class AuthTestCase(unittest.TestCase):
         self.assertTrue(user.check_password('newpassword'))
 
     def test_registration_existing_username(self):
+        # Test registration with an existing username
         user = User(username='existinguser')
         user.set_password('password')
         db.session.add(user)
@@ -42,6 +46,7 @@ class AuthTestCase(unittest.TestCase):
         self.assertIn(b'Username already exists', response.data)
 
     def test_valid_login(self):
+        # Test logging in with valid credentials
         user = User(username='testuser')
         user.set_password('testpassword')
         db.session.add(user)
@@ -55,6 +60,7 @@ class AuthTestCase(unittest.TestCase):
         self.assertIn(b'Login successful', response.data)
 
     def test_invalid_login(self):
+        # Test logging in with invalid credentials
         response = self.client.post(url_for('main.login'), json={
             'username': 'nonexistentuser',
             'password': 'wrongpassword'
@@ -63,6 +69,7 @@ class AuthTestCase(unittest.TestCase):
         self.assertIn(b'Invalid username or password', response.data)
 
     def test_logout(self):
+        #   Test logging out
         user = User(username='testuser')
         user.set_password('testpassword')
         db.session.add(user)
@@ -77,6 +84,7 @@ class AuthTestCase(unittest.TestCase):
         self.assertIn(b'Login', response.data)
 
     def test_get_user_info(self):
+        # Test getting user information
         user = User(username='testuser')
         user.set_password('testpassword')
         db.session.add(user)
