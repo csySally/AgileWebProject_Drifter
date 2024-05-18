@@ -109,10 +109,13 @@ The application should now be running on http://localhost:5000
 ## How To Run Tests
 
 -Run unittest:
-'''
+
+```
 pytest tests
-'''
+```
+
 -Run Sellenium test:
-'''
+
+```
 python test_selenium.py
-'''
+```
