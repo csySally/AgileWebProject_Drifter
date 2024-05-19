@@ -91,6 +91,12 @@ cd CITS5505_AgileWebProject2
 python -m venv venv
 ```
 
+Or
+
+```
+python3 -m venv venv
+```
+
 To activate the virtual environment, use:
 -On Windows:
 
@@ -107,7 +113,10 @@ source venv/bin/activate
 ### Step 3: Install Dependencies
 
 With the virtual environment activated, install the project dependencies using:
+
+```
 pip install -r requirements.txt
+```
 
 ### Step 4: Set Environment Variables
 
