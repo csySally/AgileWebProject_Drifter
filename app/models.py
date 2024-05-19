@@ -58,11 +58,6 @@ class User(PaginatedAPIMixin, UserMixin, db.Model):
         #Checks if the provided password matches the stored password hash.
         return check_password_hash(self.password_hash, password)
 
-    def posts_count(self):
-        #Returns the count of posts made by the user.
-        query = sa.select(sa.func.count()).select_from(self.posts.select().subquery())
-        return db.session.scalar(query)
-
     def to_dict(self):
         #Converts the user object to a dictionary.
         return {"id": self.id, "username": self.username}
@@ -89,11 +84,6 @@ class Send(PaginatedAPIMixin, db.Model):
     def __repr__(self):
         #Returns a string representation of the send message.
         return "<Send {}>".format(self.body)
-
-    def posts_count(self):
-        #Returns the count of posts related to the send message.
-        query = sa.select(sa.func.count()).select_from(self.posts.select().subquery())
-        return db.session.scalar(query)
 
     def to_dict(self):
         # Converts the send object to a dictionary.
@@ -152,4 +142,4 @@ class Reply(PaginatedAPIMixin, db.Model):
 @login.user_loader
 #Loads a user by their ID.
 def load_user(id):
-    return User.query.get(int(id))
+    return db.session.get(User, int(id))
