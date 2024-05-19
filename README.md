@@ -155,3 +155,15 @@ pytest tests
 ```
 python test_selenium.py
 ```
+
+## If you want to use GPT generate reply function
+
+```
+cd CITS5505_AgileWebProject2/app
+```
+
+reivse .env file, replace your OpenAI API key in the file.
+
+```
+OPENAI_API_KEY=replace_with_your_openai_api_key
+```

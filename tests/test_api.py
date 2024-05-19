@@ -98,7 +98,7 @@ class APITestCase(unittest.TestCase):
             'anonymous': False,
             'labels': 'test'
         }, follow_redirects=True)
-        note = Send.query.first()
+        note = db.session.query(Send).first()
 
         reply = Reply(body='This is a test reply', author=self.user, sendId=note.id, anonymous=False)
         db.session.add(reply)
