@@ -81,7 +81,7 @@ class SeleniumTestCase(unittest.TestCase):
             except NoAlertPresentException:
                 print("No alert present after registration.")
 
-            driver.get('http://127.0.0.1:5000/logout')
+            #driver.get('http://127.0.0.1:5000/logout')
 
             driver.get('http://127.0.0.1:5000/login')
             # Find the login form inputs and submit button

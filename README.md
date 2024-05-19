@@ -167,3 +167,9 @@ reivse .env file, replace your OpenAI API key in the file.
 ```
 OPENAI_API_KEY=replace_with_your_openai_api_key
 ```
+
+## References
+
+[1] [Flask Mega-Tutoria](https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-i-hello-world)l by Miguel Grinberg.
+[2] [Get up and running with the OpenAI API](https://platform.openai.com/docs/quickstart/get-up-and-running-with-the-openai-api)
+[3] Insights and assistance provided by ChatGPT, Copilot, a language model by OpenAI.
