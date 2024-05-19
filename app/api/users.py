@@ -205,9 +205,18 @@ def get_notes_with_replies(username):
 def note_reply_detail(username, note_id, reply_id):
     if current_user.username != username:
         abort(403)
-    note = Send.query.get_or_404(note_id)
-    reply = Reply.query.get_or_404(reply_id)
-    user = User.query.get(reply.userId)
+    
+    note = db.session.get(Send, note_id)
+    if note is None:
+        abort(404)
+    
+    reply = db.session.get(Reply, reply_id)
+    if reply is None:
+        abort(404)
+    
+    user = db.session.get(User, reply.userId)
+    if user is None:
+        abort(404)
 
     note_data = {
         "id": note.id,
@@ -220,9 +229,7 @@ def note_reply_detail(username, note_id, reply_id):
         "id": reply.id,
         "body": reply.body,
         "from_user": (
-            User.query.get(reply.userId).username
-            if not reply.anonymous
-            else "Anonymous"
+            user.username if not reply.anonymous else "Anonymous"
         ),
         "anonymous": reply.anonymous,
         "avatar_path": (
