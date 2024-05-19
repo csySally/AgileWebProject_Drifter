@@ -94,11 +94,22 @@ hr {
 
 /* github icon */
 .footer-icon {
-    margin-top: 5%;
+    margin-top: 7%;
+    display: flex;
+    width: 100vw;
+    align-items: center;
 }
 
 .footer-icon img{
-    width: 4%;
+    width: 1.8vw;
+    margin-right: 1vw;
+    color:black;
+}
+
+#copyright{
+    font-size: 0.9vw;
+    margin-left: 0.3vw;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 /* right-panel */
